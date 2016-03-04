@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.container{position: relative;min-height: 100%;margin-bottom: -20px;}
+.container:after{content: "";display: block;height: 20px;}
+.footer-copyright {position: relative;height: 20px;}
+.copyright{line-height: 20px;text-align: center;color: rgba(123,30,20,0.6);font-size: 12px;}
+
+// 这个是针对单个属性的样式 对于不太多属性的标签使用以下的样式添加多个类达到效果
+.ta{text-align:center;}.tr{text-align:right;}.tl{text-align:left;}
+.cr1{color:nth($fontColor,1)}.cr2{color:nth($fontColor,2)}.cr3{color:nth($fontColor,3)}
+.fs1{font-size:pTR(nth($fontSize,1))}.fs2{font-size:pTR(nth($fontSize,2))}.fs3{font-size:pTR(nth($fontSize,3))}
+.bgs{-webkit-background-size: 100%;background-size: 100%;}

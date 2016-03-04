@@ -1,0 +1,8 @@
+@charset "UTF-8";
+// rem计算基准值
+$baseSize: 64 !default;
+// 字体和背景颜色多变量值，类似数组但是从1开始匹配的
+$bgColor: #000 #900 #400;
+$fontColor: #333 #900 #400;
+// 字体大小多变量值
+$fontSize: 24 30 32;

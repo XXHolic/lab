@@ -1,0 +1,22 @@
+%flex-box{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack:center;
+  justify-content:center;
+  -webkit-box-align:center;
+  align-items:center;
+}
+
+%flex-box-main{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack:center;
+  justify-content:center;
+}
+
+%flex-box-cross{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align:center;
+  align-items:center;
+}

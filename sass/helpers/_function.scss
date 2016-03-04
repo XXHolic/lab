@@ -1,0 +1,5 @@
+@charset "UTF-8";
+// 将px转换为renm单位
+@function pTR($px) {
+  @return $px / $baseSize * 1rem;
+}

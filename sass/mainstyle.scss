@@ -1,0 +1,23 @@
+// common variables placeholders and minxins
+@import "helpers/_variables.scss";
+@import "helpers/_function.scss";
+@import "helpers/_mixins.scss";
+@import "helpers/_placeholders.scss";
+
+/* css reset */
+@import "base/_reset.scss";
+@import "components/_common.scss";
+/* main structure */
+
+/* page style */
+@import "pages/_index.scss";
+@import "pages/_end.scss";
+
+/* popbox style */
+@import "components/_popbox.scss";
+
+/* animation style */
+@import "animation/_animation.scss";
+
+
+

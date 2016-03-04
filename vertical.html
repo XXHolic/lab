@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>inline-block对齐的问题</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+</head>
+<style type="text/css">
+  .item-list{
+    padding:0;
+    font-size: 0;
+    margin-bottom: 10px;
+  }
+  .item-list li{
+    display: inline-block;
+    width: 33.33%;
+    height: 100px;
+  }
+  .cr1{background-color: #333;}
+  .cr2{background-color: #343;}
+  .cr3{background-color: #339;}
+  .cr4{color: #fff;}
+  .fs1{font-size: 15px;}
+  .bd{border: 1px solid #900;}
+  .vt{vertical-align: top;}
+  .vb{vertical-align: bottom;}
+  .vm{vertical-align: middle;}
+  .ov{overflow: hidden;}
+  .mg1{margin-bottom: 10px;}
+  .mg2{margin-bottom: 20px;}
+  .mg3{margin-bottom: 30px;}
+  .pd1{padding-bottom: 10px;}
+  .pd2{padding-bottom: 20px;}
+  .pd3{padding-bottom: 30px;}
+</style>
+<body>
+  <ul class="item-list">
+    <li class="cr1 mg1"><span class=""></span></li>
+    <li class="cr2 mg2"><span class=""></span></li>
+    <li class="cr3 mg3"><span class=""></span></li>  
+  </ul>
+  <ul class="item-list">
+    <li class="cr1 mg1"><p class="fs1 cr4">文字1</p></li>
+    <li class="cr2 mg2"><p class="bd fs1 cr4">文字文字文字文字文字2</p></li>
+    <li class="cr3 mg3"><p class="fs1 cr4">文字文字文字文字文字文字文字文字文字3</p></li>  
+  </ul>
+  <ul class="item-list">
+    <li class="cr1"><span class="fs1 cr4">文字1</span></li>
+    <li class="cr2"><span class="bd fs1 cr4">文字文字文字文字文字2</span></li>
+    <li class="cr3"><span class="fs1 cr4">文字文字文字文字文字文字文字文字文字3</span></li>
+  </ul>
+</body>
+</html>

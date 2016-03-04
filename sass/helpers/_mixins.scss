@@ -1,0 +1,16 @@
+@charset "UTF-8";
+// 主要用于设置宽高 可缺省
+@mixin ele-box($width:null,$height:null,$margin:null){
+  width: pTR($width);
+  height: pTR($height);
+  margin: $margin;
+}
+// 用来设置圆角
+@mixin r-c($arc){
+  -webkit-border-radius: pTR($arc);
+          border-radius: pTR($arc);
+}
+
+
+
+
