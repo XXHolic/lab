@@ -1,14 +1,28 @@
 @charset "UTF-8";
 // 主要用于设置宽高 可缺省
 @mixin ele-box($width:null,$height:null,$margin:null){
-  width: pTR($width);
-  height: pTR($height);
-  margin: $margin;
+  @if $height == null {
+    width: pTR($width);
+    margin: $margin;
+  } @else if $width == null {
+    height: pTR($height);
+    margin: $margin;
+  } @else {
+    width: pTR($width);
+    height: pTR($height);
+    margin: $margin;
+  }
 }
 // 用来设置圆角
 @mixin r-c($arc){
-  -webkit-border-radius: pTR($arc);
-          border-radius: pTR($arc);
+  @if $arc == 50% {
+    -webkit-border-radius: $arc;
+    border-radius: $arc;
+  } @else {
+    -webkit-border-radius: pTR($arc);
+    border-radius: pTR($arc);
+  }
+  
 }
 
 
