@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>auto</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <style type="text/css">
+    body{background-color: #333;color: #fff;}
+    .pos1{width:200px;height: 50px;background-color: #234;}
+    .pos2{position: relative;width:100px;height: 100px;background-color: #394;}
+    .pos3{position: relative;width:100px;height: 100px;background-color: #567;}
+    .pos4{position: relative;background-color: #129;}
+    .pr1{position: relative;left: auto;right:10px;}
+    .pr2{position: relative;left: 10px;right:20px;}
+    .pr3{position: relative;right:auto;left: 20px;}
+    .pr4{position: relative;left: auto;right:auto;}
+    .prv1{position: relative;top: auto;bottom:10px;}
+    .prv2{position: relative;top: 10px;bottom:20px;}
+    .prv3{position: relative;top: 20px;bottom:auto;}
+    .prv4{position: relative;top: auto;bottom:auto;}
+    .fs1{font-size: 20px;}
+    .mb1{margin-bottom: 10px;}
+    .ml{margin-left: 20px;}
+    .bd{border: 5px solid #900;}
+    .pl1{padding-left: 20px;}
+  </style>
+</head>
+<body>
+  <h3>position:relative的auto情况</h3>
+  <h4>水平方向:</h4>
+  <div class="pos1 mb1 pl1">
+    <span class="pr1">left:auto right:10px</span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="pr2">left:10px right:20px</span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="pr3">left:20px right:auto </span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="pr4">left:auto right:auto</span>
+  </div>
+  <h4>垂直方向:</h4>
+  <div class="pos1 mb1">
+    <span class="prv1">top:auto bottom:10px</span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="prv2">top:10px bottom:20px</span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="prv3">top:20px bottom:auto</span>
+  </div>
+  <div class="pos1 mb1">
+    <span class="prv4">top:auto bottom:auto</span>
+  </div>
+</body>
+</html>
