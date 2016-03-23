@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>3张图片层次切换</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <style type="text/css">
+  body{padding-top: 100px;margin:0;}
+  #carousel .cloud9-item,
+  #buttons button {
+    cursor: pointer;
+  }
+  
+  .img-slider {
+  	/* overflow: auto; */
+    margin: 0 auto;
+   /*  margin:0;
+    padding:0; */
+    width: 100%;
+    height: 360px;
+    background-color: #333;
+    -webkit-transform: scale(1.1);
+  }
+  
+  .img-slider img {
+    width: 100px;
+  }
+  .result {
+  	position: absolute;
+  	top: 45%;
+  	left: 50%;
+  	z-index: 5;
+  	width: 105px;
+  	height: 73px;
+  	-webkit-transform: translate(-50%,0);
+  	transform: translate(-50%,0);
+  }
+  .result1{
+  	background: url(images/r1.png) 0 0 no-repeat;
+  	-webkit-background-size: 100%;
+  	background-size: 100%;
+  }
+  .result2{
+  	background: url(images/r2.png) 0 0 no-repeat;
+  	-webkit-background-size: 100%;
+  	background-size: 100%;
+  }
+  .result3{
+  	background: url(images/r3.png) 0 0 no-repeat;
+  	-webkit-background-size: 100%;
+  	background-size: 100%;
+  }
+  .bg_stage {
+  	position: absolute;
+  	top: -90px;
+  	left: 0;
+  	z-index: 99;
+  	width: 320px;
+  	height: 400px;
+  	background: url(images/bg_person.png) 0 0 no-repeat;
+  	-webkit-background-size: 100%;
+  	background-size: 100%;
+  	-webkit-transform: scale(0.85);
+  }
+  .two-horn {
+  	position: absolute;
+  	bottom: 100px;
+  	left: 50%;
+  	z-index: 101;
+  	margin:0;
+  	width: 287px;
+  	height: 150px;
+  	/* @include ele-box(575,300); */
+  	/* font-size: pTR(26); */
+  	/* font-weight: bold; */
+  	/* color: #000; */
+  	background: url(images/bg_horn.png) 0 0 no-repeat;
+  	-webkit-background-size: 100%;
+  	background-size: 100%;
+  	-webkit-transform: translate(-50%,0) scale(0.85);
+  	transform: translate(-50%,0) scale(0.85);
+  }
+  </style>
+</head>
+
+<body>
+  <div id="carousel" class="img-slider">
+  	<div class="card">
+  		<img class="cloud9-item" src="images/1.png" alt="Item #1">
+  		<span class="result result1"></span>
+  	</div>
+  	<div class="card">
+  		<img class="cloud9-item" src="images/1.png" alt="Item #1">
+  		<span class="result result1"></span>
+  	</div>
+  	<div class="card">
+  		<img class="cloud9-item" src="images/1.png" alt="Item #1">
+  		<span class="result result1"></span>
+  	</div>
+  	<div class="card">
+  		<img class="cloud9-item" src="images/1.png" alt="Item #1">
+  		<span class="result result1"></span>
+  	</div>
+  	<div class="bg_stage"></div>
+  	<div class="two-horn"></div>
+  </div>
+  <!-- 	<div id="buttons">
+	  <button class="left">
+	    ←
+	  </button>
+	  <button class="right">
+	    →
+	  </button>
+	</div> -->
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/touch.js"></script>
+  <script src="js/3d-slider.js"></script>
+  <script type="text/javascript">
+  $("#carousel").Cloud9Carousel({
+  	// yOrigin: 10,
+    yRadius: -80,
+    itemClass: "card",
+    autoPlay: 0,
+    bringToFront: true,
+    onRotateCompleted: function() {
+      console.log('stopped');
+    }
+  });
+  </script>
+</body>
+
+</html>

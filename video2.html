@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+<title>默认封面图</title>
+</head>
+<body>
+<script src="http://imgcache.qq.com/tencentvideo_v1/tvp/js/tvp.player_v2.js" type="text/javascript" ></script>
+<!-- <script src="http://v.qq.com/iframe/tvp.config.js?v=20150918" type="text/javascript"></script> -->
+
+<div id="mod_player"></div>
+
+<script>
+tvp.$.getScript('setting.js?t='+ (+new Date()), function(){
+
+var video = new tvp.VideoInfo();
+video.setVid(tvpSetting.vid);
+var player = new tvp.Player();
+player.create({
+  width  : tvpSetting.width,
+  height : tvpSetting.height,
+  pic: tvp.common.getVideoSnapMobile(tvpSetting.vid),
+  video  : video,
+  playerType: 'html5',
+  isiPhoneShowPosterOnPause : !tvp.$.browser.WeChat,
+  modId  : 'mod_player'
+});
+
+});
+</script>
+</body>
+</html>
