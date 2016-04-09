@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>poa</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <style type="text/css">
+    .poa{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      background-color: #333;
+    }
+    .place{
+      height: 100px;
+      color: #340;
+    }
+    .bd-test{
+      border-width: 2px;
+      border-style: solid;
+      padding: 3px;
+      color: #900;
+      background-color: #340;
+    }
+  </style>
+</head>
+<body>
+  <p class="poa" id="aa"></p>
+  <p class="place"></p>
+  <p class="place"></p>
+  <p class="place"></p>
+  <p class="place"></p>
+  <p class="bd-test">字体颜色可以影响边框的颜色</p>
+  <p class="place">测试q</p>
+  <p class="place">测试2</p>
+  <p class="place" id="scroll">测试3</p>
+  <p class="place">测试5</p>
+  <p class="place"></p>
+  <script type="text/javascript">
+  function scrollShow() {
+    var scrollEle=document.getElementById("scroll");
+      scrollEle.scrollIntoView();
+  }
+    
+    document.getElementById("aa").onclick=function() {
+      scrollShow();
+    };
+    scrollShow();
+  </script>
+</body>
+</html>

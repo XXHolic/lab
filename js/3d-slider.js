@@ -154,7 +154,7 @@
             this.itemOptions.mirror = $.extend( { gap: 2 }, options.mirror );
         }
 
-        $container.css( { position: 'relative', overflow: 'hidden' } );
+        $container.css( { position: 'relative',width: "100%" } );
 
         // Rotation:
         //  *      0 : right
@@ -303,13 +303,11 @@
                     ev.preventDefault();
                 });
                 touch.on('#carousel', 'swipeleft', function(ev){
-                    console.log("向左动.");
-                    self.go( -1 );
+                    self.go( 1 );
                     return false;
                 });
                 touch.on('#carousel', 'swiperight', function(ev){
-                    console.log("向右滑动.");
-                    self.go( 1 );
+                    self.go( -1 );
                     return false;
                 });
             }
