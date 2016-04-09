@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>3张图片层次切换</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<style type="text/css">
+		#carousel .cloud9-item, #buttons button {
+		  cursor: pointer;
+		}
+		.img-slider {
+			margin: 0 auto;
+			height: 360px;
+			background-color: #333;
+		}
+		.img-slider img{width: 100px;}
+	</style>
+</head>
+<body>
+	<div id="carousel" class="img-slider">
+	  <img class="cloud9-item" src="images/1.png" alt="Item #1">
+	  <img class="cloud9-item" src="images/2.png" alt="Item #2">
+	  <img class="cloud9-item" src="images/3.png" alt="Item #3">
+	  <img class="cloud9-item" src="images/4.png" alt="Item #4">
+	</div>
+<!-- 	<div id="buttons">
+	  <button class="left">
+	    ←
+	  </button>
+	  <button class="right">
+	    →
+	  </button>
+	</div> -->
+	<script src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/touch.js"></script>
+	<script src="js/3d-slider.js"></script>
+	<script type="text/javascript">
+		$("#carousel").Cloud9Carousel( {
+		  // buttonLeft: $("#buttons > .left"),
+		  // buttonRight: $("#buttons > .right"),
+		  autoPlay: 0,
+		  bringToFront: true
+		} );
+	</script>
+</body>
+</html>
