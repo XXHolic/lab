@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>FileLoad</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+</head>
+
+<body>
+  <form>
+    <fieldset>
+      <legend>读取文件：</legend>
+      <input type="file" id="file2" />
+      <!-- <input type="button" value="中断" id="Abort" /> -->
+      <p id="total"></p>
+    </fieldset>
+  </form>
+  <script type="text/javascript">
+  function fileSelect2(e) {
+    e = e || window.event;
+    var file = this.files[0];
+    // var p = document.getElementById('preview2');
+
+    // for (var i = 0, f; f = files[i]; i++) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        console.log(this.result);
+      };
+      //读取文件内容
+      reader.readAsBinaryString(file);
+    // }
+  }
+  document.getElementById('file2').onchange=fileSelect2;
+  </script>
+</body>
+
+</html>

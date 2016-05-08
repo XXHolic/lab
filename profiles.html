@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>chrome profiles</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+</head>
+
+<body>
+  <button id="btn"> click me</button>
+  <script type="text/javascript">
+  function a() {
+    console.log('hello world');
+  }
+
+  function b() {
+    a();
+  }
+
+  function c() {
+    b();
+  }
+
+  document.getElementById('btn').addEventListener('click', c, true);
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/newreset.css">
+</body>
+
+</html>

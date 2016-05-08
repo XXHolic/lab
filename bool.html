@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="cn-ZH">
+<head>
+  <meta charset="UTF-8">
+  <title>bool值</title>
+</head>
+<body>
+  <script type="text/javascript">
+    var sm;
+    var obj={aa:"a1"};
+    var a=obj&&obj.aa;
+    console.log("&& 当第一个操作数布尔转换为true时返回值："+a);
+    var b=(1-1)&&1;
+    console.log("&& 当第一个操作数布尔转换为false时返回值："+b);
+    var a1=obj||obj.aa;
+    console.log("|| 当第一个操作数布尔转换为true时返回值："+a1);
+    var b1=null||null;
+    console.log("|| 当第一个操作数布尔转换为false时返回值："+b1);
+
+  </script>
+
+</body>
+</html>
