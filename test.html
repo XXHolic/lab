@@ -31,6 +31,9 @@
     0% {-webkit-transform: translate(0,0);transform: translate(0,0);}
     100% {-webkit-transform: translate(40px,0);transform: translate(40px,0);}
   }
+  .test-ib span{display: inline-block;width: 100px;height: 100px;}
+  .test-ib span:nth-child(1){background-color: #349;}
+  .test-ib span:nth-child(2){background-color: #340;}
   </style>
 </head>
 <body>
@@ -41,7 +44,9 @@
     <li><span>咸菜</span></li>
   </ul>
   <button onclick="chageColor();">点击改变</button> -->
-  <div class=""></div>
+  <div class="test-ib">
+    <span></span><span></span>
+  </div>
   <button onclick="start();">点击开始</button>
   <button onclick="stop();">点击结束</button>
   <div class="bg-img"></div>

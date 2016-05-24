@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>缩放</title>
+  <style type="text/css">
+    .zoom-part{-webkit-perspective: 500;width: 100px;height: 100px;background-color: #340;}
+    .zoom-part img{float: left; width: 30px;height: 30px;}
+  </style>
+</head>
+
+<body>
+  <div class="zoom-part">
+    <img src="http://1251097942.cdn.myqcloud.com/1251097942/demos/photo/photo1.jpg">
+    <img src="http://1251097942.cdn.myqcloud.com/1251097942/demos/photo/photo2.jpg">
+  </div>
+
+  <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="js/snabbt.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  $(".zoom-part").snabbt({
+    position: [50, 50, 0],
+    scale:[2,2]
+  });
+  </script>
+</body>
+
+</html>

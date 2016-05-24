@@ -7,6 +7,7 @@
   <style type="text/css">
     /* html,body{height: 100%;} */
     *{padding: 0;margin:0;}
+    .input-part {padding-top: 100%;}
     .input-test {
       /* position: absolute; */
       /* bottom: 0; */
@@ -17,9 +18,9 @@
   </style>
 </head>
 <body id="test-body">
-  <div class="ky" id="ky">
+ <!--  <div class="ky" id="ky">
     <p id="num-show"></p>
-  </div>
+  </div> -->
   <div class="input-part">
     <input type="text" class="input-test" id="content-input"></input>
   </div>
@@ -45,15 +46,15 @@
         // $("#test-body").scrollTop(scrollHeight);
       },2000);
       // testBody.style.height=(window.innerHeight+1)+"px";
-     
+
       // conInput.scrollIntoView();
     }
   }
-    
-    window.onload=function() {
-      setHeight();
-      inputUp();
-    }
+
+    // window.onload=function() {
+    //   setHeight();
+    //   inputUp();
+    // }
   </script>
 </body>
 </html>
