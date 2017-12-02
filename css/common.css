@@ -1,0 +1,56 @@
+html {
+  font-size: 14px;
+}
+
+/*
+ *  用于控制显示和隐藏的css
+ */
+.dn {
+  display: none;
+}
+.dib {
+  display: inline-block;
+}
+.db {
+  display: block;
+}
+.df {
+  display: flex;
+}
+/*
+ *  用于控制方向的css
+ */
+.tc {
+  text-align: center;
+}
+.tl {
+  text-align: left;
+}
+.tr {
+  text-align: right;
+}
+
+/*
+ *  浮动
+ */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+
+/*
+ *  margin居中
+ */
+.ma {
+  margin: 0 auto;
+}
+
+/*
+ *  方便定位的position
+ */
+.pr {
+  position: relative;
+}
+
