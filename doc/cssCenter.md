@@ -55,12 +55,49 @@ display: inline-block;
 元素设置了display: inline-block后也有了内联元素的特性，text-align也就生效了，所以就让元素居中了。
 
 方法3：居中元素使用定位position和margin负值
+```css
+/* 添加到父元素上 */
+.pr {
+  position: relative;
+}
+/* 添加到居中元素上 */
+.css-center-rec-pos-justify1 {
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+}
+```
+这个主要是要理解属性的具体作用。找文档走起，首先，margin是可以为负值，不过可以有一些特定于具体实现的限制。
+> Negative values for margin properties are allowed, but there may be implementation-specific limits.
+
+设置margin为负值，效果就是超过了父元素的边框，这里居中元素会向左超出50px。然后设置了居中元素position绝对定位（不一定要绝对定位），left属性含义是：该元素的左外边距边界相对于其包含块左边界有多远。值为百分比时，计算相对于其包含块的宽度计算，这里居中元素向右偏移了150px。最终距离父元素左边界150-50=100px，父元素300px,居中元素100px，该元素就居中了。
+
+方法4：居中元素使用定位position和transform
+```css
+/* 添加到父元素上 */
+.pr {
+  position: relative;
+}
+/* 添加到居中元素上 */
+.css-center-rec-pos-justify1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+```
+这个主要是要理解属性的具体作用。position定位在方法3中提过，至于transform这个属性,找文档走起。虽然还没有正式成为标准，但大部分浏览器都已经实现了，transform属性会让这个元素建立自己的坐标系，在左边系里面可以改变形状，大小和位置。
+![元素坐标系](../images/css-center1.png)
+
+元素坐标系的原点默认是元素的中心，translateX就是元素中心沿着坐标系X轴移动，值为百分数的时候，计算值是相对于元素自身的宽度。position定位向右偏移了300*50%=150px，元素自身transform向左偏移了100*50%=50px，最终距离父元素左边界150-50=100px，父元素300px,居中元素100px，该元素就居中了。
 
 
-
-
-
-
+参考文档：
+1. text-align说明文档：https://www.w3.org/TR/CSS2/text.html#propdef-text-align
+2. margin说明文档：https://www.w3.org/TR/CSS2/box.html#box-margin-area
+3. Box offsets: 'top', 'right', 'bottom', 'left'：https://www.w3.org/TR/CSS2/visuren.html#propdef-left
+4. CSS Transforms Module Level 1：https://www.w3.org/TR/css-transforms-1/
+5. Containing blocks（包含块）：https://www.w3.org/TR/CSS2/visuren.html#containing-block
+6. Bring your page to life with CSS transforms：https://msdn.microsoft.com/en-us/library/jj665791(v=vs.85).aspx
 
 
 
