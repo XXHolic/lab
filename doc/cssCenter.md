@@ -15,7 +15,7 @@
 .css-center-parent {
   border: 1px solid #333;
   width: 300px;
-  height: 185px;
+  height: 186px;
 }
 .css-center-rec {
   border: 1px solid #333;
@@ -24,7 +24,7 @@
 }
 ```
 ## 水平居中
-#### 方法1：使用margin让元素居中
+#### 方法1：使用margin
 ```css
 .ma {
   margin: 0 auto;
@@ -36,7 +36,7 @@ margin是一个简写属性，上面的意思就是margin-top和margin-bottom值
 相互影响的属性是有下面一个强制约定的关系：
 > 'margin-left' + 'border-left-width' + 'padding-left' + 'width' + 'padding-right' + 'border-right-width' + 'margin-right' = width of containing block
 
-下面说了好几种更详情的情况，这个例属于最后说明：如果margin-left和margin-right值都是auto，那么它们渲染出来的值就相等。所以这样使用margin就让元素居中了。
+下面说了好几种更详情的情况，这个例属于最后说明：如果margin-left和margin-right值都是auto，那么它们渲染出来的值就相等。所以这样使用margin就让元素水平居中了。
 
 #### 方法2：改变居中元素display属性,父元素设置text-align: center;
 ```css
@@ -52,9 +52,9 @@ display: inline-block;
 在一些教程里面对text-align的解释是：指定元素文本的水平对齐方式。但这里是一个元素又不是文本，为什么就居中了？找文档走起，看了之后发现，这个感觉就是英文单词上的误导。这个属性描述的是块级元素里面内联级别内容如何对齐，并不是只针对文本。
 > This property describes how inline-level content of a block container is aligned. 
 
-元素设置了display: inline-block后也有了内联元素的特性，text-align也就生效了，所以就让元素居中了。
+元素设置了display: inline-block后也有了内联元素的特性，text-align也就生效了，所以就让元素水平居中了。
 
-#### 方法3：居中元素使用定位position和margin负值
+#### 方法3：使用定位position和margin负值
 ```css
 /* 添加到父元素上 */
 .pr {
@@ -70,9 +70,9 @@ display: inline-block;
 这个主要是要理解属性的具体作用。找文档走起，首先，margin是可以为负值，不过可以有一些特定于具体实现的限制。
 > Negative values for margin properties are allowed, but there may be implementation-specific limits.       
 
-设置margin为负值，效果就是超过了父元素的边框，这里居中元素会向左超出50px。然后设置了居中元素position绝对定位（不一定要绝对定位），left属性含义是：该元素的左外边距边界相对于其包含块左边界有多远。值为百分比时，计算相对于其包含块的宽度计算，这里居中元素向右偏移了150px。最终距离父元素左边界150-50=100px，父元素300px,居中元素100px，该元素就居中了。
+设置margin为负值，效果就是超过了父元素的边框，这里居中元素会向左超出50px。然后设置了居中元素position绝对定位（不一定要绝对定位）。left属性含义是：该元素的左外边距边界相对于其包含块左边界有多远。值为百分比时，计算相对于其包含块的宽度计算，这里居中元素向右偏移了150px。最终距离父元素左边界150-50=100px，父元素宽度300px,居中元素宽度100px，该元素就水平居中了。
 
-#### 方法4：居中元素使用定位position和transform
+#### 方法4：使用定位position和transform
 ```css
 /* 添加到父元素上 */
 .pr {
@@ -89,9 +89,9 @@ display: inline-block;
 
 ![元素坐标系](../images/css-center-position.png)
 
-元素坐标系的原点默认是元素的中心，translateX就是元素中心沿着坐标系X轴移动，值为百分数的时候，计算值是相对于元素自身的宽度。position定位向右偏移了300*50%=150px，元素自身transform向左偏移了100 * 50%=50px，最终距离父元素左边界150-50=100px，父元素300px,居中元素100px，该元素就居中了。更多相关点击[这里](https://www.w3.org/TR/css-transforms-1/)。
+元素坐标系的原点默认是元素的中心，translateX就是元素中心沿着坐标系X轴移动，值为百分数的时候，计算值是相对于元素自身的宽度。position定位向右偏移了300*50%=150px，元素自身transform向左偏移了100 * 50%=50px，最终距离父元素左边界150-50=100px，父元素宽度300px,居中元素宽度100px，该元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-transforms-1/)。
 
-#### 方法5：使用flex
+#### 方法5：使用flex layout
 ```css
 /* 添加到父元素上 */
 .df {
@@ -106,9 +106,37 @@ display: inline-block;
 
 ![flex directions](../images/css-center-flex.png)
 
-父元素设置justify-content属性表示的是flex items在main axis上的对其方式，其属性值center表示在main axis上居中，其直接子元素就居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
-
-
+父元素设置justify-content属性表示的是flex items在main axis上的对齐方式，其属性值center表示在main axis上居中，其直接子元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
+## 垂直居中
+#### 方法1：使用定位position和margin负值
+```css
+/* 添加到父元素上 */
+.pr {
+  position: relative;
+}
+/* 添加到居中元素上 */
+.css-center-rec-pos-align1 {
+  position: absolute;
+  top: 50%;
+  margin-top: -31px;
+}
+```
+这个跟水平居中的方法3类似，只是对应使用的属性不一样。设置margin-top为负值，居中元素会向顶部超出31px。然后设置了居中元素position绝对定位（不一定要绝对定位）。top属性含义是：该元素的上外边距边界相对于其包含块上边界有多远。值为百分比时，计算相对于其包含块的高度计算，这里居中元素向下偏移了93px。最终距离父元素左边界93-31=62px，父元素高度186px,居中元素高度62px，该元素就垂直居中了。
+#### 方法2：使用定位position和transform
+```css
+/* 添加到父元素上 */
+.pr {
+  position: relative;
+}
+/* 添加到居中元素上 */
+.css-center-rec-pos-align2 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+```
+这个跟水平居中的方法4类似，只是对应使用的属性不一样。translate就是元素中心沿着坐标系轴移动，值为百分数的时候，计算值是相对于元素自身的宽高度。这里居中元素向上偏移了62 * 50% = 31px，定位向下偏移了186 * 50% = 93px，最终居中元素距离父元素偏移的距离是93-31 = 62px，父元素高度186px,居中元素高度62px，该元素就垂直居中了。
+#### 方法3：使用flex layout
        
 ## 参考文档：
 1. Alignment: the 'text-align' property：https://www.w3.org/TR/CSS2/text.html#propdef-text-align
