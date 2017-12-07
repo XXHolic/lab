@@ -87,7 +87,7 @@ display: inline-block;
 ```
 这个主要是要理解属性的具体作用。position定位在方法3中提过，至于transform这个属性,找文档走起。虽然还没有正式成为标准，但大部分浏览器都已经支持了，transform属性会让这个元素建立自己的坐标系，在坐标系里面可以改变形状，大小和位置。
 
-![元素坐标系](../images/css-center1.png)
+![元素坐标系](../images/css-center-position.png)
 
 元素坐标系的原点默认是元素的中心，translateX就是元素中心沿着坐标系X轴移动，值为百分数的时候，计算值是相对于元素自身的宽度。position定位向右偏移了300*50%=150px，元素自身transform向左偏移了100 * 50%=50px，最终距离父元素左边界150-50=100px，父元素300px,居中元素100px，该元素就居中了。更多相关点击[这里](https://www.w3.org/TR/css-transforms-1/)。
 
@@ -104,7 +104,7 @@ display: inline-block;
 这个主要也是理解属性的具体作用。在CSS2.1中定义了4种布局模式：block layout、inline layout、table layout、positioned layout。这种方法使用的是新的一种布局模型:flex layout,它是为复杂的应用程序和网页设计。flex布局模式主要由父容器和它直接的子元素组成，父容器被成为flex container，其直接子元素被称为flex items。      
 代码中父元素设置display:flex，让它成为了flex container，其直接子元素的排列就使用flex布局模式。在CSS中定义了一些跟物理方向和空间相对应的一些概念，这些概念为未来定义新的布局提供理论的支持，在flex布局模式中对应物理方向和空间的概念如下如下图。
 
-![flex directions](../images/flex.png)
+![flex directions](../images/css-center-flex.png)
 
 父元素设置justify-content属性表示的是flex items在main axis上的对其方式，其属性值center表示在main axis上居中，其直接子元素就居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
 
