@@ -2,7 +2,7 @@
 ## 想法
 在工作刚开始的时候，对CSS还是很有热情的，也花了时间看了些相关的书籍，做了相关的尝试。随着工作经验积累，手上的事情也越来越多，大部分时候根据已有的经验快速解决问题。时间久了，知道怎么写出这个效果，但写的时候往往很少再去想一下，这个属性的具体作用。所以在此对经常使用的CSS属性“再想一下”。
 ## 约定
-“再想一下”更多的是去理解规范标准，在这里就不会去比较它们的优劣，如果理解了这些，我想到时候自然知道如何去选择。CSS居中在设计和代码实现中用的很多，居中效果需要有一个参照物，下面CSS实现方法前提是，都有一个一定高度和宽度的父元素。
+“再想一下”更多的是去理解规范，在这里就不会去比较它们的优劣和兼容性，如果理解了这些，我想到时候自然知道如何去选择。CSS居中在设计和代码实现中用的很多，居中效果需要有一个参照物，下面CSS实现方法前提是，都有一个一定高度和宽度的父元素。
 ## 居中
 经常遇到的居中效果主要有2种：水平居中和垂直居中。需要居中的元素高宽度可能有或没有，为了方便理解，先以有固定高宽度元素为例。html的结构如下：
 ```html
@@ -106,7 +106,7 @@ display: inline-block;
 
 ![flex directions](../images/css-center-flex.png)
 
-父元素设置justify-content属性表示的是flex items在main axis上的对齐方式，其属性值center表示在main axis上居中，其直接子元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
+父元素设置justify-content属性表示的是该容器下的flex items在main axis上的对齐方式，其属性值center表示在main axis上居中，其直接子元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
 ## 垂直居中
 #### 方法1：使用定位position和margin负值
 ```css
@@ -137,6 +137,16 @@ display: inline-block;
 ```
 这个跟水平居中的方法4类似，只是对应使用的属性不一样。translate就是元素中心沿着坐标系轴移动，值为百分数的时候，计算值是相对于元素自身的宽高度。这里居中元素向上偏移了62 * 50% = 31px，定位向下偏移了186 * 50% = 93px，最终居中元素距离父元素偏移的距离是93-31 = 62px，父元素高度186px,居中元素高度62px，该元素就垂直居中了。
 #### 方法3：使用flex layout
+```css
+/* 添加到父元素上 */
+.df {
+  display: flex;
+}
+.css-center-parent-flex-justify {
+  align-items: center;
+}
+```
+这个跟水平居中的方法5类似，换成使用align-items属性，该属性含义是该容器下的flex items在cross axis 上的对齐方式，属性值center作用就是让flex items的外边距盒子在垂直方向居中。
        
 ## 参考文档：
 1. Alignment: the 'text-align' property：https://www.w3.org/TR/CSS2/text.html#propdef-text-align
@@ -145,7 +155,7 @@ display: inline-block;
 4. CSS Transforms Module Level 1：https://www.w3.org/TR/css-transforms-1/
 5. Containing blocks（包含块）：https://www.w3.org/TR/CSS2/visuren.html#containing-block
 6. Bring your page to life with CSS transforms：https://msdn.microsoft.com/en-us/library/jj665791(v=vs.85).aspx
-7. CSS Flexible Box Layout Module Level 1：https://www.w3.org/TR/css-flexbox-1/#justify-content-property
+7. CSS Flexible Box Layout Module Level 1：https://www.w3.org/TR/css-flexbox-1/
 8. Abstract Box Terminology：https://www.w3.org/TR/css-writing-modes-3/#abstract-box
 
 
