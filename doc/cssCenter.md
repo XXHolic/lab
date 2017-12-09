@@ -101,12 +101,19 @@ display: inline-block;
   justify-content: center;
 }
 ```
-这个主要也是理解属性的具体作用。在CSS2.1中定义了4种布局模式：block layout、inline layout、table layout、positioned layout。这种方法使用的是新的一种布局模型:flex layout,它是为复杂的应用程序和网页设计。flex布局模式主要由父容器和它直接的子元素组成，父容器被成为flex container，其直接子元素被称为flex items。      
-代码中父元素设置display:flex，让它成为了flex container，其直接子元素的排列就使用flex布局模式。在CSS中定义了一些跟物理方向和空间相对应的一些概念，这些概念为未来定义新的布局提供理论的支持，在flex布局模式中对应物理方向和空间的概念如下如下图。
+这个主要也是理解属性的具体作用。在CSS2.1中定义了4种布局模式：block layout、inline layout、table layout、positioned layout。这种方法使用的是新的一种布局模型:flex layout,它是为复杂的应用程序和网页设计。flex布局模式主要由父容器和它直接的子元素组成，父容器被称为flex容器（flex container），其直接子元素被称为flex项（flex items）。      
+代码中父元素设置display:flex，让它成为了flex容器，其直接子元素的排列就使用flex布局模式。在CSS中定义了一些跟物理方向和空间相对应的一些概念，这些概念为未来定义新的布局提供理论的支持，在flex布局模式中对应物理方向和空间的概念如下图。
 
 ![flex directions](../images/css-center-flex.png)
 
-父元素设置justify-content属性表示的是该容器下的flex items在main axis上的对齐方式，其属性值center表示在main axis上居中，其直接子元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/#justify-content-property)。
+- main axis:主轴，flex items的排列是按照主轴进行排列，主轴的方向取决于flex-direction属性，不一定是水平方向。
+- main-start/main-end:flex容器主轴上的开始/结束位置，flex项的排列是从main-start开始，到main-end结束。
+- main-size:在主轴方向flex容器或者flex项的高度或宽度，它可能是元素的宽度或高度属性的值。
+- cross axis:侧轴，跟主轴方向垂直的轴。
+- cross-start/cross-end:flex容器侧轴上的开始/结束位置，flex项的排列是从cross-start开始，到cross-end结束。
+- cross-size:在侧轴方向flex容器或者flex项的高度或宽度，它可能是元素的宽度或高度属性的值。
+
+flex-direction默认值是row，表示主轴为水平方向，起点在左端。父元素设置justify-content属性表示的是该容器下的flex项在主轴上的对齐方式，其属性值center表示在main axis上居中对齐，其直接子元素就水平居中了。更多相关点击[这里](https://www.w3.org/TR/css-flexbox-1/)。
 ## 垂直居中
 #### 方法1：使用定位position和margin负值
 ```css
@@ -146,7 +153,7 @@ display: inline-block;
   align-items: center;
 }
 ```
-这个跟水平居中的方法5类似，换成使用align-items属性，该属性含义是该容器下的flex items在cross axis 上的对齐方式，属性值center作用就是让flex items的外边距盒子在垂直方向居中。
+这个跟水平居中的方法5类似，换成使用align-items属性，该属性含义是该容器下的flex项在侧轴 上的对齐方式，属性值center作用就是让flex items的外边距盒子在侧轴方向居中对齐。
        
 ## 参考文档：
 1. Alignment: the 'text-align' property：https://www.w3.org/TR/CSS2/text.html#propdef-text-align
@@ -157,6 +164,7 @@ display: inline-block;
 6. Bring your page to life with CSS transforms：https://msdn.microsoft.com/en-us/library/jj665791(v=vs.85).aspx
 7. CSS Flexible Box Layout Module Level 1：https://www.w3.org/TR/css-flexbox-1/
 8. Abstract Box Terminology：https://www.w3.org/TR/css-writing-modes-3/#abstract-box
+9. Flex 布局教程：语法篇：http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
 
 
 
