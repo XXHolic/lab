@@ -153,7 +153,9 @@ flex-direction默认值是row，表示主轴为水平方向，起点在左端。
   align-items: center;
 }
 ```
-这个跟水平居中的方法5类似，换成使用align-items属性，该属性含义是该容器下的flex项在侧轴 上的对齐方式，属性值center作用就是让flex items的外边距盒子在侧轴方向居中对齐。
+这个跟水平居中的方法5类似，换成使用align-items属性，该属性含义是该容器下的flex项在侧轴 上的对齐方式，属性值center作用就是让flex items的外边距盒子在侧轴方向居中对齐。     
+
+以上方法示例链接：http://xxholic.github.io/lab/lab-css/css-center.html
        
 ## 参考文档：
 1. Alignment: the 'text-align' property：https://www.w3.org/TR/CSS2/text.html#propdef-text-align
