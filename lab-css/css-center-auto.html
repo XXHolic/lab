@@ -18,7 +18,20 @@
   <div>
     <p>居中效果需要有一个参照物，下面提到的方法前提是，都有一个一定高度和宽度的父元素。</p>
     <p>不定高宽度元素上下左右居中</p>
-    <div></div>
+    <div>
+      <p>方法1：使用定位position和transform</p>
+      <div class="css-center-parent-rec pr">
+        <div class="css-center-auto-rec css-center-auto-center1">
+          内部元素撑起内部元素撑起内部元素撑起内部元素撑起内部元素撑起
+        </div>
+      </div>
+      <p>方法2：使用flex layout</p>
+      <div class="css-center-parent-rec df css-center-auto-flex">
+        <div class="css-center-auto-rec">
+          内部元素撑起内部元素撑
+        </div>
+      </div>
+    </div>
 
   </div>
 </body>

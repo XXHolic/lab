@@ -11,6 +11,7 @@
  * 居中元素父元素样式
  */
 .css-center-parent-rec{
+  margin-bottom: 10px;
   border: 1px solid #333;
   width: 300px;
   height: 186px;
@@ -65,5 +66,20 @@
 }
 .css-center-rec-va {
   vertical-align: middle;
+}
+
+/* css-center-auto.html page style */
+.css-center-auto-rec {
+  border: 1px solid #333;
+}
+.css-center-auto-flex {
+  justify-content: center;
+  align-items: center;
+}
+.css-center-auto-center1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 
