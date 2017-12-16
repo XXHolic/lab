@@ -43,19 +43,23 @@
     </div>
     <div>
       <h3>垂直居中</h3>
-      <p>方法1：使用定位position和margin负值</p>
+      <p>方法1：使用vertical-align</p>
+      <div class="css-center-parent-rec css-center-parent-before">
+        <div class="css-center-rec dib vam"></div>
+      </div>
+      <p>方法2：使用定位position和margin负值</p>
       <div class="css-center-parent-rec pr">
         <div class="css-center-rec css-center-rec-pos-align1"></div>
       </div>
-      <p>方法2：使用定位position和transform</p>
+      <p>方法3：使用定位position和transform</p>
       <div class="css-center-parent-rec pr">
         <div class="css-center-rec css-center-rec-pos-align2"></div>
       </div>
-      <p>方法3：父元素使用flex</p>
+      <p>方法4：父元素使用flex</p>
       <div class="css-center-parent-rec df css-center-parent-flex-align">
         <div class="css-center-rec"></div>
       </div>
-      <p>方法4：使用table的特性，这种可以让居中元素内部的元素居中，元素本身改变了属性，高宽度失效，不符合假定的场景</p>
+      <p>方法5：使用table的特性，这种可以让居中元素内部的元素居中，元素本身改变了属性，高宽度失效，不符合假定的场景</p>
       <div class="css-center-parent-rec css-center-dt">
         <div class="css-center-rec css-center-dc css-center-rec-va">ddd</div>
       </div>

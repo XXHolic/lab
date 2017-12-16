@@ -8,7 +8,7 @@
   <meta name="keywords" content="css,center">
   <meta content="示例的元素采用的是一个近似黄金矩形300*186，子元素100*62">
   <meta name="format-detection" content="telephone=no">
-  <title>css不定宽高元素上下左右居中</title>
+  <title>css不定宽高元素水平垂直居中</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
@@ -17,22 +17,49 @@
 <body class="css-center-body">
   <div>
     <p>居中效果需要有一个参照物，下面提到的方法前提是，都有一个一定高度和宽度的父元素。</p>
-    <p>不定高宽度元素上下左右居中</p>
+    <p>不定高宽度元素水平垂直居中</p>
     <div>
-      <p>方法1：使用定位position和transform</p>
-      <div class="css-center-parent-rec pr">
-        <div class="css-center-auto-rec css-center-auto-center1">
-          内部元素撑起内部元素撑起内部元素撑起内部元素撑起内部元素撑起
+      <p>方法1：使用table布局</p>
+      <div class="css-center-parent-rec dt">
+        <div class="css-center-auto-rec-wrap dtc">
+          <div class="css-center-auto-rec">内部元素内部元素内部元素内部元素内部元素</div>
         </div>
       </div>
-      <p>方法2：使用flex layout</p>
+      <p>方法2：行内块法</p>
+      <div class="css-center-parent-rec css-center-auto-parent-rec tc">
+        <div class="css-center-auto-rec vam fb">内部元素内部元素内部元素内部元素内部元素</div>
+      </div>
+      <p>方法3：使用定位position和transform</p>
+      <div class="css-center-parent-rec pr">
+        <div class="css-center-auto-rec css-center-auto-pos" id="transformCenterEle">
+          内部元素内部元素内部元素内部元素内部元素
+        </div>
+      </div>
+      <p>方法4：使用flex布局</p>
       <div class="css-center-parent-rec df css-center-auto-flex">
         <div class="css-center-auto-rec">
-          内部元素撑起内部元素撑
+          内部元素内部元素内部元素内部元素内部元素
         </div>
       </div>
     </div>
-
   </div>
+
+  <script>
+    function roundCssTransformMatrix(element){
+      var el = document.getElementById(element);
+      var mx = window.getComputedStyle(el, null); //gets the current computed style
+      el.style.transform=""; //resets the redifined matrix to allow recalculation, the original style should be defined in the class not inline.
+      mx = mx.getPropertyValue("-webkit-transform") ||
+        mx.getPropertyValue("-moz-transform") ||
+        mx.getPropertyValue("-ms-transform") ||
+        mx.getPropertyValue("-o-transform") ||
+        mx.getPropertyValue("transform") || false;
+      var values = mx.replace(/ |\(|\)|matrix/g,"").split(",");
+      for(var v in values) {  values[v]=Math.ceil(values[v]);  }
+      el.style.transform = "matrix("+values.join()+")";
+    }
+
+    roundCssTransformMatrix("transformCenterEle");
+  </script>
 </body>
 </html>

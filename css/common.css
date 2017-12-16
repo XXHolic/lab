@@ -17,6 +17,12 @@ html {
 .df {
   display: flex;
 }
+.dt {
+  display: table;
+}
+.dtc {
+  display: table-cell;
+}
 /*
  *  用于控制方向的css
  */
@@ -54,3 +60,9 @@ html {
   position: relative;
 }
 
+/*
+ *  用于对齐
+ */
+.vam {
+  vertical-align: middle;
+}

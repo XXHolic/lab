@@ -41,6 +41,15 @@
 /*
  * 居中元素居中相关样式
  */
+.css-center-parent-before:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.css-center-parent-before {
+  font-size: 0;
+}
 .css-center-rec-pos-justify1 {
   position: absolute;
   left: 50%;
@@ -69,18 +78,35 @@
 }
 
 /* css-center-auto.html page style */
+.css-center-auto-parent-rec {
+  font-size: 0;
+}
+.css-center-auto-parent-rec:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 .css-center-auto-rec {
+  display: inline-block;
   border: 1px solid #333;
 }
 .css-center-auto-flex {
   justify-content: center;
   align-items: center;
 }
-.css-center-auto-center1 {
+.css-center-auto-pos {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   transform-style: preserve-3d;
+}
+.css-center-auto-rec-wrap {
+  vertical-align: middle;
+  text-align: center;
+}
+.fb {
+  font-size: 14px;
 }
 
