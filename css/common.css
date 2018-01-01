@@ -66,3 +66,12 @@ html {
 .vam {
   vertical-align: middle;
 }
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+a:active, a:hover {
+  color: #0366d6;
+  text-decoration: underline;
+}
