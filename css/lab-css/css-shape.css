@@ -6,11 +6,15 @@
 .example-square {
   width: 100px;
   height: 100px;
-  border-top:5px solid #990000;
-  border-left:5px solid #000000;
-  border-bottom:5px solid #ffff00;
-  border-right:5px solid #440000;
-  /*background-color: #333;*/
+  background-color: #333;
+}
+.example-square-border {
+  width: 100px;
+  height: 100px;
+  border-top:10px solid #990000;
+  border-left:20px solid #000000;
+  border-bottom:15px solid #ffff00;
+  border-right:25px solid #440000;
 }
 .example-rectangle {
   width: 200px;
@@ -32,8 +36,35 @@
 .example-triangle-up {
   width: 100px;
   height: 100px;
-  border-left: 50px solid rgba(33,33,33,.2);
-  border-right: 50px solid rgba(33,33,33,.2);
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
   border-bottom: 100px solid #333;
-  background-color: silver;
+}
+.example-triangle-down {
+  width: 100px;
+  height: 100px;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 100px solid #333;
+}
+.example-triangle-right {
+  width: 100px;
+  height: 100px;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-right: 100px solid #333;
+}
+.example-triangle-left {
+  width: 100px;
+  height: 100px;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-left: 100px solid #333;
+}
+.example-trapezoid {
+  width: 200px;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid #333;
 }
