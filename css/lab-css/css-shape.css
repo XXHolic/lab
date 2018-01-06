@@ -80,3 +80,168 @@
   border-right: 50px solid transparent;
   border-bottom: 100px solid #333;
 }
+.example-parallelogram {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background-color: #333;
+}
+.example-parallelogram:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 20px solid transparent;
+  border-top: 100px solid #fff;
+}
+.example-parallelogram:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-left: 20px solid transparent;
+  border-bottom: 100px solid #fff;
+}
+.example-diamond {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background-color: #333;
+}
+.example-diamond:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 100px solid transparent;
+  border-top: 50px solid #fff;
+  border-bottom: 50px solid #fff;
+}
+.example-diamond:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-left: 100px solid transparent;
+  border-top: 50px solid #fff;
+  border-bottom: 50px solid #fff;
+}
+.example-star-five {
+  position: relative;
+  width: 242px;
+  height: 242px;
+}
+/*.example-star-five:before {*/
+  /*position: absolute;*/
+  /*content: '';*/
+  /*top: 0;*/
+  /*left: 0;*/
+  /*border-bottom: 78px solid transparent;*/
+  /*border-top: 78px solid transparent;*/
+  /*border-right: 156px solid #333;*/
+/*}*/
+/*.example-star-five:after {*/
+
+/*}*/
+.example-star-six {
+  position: relative;
+  margin-bottom: 68px;
+  width: 180px;
+  height: 156px;
+  border-bottom: 156px solid #333;
+  border-left: 90px solid transparent;
+  border-right: 90px solid transparent;
+}
+.example-star-six:before {
+  content: "";
+  position: absolute;
+  top: 52px;
+  left: -90px;
+  border-top: 156px solid #333;
+  border-left: 90px solid transparent;
+  border-right: 90px solid transparent;
+}
+
+.example-pentagon {
+  position: relative;
+  width: 162px;
+  height: 154px;
+}
+.example-pentagon:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-bottom: 59px solid #333;
+  border-left: 81px solid transparent;
+  border-right: 81px solid transparent;
+}
+.example-pentagon:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 162px;
+  border-top: 95px solid #333;
+  border-left: 31px solid transparent;
+  border-right: 31px solid transparent;
+}
+
+.example-hexagon {
+  position: relative;
+  width: 200px;
+  height: 174px;
+}
+.example-hexagon:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: 200px;
+  border-bottom: 87px solid #333;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+}
+.example-hexagon:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 200px;
+  border-top: 87px solid #333;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+}
+
+.example-octagon {
+  position: relative;
+  margin: 58px 0;
+  width: 145px;
+  height: 60px;
+  background-color: #333;
+}
+.example-octagon:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -42px;
+  box-sizing: border-box;
+  width: 145px;
+  border-bottom: 42px solid #333;
+  border-left: 42px solid transparent;
+  border-right: 42px solid transparent;
+}
+.example-octagon:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -42px;
+  box-sizing: border-box;
+  width: 145px;
+  border-top: 42px solid #333;
+  border-left: 42px solid transparent;
+  border-right: 42px solid transparent;
+}
