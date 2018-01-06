@@ -52,7 +52,15 @@ html {
 .ma {
   margin: 0 auto;
 }
-
+/*
+ *  用于间隔
+ */
+.mb10 {
+  margin-bottom: 10px;
+}
+.mr10 {
+  margin-right: 10px;
+}
 /*
  *  方便定位的position
  */
@@ -75,3 +83,5 @@ a:active, a:hover {
   color: #0366d6;
   text-decoration: underline;
 }
+
+

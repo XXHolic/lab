@@ -73,20 +73,50 @@
   border-bottom: 50px solid transparent;
   border-right: 100px solid #333;
 }
-.example-trapezoid {
+
+.example-trapezoid1 {
   width: 200px;
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
   border-bottom: 100px solid #333;
 }
-.example-parallelogram {
+.example-trapezoid2 {
   position: relative;
   width: 200px;
   height: 100px;
   background-color: #333;
 }
-.example-parallelogram:before {
+.example-trapezoid2:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 50px solid transparent;
+  border-top: 100px solid #fff;
+}
+.example-trapezoid2:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-left: 50px solid transparent;
+  border-top: 100px solid #fff;
+}
+
+.example-parallelogram1 {
+  width: 200px;
+  height: 100px;
+  transform: skew(-10deg);
+  background-color: #333;
+}
+.example-parallelogram2 {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background-color: #333;
+}
+.example-parallelogram2:before {
   content: '';
   position: absolute;
   top: 0;
@@ -94,7 +124,7 @@
   border-right: 20px solid transparent;
   border-top: 100px solid #fff;
 }
-.example-parallelogram:after {
+.example-parallelogram2:after {
   content: '';
   position: absolute;
   top: 0;
@@ -102,6 +132,7 @@
   border-left: 20px solid transparent;
   border-bottom: 100px solid #fff;
 }
+
 .example-diamond {
   position: relative;
   width: 200px;
