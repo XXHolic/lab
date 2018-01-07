@@ -157,41 +157,6 @@
   border-top: 50px solid #fff;
   border-bottom: 50px solid #fff;
 }
-.example-star-five {
-  position: relative;
-  width: 242px;
-  height: 242px;
-}
-/*.example-star-five:before {*/
-  /*position: absolute;*/
-  /*content: '';*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*border-bottom: 78px solid transparent;*/
-  /*border-top: 78px solid transparent;*/
-  /*border-right: 156px solid #333;*/
-/*}*/
-/*.example-star-five:after {*/
-
-/*}*/
-.example-star-six {
-  position: relative;
-  margin-bottom: 68px;
-  width: 180px;
-  height: 156px;
-  border-bottom: 156px solid #333;
-  border-left: 90px solid transparent;
-  border-right: 90px solid transparent;
-}
-.example-star-six:before {
-  content: "";
-  position: absolute;
-  top: 52px;
-  left: -90px;
-  border-top: 156px solid #333;
-  border-left: 90px solid transparent;
-  border-right: 90px solid transparent;
-}
 
 .example-pentagon {
   position: relative;
@@ -275,4 +240,52 @@
   border-top: 42px solid #333;
   border-left: 42px solid transparent;
   border-right: 42px solid transparent;
+}
+
+.example-star-five {
+  position: relative;
+  width: 424px;
+  height: 154px;
+  border-bottom: 154px solid #333;
+  border-left: 212px solid transparent;
+  border-right: 212px solid transparent;
+  transform: rotate(36deg) scale(.5);
+}
+.example-star-five:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: -212px;
+  border-bottom: 154px solid #333;
+  border-left: 212px solid transparent;
+  border-right: 212px solid transparent;
+  transform: rotate(-72deg);
+}
+.example-star-five:after {
+  position: absolute;
+  content: '';
+  top: -109px;
+  left: -135px;
+  border-bottom: 154px solid #333;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  transform: rotate(-36deg);
+}
+.example-star-six {
+  position: relative;
+  margin-bottom: 68px;
+  width: 180px;
+  height: 156px;
+  border-bottom: 156px solid #333;
+  border-left: 90px solid transparent;
+  border-right: 90px solid transparent;
+}
+.example-star-six:before {
+  content: "";
+  position: absolute;
+  top: 52px;
+  left: -90px;
+  border-top: 156px solid #333;
+  border-left: 90px solid transparent;
+  border-right: 90px solid transparent;
 }
