@@ -83,5 +83,25 @@ a:active, a:hover {
   color: #0366d6;
   text-decoration: underline;
 }
+/*
+ *  顶部标题公用样式
+ */
+.fix-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin: 0;
+  box-shadow: 0 0 5px #333;
+  height: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  white-space: nowrap;
+  background-color: #fff;
+}
+.pt50 {
+  padding-top: 50px;
+}
 
 

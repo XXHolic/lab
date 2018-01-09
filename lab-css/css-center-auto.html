@@ -14,31 +14,29 @@
   <link rel="stylesheet" href="../css/common.css">
   <link rel="stylesheet" href="../css/lab-css/css-center.css">
 </head>
-<body class="css-center-body">
-  <div>
-    <h2>对应文：<a href="https://github.com/XXHolic/blog/issues/4" target="_blank">CSS不定高宽度元素水平垂直居中</a></h2>
-    <div>
-      <p>方法1：使用table布局</p>
-      <div class="css-center-parent-rec dt">
-        <div class="css-center-auto-rec-wrap dtc">
-          <div class="css-center-auto-rec">给我撑起给我撑起给我撑起给我撑起给我撑起</div>
-        </div>
+<body class="css-center pt50 tc">
+  <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/4" target="_blank">CSS不定高宽度元素水平垂直居中</a></h2>
+  <div class="dib tl">    
+    <h3>方法1：使用table布局</h3>
+    <div class="css-center-parent-rec dt">
+      <div class="css-center-auto-rec-wrap dtc">
+        <div class="css-center-auto-rec">给我撑起给我撑起给我撑起给我撑起给我撑起</div>
       </div>
-      <p>方法2：行内块法</p>
-      <div class="css-center-parent-rec css-center-auto-parent-rec tc">
-        <div class="css-center-auto-rec vam fb">给我撑起给我撑起给我撑起给我撑起给我撑起</div>
+    </div>
+    <h3>方法2：行内块法</h3>
+    <div class="css-center-parent-rec css-center-auto-parent-rec tc">
+      <div class="css-center-auto-rec vam fb">给我撑起给我撑起给我撑起给我撑起给我撑起</div>
+    </div>
+    <h3>方法3：使用定位position和transform</h3>
+    <div class="css-center-parent-rec pr">
+      <div class="css-center-auto-rec css-center-auto-pos" id="transformCenterEle">
+        给我撑起给我撑起给我撑起给我撑起给我撑起
       </div>
-      <p>方法3：使用定位position和transform</p>
-      <div class="css-center-parent-rec pr">
-        <div class="css-center-auto-rec css-center-auto-pos" id="transformCenterEle">
-          给我撑起给我撑起给我撑起给我撑起给我撑起
-        </div>
-      </div>
-      <p>方法4：使用flex布局</p>
-      <div class="css-center-parent-rec df css-center-auto-flex">
-        <div class="css-center-auto-rec">
-          给我撑起给我撑起给我撑起给我撑起给我撑起
-        </div>
+    </div>
+    <h3>方法4：使用flex布局</h3>
+    <div class="css-center-parent-rec df css-center-auto-flex">
+      <div class="css-center-auto-rec">
+        给我撑起给我撑起给我撑起给我撑起给我撑起
       </div>
     </div>
   </div>
