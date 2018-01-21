@@ -1,13 +1,32 @@
 .float-parent {
   padding-bottom: 30px;
   width: 300px;
+  color: #fff;
   background-color: #333;
 }
 
 .float-ele {
   width: 150px;
   height: 80px;
+  color: #000;
   background-color: #eee;
+}
+.float-ele1 {
+  float: left;
+  display: none;
+  position: absolute;
+}
+
+.float-ele12 {
+  position: absolute;
+  float: left;
+  display: inline;
+}
+
+.float-ele123 {
+  position: relative;
+  float: left;
+  display: inline;
 }
 
 .close-float-method1 {

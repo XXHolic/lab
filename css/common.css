@@ -8,6 +8,9 @@ html {
 .dn {
   display: none;
 }
+.di {
+  display: inline;
+}
 .dib {
   display: inline-block;
 }
@@ -22,6 +25,9 @@ html {
 }
 .dtc {
   display: table-cell;
+}
+.dit {
+  display: inline-table;
 }
 /*
  *  用于控制方向的css
@@ -66,6 +72,12 @@ html {
  */
 .pr {
   position: relative;
+}
+.pa {
+  position: absolute;
+}
+.pf {
+  position: fixed;
 }
 
 /*
