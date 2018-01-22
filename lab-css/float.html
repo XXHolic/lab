@@ -16,7 +16,7 @@
 <body class="pt50 tc">
   <div class="dib tl">
     <div class="close-float-method1">
-      <h3>浮动的影响展示</h3>
+      <h3>浮动的问题展示</h3>
       <h4>未添加浮动</h4>
       <div class="float-parent">
         <div class="float-ele"></div>
@@ -28,19 +28,20 @@
     </div>
 
     <h3>闭合浮动方法</h3>
-    <h4>方法1：使用overflow</h4>
-    <div class="float-parent close-float-method1">
-      <div class="float-ele fl"></div>
-    </div>
-    <h4>方法2：使用伪元素</h4>
-    <div class="float-parent close-float-method2">
-      <div class="float-ele fl"></div>
-    </div>
-    <h4>方法2：添加额外的标签</h4>
+    <h4>方法1：利用清除浮动属性clear</h4>
     <div class="float-parent">
       <div class="float-ele fl"></div>
       <div class="clear-fix"></div>
     </div>
+    <h4>方法2：利用伪元素和clear</h4>
+    <div class="float-parent close-float-method3">
+      <div class="float-ele fl"></div>
+    </div>
+    <h4>方法3：利用属性overflow</h4>
+    <div class="float-parent close-float-method2">
+      <div class="float-ele fl"></div>
+    </div>
+
   </div>
 </body>
 </html>
