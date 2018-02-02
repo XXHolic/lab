@@ -1,0 +1,20 @@
+.zIndex-container {
+  width: 200px;
+  height: 150px;
+}
+.zIndex-ele {
+  width: 150px;
+  height: 100px;
+  color: #fff;
+  background-color: #333;
+}
+.zIndex1 {
+  z-index: 1;
+  background-color: #8d8b1b;
+}
+
+.zIndex2 {
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
