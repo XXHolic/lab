@@ -284,3 +284,37 @@
   border-left: 90px solid transparent;
   border-right: 90px solid transparent;
 }
+
+.example-heart {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+.example-heart:before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 0;
+  border-radius: 100px 100px 0 0;
+  width: 100px;
+  height: 162px;
+  -webkit-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background-color: #333;
+}
+.example-heart:after {
+  content: '';
+  position: absolute;
+  top: 19px;
+  right: 0;
+  border-radius: 100px 100px 0 0;
+  width: 100px;
+  height: 162px;
+  -webkit-transform-origin: 0% 100%;
+  transform-origin: 0% 100%;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  background-color: #333;
+}
