@@ -316,5 +316,33 @@
   transform-origin: 0 100%;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  background-color: #343;
+  background-color: #22d81b;
+}
+
+.example-infinity {
+  position: relative;
+  width: 260px;
+  height: 100px;
+}
+.example-infinity:before {
+  content: '';
+  position: absolute;
+  border: 20px solid #333;
+  border-radius: 60px 60px 0 60px;
+  width: 80px;
+  height: 80px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.example-infinity:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 20px solid #333;
+  border-radius: 60px 60px 60px 0;
+  width: 80px;
+  height: 80px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
