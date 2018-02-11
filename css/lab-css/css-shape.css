@@ -321,16 +321,19 @@
 
 .example-infinity {
   position: relative;
-  width: 260px;
+  width: 168px;
   height: 100px;
 }
 .example-infinity:before {
   content: '';
   position: absolute;
-  border: 20px solid #333;
-  border-radius: 60px 60px 0 60px;
-  width: 80px;
-  height: 80px;
+  top: 8px;
+  left: 0;
+  box-sizing: border-box;
+  border: 24px solid #333;
+  border-radius: 42px 42px 0 42px;
+  width: 84px;
+  height: 84px;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
@@ -338,11 +341,12 @@
   content: '';
   position: absolute;
   right: 0;
-  top: 0;
-  border: 20px solid #333;
-  border-radius: 60px 60px 60px 0;
-  width: 80px;
-  height: 80px;
+  top: 8px;
+  box-sizing: border-box;
+  border: 24px solid #333;
+  border-radius: 42px 42px 42px 0;
+  width: 84px;
+  height: 84px;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
