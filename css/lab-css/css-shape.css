@@ -240,8 +240,8 @@
 .example-star-five {
   position: relative;
   width: 424px;
-  height: 154px;
-  border-bottom: 154px solid #333;
+  height: 166px;
+  border-bottom: 166px solid #333;
   border-left: 212px solid transparent;
   border-right: 212px solid transparent;
   transform: rotate(36deg) scale(.5);
@@ -251,7 +251,7 @@
   content: '';
   top: 0;
   left: -212px;
-  border-bottom: 154px solid #333;
+  border-bottom: 166px solid #333;
   border-left: 212px solid transparent;
   border-right: 212px solid transparent;
   transform: rotate(-72deg);
@@ -259,8 +259,8 @@
 .example-star-five:after {
   position: absolute;
   content: '';
-  top: -109px;
-  left: -135px;
+  top: -108px;
+  left: -133px;
   border-bottom: 154px solid #333;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
@@ -298,9 +298,7 @@
   border-radius: 50px 50px 0 0;
   width: 100px;
   height: 162px;
-  -webkit-transform-origin: 100% 100%;
   transform-origin: 100% 100%;
-  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   background-color: #333;
 }
@@ -312,9 +310,7 @@
   border-radius: 50px 50px 0 0;
   width: 100px;
   height: 162px;
-  -webkit-transform-origin: 0 100%;
   transform-origin: 0 100%;
-  -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
   background-color: #22d81b;
 }
@@ -334,7 +330,6 @@
   border-radius: 42px 42px 0 42px;
   width: 84px;
   height: 84px;
-  -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .example-infinity:after {
@@ -347,6 +342,5 @@
   border-radius: 42px 42px 42px 0;
   width: 84px;
   height: 84px;
-  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
