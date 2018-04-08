@@ -72,7 +72,7 @@
 
       if (step > 0) {
         guideItems[step-1] = {
-          eleLen = currentEle,
+          element: currentEle,
           intro: currentEle.getAttribute('data-intro'),
           step: step,
           tipClass: currentEle.getAttribute('data-tipClass'),

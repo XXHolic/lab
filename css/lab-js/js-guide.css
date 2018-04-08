@@ -1,0 +1,32 @@
+.js-guide-test {
+  margin: 30px 0 0 50px;
+  border-radius: 3px;
+  width: 300px;
+  height: 50px;
+}
+.guide-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: content-box;
+  border-width: 30px 300px 500px 50px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, .8);
+  width: 300px;
+  height: 50px;
+}
+.guide-tip {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  border-radius: 3px;
+  min-width: 200px;
+  min-height: 100px;
+  background-color: #fff;
+}
+.guide-tip:before {
+  content: '';
+  position: absolute;
+
+
+}
