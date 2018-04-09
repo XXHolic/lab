@@ -31,8 +31,9 @@
   var VERSION = '1.0.0';
 
   function Guide(obj) {
-    this.targetEle = obj;
+    this.targetElement = obj;
     this.allGuideItems = [];
+    this.currentStep = 0;
 
     this.options = {
       prevText: 'Pre',
@@ -41,14 +42,17 @@
       doneText: 'Done',
       tipPositon: 'bottom',
       tipClass: '',
+      // 下面2个参数功能实现先不管
       scrollToElement: true,
       scrollTo: 'element',
     };
   }
 
-  /*
-  * 为一组类似的元素，用同一方法的处理
-  */
+  /**
+   * 为一组类似的元素，用同一方法的处理
+   * @param {Array} arr
+   * @param {Function} fuc
+   */
   function functionForEach(arr, fuc) {
     if (arr) {
       for (var i = 0, len = arr.length; i < len; i++) {
@@ -57,7 +61,24 @@
     }
   }
 
-  // 引导初始化
+  /**
+   * 获取元素的位置
+   * @param {Object} element
+   */
+  function getOffset(element) {
+    var eleAttribute = element.getBoundingClientRect();
+    return {
+      top: eleAttribute.top,
+      width: eleAttribute.width,
+      height: eleAttribute.height,
+      left: eleAttribute.left
+    };
+  }
+
+  /**
+   * 引导初始化
+   * @param {Object} targetEle
+   */
   function guideInit(targetEle) {
     var allGuideSteps = targetEle.querySelector('*[data-intro]'),
         guideItems = [];
@@ -91,9 +112,45 @@
 
   }
 
-  // 显示引导
+  /**
+   * 显示引导
+   * @param {Object} targetEle
+   */
   function showElement(targetEle) {
     console.info("创建元素");
+    var self = this,
+        guideContainer = document.querySelector('.guide-container');
+
+    if (guideContainer !== null) {
+
+    } else {
+      var guideLayer = document.createElement('div');
+      var guideTipLayer = document.createElement('div');
+      var guideTipTextLayer = document.createElement('div');
+      var guideTipBtnLayer = document.createElement('div');
+
+      guideLayer.className = 'guide-container';
+      guideTipLayer.className = 'guide-tip';
+      guideTipTextLayer.className = 'guide-tip-text';
+      guideTipBtnLayer.className = 'guide-tip-btns';
+
+      guideLayer.appendChild(guideTipLayer);
+      guideTipLayer.appendChild(guideTipTextLayer);
+      guideTipLayer.appendChild(guideTipBtnLayer);
+
+      setGuideLayerPosition.call(self,guideLayer);
+      this.targetElement.appendChild(guideLayer);
+
+    }
+
+  }
+
+  // 设置引导层阴影的位置
+  function setGuideLayerPosition(guideLayer) {
+    if (guideLayer) {
+      var elementPosition = getOffset();
+      guideLayer.style.cssText = '';
+    }
   }
 
   var guide = function (targetEle) {
