@@ -3,6 +3,9 @@
   line-height: 60px;
 }
 .filter-ele {
+  color: #6de015;
+  background: url(../../images/css-shape-other-heart.png) no-repeat;
+  background-size: auto 100%;
   -webkit-filter: grayscale(80%);
   filter: grayscale(80%)
 }
