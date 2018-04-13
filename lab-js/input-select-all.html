@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,css,html,input,select,selectAll">
+  <meta content="input全选文本是比较实用的功能">
+  <meta name="format-detection" content="telephone=no">
+  <title>input自动全选文本示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../css/newreset.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <style>
+    .pop-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding-top: 20px;
+      background: rgba(0, 0, 0, .6);
+    }
+  </style>
+</head>
+<body class="pt50 tc" id="body">
+  <div class="dib tl">
+    <button id="showAlert">点击出现弹窗</button>
+  </div>
+  <script>
+    document.getElementById('showAlert').ontouchstart = function(e) {
+      var alertEle = document.createElement('div');
+      var cancelBtnEle = document.createElement('button');
+      var inputEle = document.createElement('input');
+      alertEle.className = 'pop-mask';
+      inputEle.type = 'text';
+      inputEle.className = 'input';
+      inputEle.value = '34233432';
+      alertEle.appendChild(inputEle);
+      document.getElementById('body').appendChild(alertEle);
+
+    };
+  </script>
+</body>
+</html>
