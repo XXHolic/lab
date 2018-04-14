@@ -36,10 +36,18 @@
 </head>
 <body class="pt50 tc" id="body">
   <div class="dib tl">
+    <input type="text" id="inputFocus" value="fdsa">
     <button class="btn-show" id="showAlert">点击出现弹窗</button>
   </div>
   <script>
     document.getElementById('showAlert').ontouchend = function(e) {
+      var inputFocus = document.getElementById('inputFocus');
+      inputFocus.focus();
+      inputFocus.select();
+      inputFocus.selectionStart = 0;
+      inputFocus.selectionEnd = inputFocus.value.length;
+      return false;
+
       var alertEle = document.createElement('div');
       var cancelBtnEle = document.createElement('button');
       var inputEle = document.createElement('input');
