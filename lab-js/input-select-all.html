@@ -21,6 +21,14 @@
       padding-top: 20px;
       background: rgba(0, 0, 0, .6);
     }
+    .btn-cancel {
+      display: block;
+      margin: 0 auto;
+      margin-top: 30px;
+      width: 100px;
+      height: 30px;
+      color: #000;
+    }
   </style>
 </head>
 <body class="pt50 tc" id="body">
@@ -33,11 +41,26 @@
       var cancelBtnEle = document.createElement('button');
       var inputEle = document.createElement('input');
       alertEle.className = 'pop-mask';
+
       inputEle.type = 'text';
       inputEle.className = 'input';
+      inputEle.id = 'inputValue';
       inputEle.value = '34233432';
+
+      cancelBtnEle.type = "button";
+      cancelBtnEle.className = "btn-cancel";
+      cancelBtnEle.id = "hidePop";
+      cancelBtnEle.textContent = "取消";
+
       alertEle.appendChild(inputEle);
+      alertEle.appendChild(cancelBtnEle);
       document.getElementById('body').appendChild(alertEle);
+
+      var inputValue = document.getElementById('inputValue');
+      inputValue.focus();
+      inputValue.select();
+      inputValue.selectionStart = 0;
+      inputValue.selectionEnd = inputValue.value.length;
 
     };
   </script>
