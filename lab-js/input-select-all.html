@@ -47,7 +47,7 @@
     document.getElementById('foucsInput').ontouchend = function(e) {
       var inputFocus = document.getElementById('inputFocus');
       inputFocus.focus();
-      inputFocus.select();
+      // inputFocus.select();
       inputFocus.selectionStart = 0;
       inputFocus.selectionEnd = inputFocus.value.length;
       // 由于事件的机制这里要这么做
@@ -85,7 +85,7 @@
         return false;
       }
       inputValue.focus();
-      inputValue.select();
+      // inputValue.select();
       inputValue.selectionStart = 0;
       inputValue.selectionEnd = inputValue.value.length;
       // 由于事件的机制这里要这么做
