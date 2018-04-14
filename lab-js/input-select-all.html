@@ -21,6 +21,9 @@
       padding-top: 20px;
       background: rgba(0, 0, 0, .6);
     }
+    .btn-show {
+      margin-top: 100px;
+    }
     .btn-cancel {
       display: block;
       margin: 0 auto;
@@ -33,14 +36,15 @@
 </head>
 <body class="pt50 tc" id="body">
   <div class="dib tl">
-    <button id="showAlert">点击出现弹窗</button>
+    <button class="btn-show" id="showAlert">点击出现弹窗</button>
   </div>
   <script>
-    document.getElementById('showAlert').ontouchstart = function(e) {
+    document.getElementById('showAlert').ontouchend = function(e) {
       var alertEle = document.createElement('div');
       var cancelBtnEle = document.createElement('button');
       var inputEle = document.createElement('input');
       alertEle.className = 'pop-mask';
+      alertEle.id = 'popMask';
 
       inputEle.type = 'text';
       inputEle.className = 'input';
@@ -56,12 +60,17 @@
       alertEle.appendChild(cancelBtnEle);
       document.getElementById('body').appendChild(alertEle);
 
+      var popMask = document.getElementById('popMask');
       var inputValue = document.getElementById('inputValue');
+      var hidePop = document.getElementById('hidePop');
+
+      hidePop.ontouchend = function() {
+        document.getElementById('body').removeChild(popMask);
+      }
       inputValue.focus();
       inputValue.select();
       inputValue.selectionStart = 0;
       inputValue.selectionEnd = inputValue.value.length;
-
     };
   </script>
 </body>
