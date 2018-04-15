@@ -14,18 +14,23 @@
   <link rel="stylesheet" href="../css/lab-js/js-guide.css">
 </head>
 <body>
-  <div class="js-guide-test" data-step="1" data-intro="第一步的引导说明">
-    这个第一步要进行引导。
+  <div class="js-guide-test">
+    这个文字区域是要进行引导。
   </div>
-  <div class="js-guide-test" data-step="2" data-intro="第二步的引导说明">
-    这个第二步要进行引导。
-  </div>
-  <div class="js-guide-test" data-step="3" data-intro="第三步的引导说明">
-    这个第三步要进行引导。
+  <div class="guide-container">
+    <div class="guide-tip">
+        <div class="guide-tip-text">这个是提示的文字区域</div>
+        <div class="guide-tip-btns">
+          <button>Skip</button>
+          <button>Back</button>
+          <button>Next</button>
+        </div>
+    </div>
+
   </div>
   <script src="../js/js-guide/guide.js"></script>
   <script>
-    guide().start();
+    // guide().start();
     // var test = function() {
     //   console.info("ddd");
     // };
