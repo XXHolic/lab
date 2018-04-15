@@ -13,20 +13,21 @@
   <link rel="stylesheet" href="../css/common.css">
   <style>
     *{
-      -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
-      -webkit-user-select:none; /*webkit浏览器*/
-      -khtml-user-select:none; /*早期浏览器*/
-      -moz-user-select:none;/*火狐*/
-      -ms-user-select:none; /*IE10*/
+      /*系统默认菜单被禁用*/
+      -webkit-touch-callout:none;  
+      /*webkit浏览器*/
+      -webkit-user-select:none; 
+      /*火狐*/
+      -moz-user-select:none;
       user-select:none;
     }
-    input,textarea {
-      -webkit-user-select:auto; /*webkit浏览器*/
+    /* input,textarea {
+      -webkit-user-select:auto; 
       user-select:auto;
       margin: 0px;
       padding: 0px;
       outline: none;
-    }
+    } */
     .pop-mask {
       position: absolute;
       top: 0;
@@ -58,7 +59,7 @@
     <button class="btn-show mb10" id="foucsInput">点击聚焦已有input</button>
     <button class="btn-show mb100" id="showAlert">点击聚焦动态创建的input</button>
   </div>
-  <div>为了查看页面是否更新：测试</div>
+  <div>为了查看页面是否更新：测试2</div>
   <script>
     document.getElementById('foucsInput').ontouchend = function(e) {
       var inputFocus = document.getElementById('inputFocus');
