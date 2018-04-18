@@ -1,0 +1,18 @@
+.inline-block-example1 {
+  margin: 0;
+  width: 300px;
+  background-color: #340;
+}
+.inline-block-example1 li {
+  display: inline-block;
+  width: 100px;
+  height: 60px;
+  background-color: #eee;
+}
+
+.inline-block-handle1 {
+  font-size: 0;
+}
+.inline-block-handle1 li {
+  font-size: 10px;
+}
