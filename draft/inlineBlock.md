@@ -18,7 +18,7 @@
 ![inline-block-problem.png](../images/inline-block-problem.png)
 
 ## 原因
-先来了解
+先来了解这个属性值的含义，`display`值为`inline-block`会导致一个元素生成偏内联级别特性的块容器，这个元素的内部被格式化为块级盒子，元素本身被格式化为一个单独的内联级别盒子。也可以说使用了这样的元素，既有块级元素的特性，又有内联元素的特性。一些教程里面翻译过来叫行内块元素，这个属性是在CSS2.1中才出现。
 
 ## 相关资料
 - https://www.w3.org/TR/CSS22/visuren.html#x17
