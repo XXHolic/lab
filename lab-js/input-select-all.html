@@ -56,17 +56,22 @@
     <button class="btn-show mb10" id="foucsInput">点击聚焦已有input</button>
     <button class="btn-show mb100" id="showAlert">点击聚焦动态创建的input</button>
   </div>
-  <div>为了查看页面是否更新：测试4</div>
+  <div>为了查看页面是否更新：测试5</div>
   <script>
     document.getElementById('foucsInput').ontouchend = function(e) {
       var inputFocus = document.getElementById('inputFocus');
       inputFocus.focus();
       inputFocus.select();
-//      var valueLen = inputFocus.value.length;
-//      if (inputFocus.selectionStart && valueLen) {
-//        inputFocus.selectionStart = 0;
-//        inputFocus.selectionEnd = valueLen;
-//      }
+      var valueLen = inputFocus.value.length;
+      try {
+        if (inputFocus.selectionStart && valueLen) {
+          inputFocus.selectionStart = 0;
+          inputFocus.selectionEnd = valueLen;
+        }
+      } catch(e) {
+        alert(e)
+      }
+
       // 由于事件的机制这里要这么做
       return false;
     };
