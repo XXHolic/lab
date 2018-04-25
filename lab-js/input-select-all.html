@@ -56,7 +56,7 @@
     <button class="btn-show mb10" id="foucsInput">点击聚焦已有input</button>
     <button class="btn-show mb100" id="showAlert">点击聚焦动态创建的input</button>
   </div>
-  <div>为了查看页面是否更新：测试5</div>
+  <div>为了查看页面是否更新：测试6</div>
   <script>
     document.getElementById('foucsInput').ontouchend = function(e) {
       var inputFocus = document.getElementById('inputFocus');
@@ -65,12 +65,12 @@
       var valueLen = inputFocus.value.length;
 //      alert(inputFocus.hasOwnProperty('selectionStart'));//安卓手机上为true，chrome上微false
       try {
-        if (valueLen) {
+        if (inputFocus.selectionStart && valueLen) {
           inputFocus.selectionStart = 0;
           inputFocus.selectionEnd = valueLen;
         }
       } catch(e) {
-        alert(e)
+        console.info(e)
       }
 
       // 由于事件的机制这里要这么做
@@ -109,11 +109,15 @@
         return false;
       }
       inputValue.focus();
-      // inputValue.select();
+      inputValue.select();
       var valueLen = inputValue.value.length;
-      if (inputValue.selectionStart && valueLen) {
-        inputValue.selectionStart = 0;
-        inputValue.selectionEnd = valueLen;
+      try {
+        if (inputValue.selectionStart && valueLen) {
+          inputValue.selectionStart = 0;
+          inputValue.selectionEnd = valueLen;
+        }
+      } catch(e) {
+        console.info(e)
       }
       // 由于事件的机制这里要这么做
       return false;
