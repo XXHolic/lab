@@ -64,7 +64,7 @@
       inputFocus.select();
       var valueLen = inputFocus.value.length;
       try {
-        if (inputFocus.selectionStart && valueLen) {
+        if (inputFocus.hasOwnProperty('selectionStart') && valueLen) {
           inputFocus.selectionStart = 0;
           inputFocus.selectionEnd = valueLen;
         }
