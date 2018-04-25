@@ -63,11 +63,9 @@
       inputFocus.focus();
       inputFocus.select();
       var valueLen = inputFocus.value.length;
-      alert(inputFocus.hasOwnProperty('selectionStart'));
-      alert(valueLen);
-      alert(inputFocus.hasOwnProperty('selectionStart') && valueLen);
+//      alert(inputFocus.hasOwnProperty('selectionStart'));//安卓手机上为true，chrome上微false
       try {
-        if (inputFocus.hasOwnProperty('selectionStart') && valueLen) {
+        if (valueLen) {
           inputFocus.selectionStart = 0;
           inputFocus.selectionEnd = valueLen;
         }
