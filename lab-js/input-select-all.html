@@ -62,11 +62,11 @@
       var inputFocus = document.getElementById('inputFocus');
       inputFocus.focus();
       inputFocus.select();
-      var valueLen = inputFocus.value.length;
-      if (inputFocus.selectionStart && valueLen) {
-        inputFocus.selectionStart = 0;
-        inputFocus.selectionEnd = valueLen;
-      }
+//      var valueLen = inputFocus.value.length;
+//      if (inputFocus.selectionStart && valueLen) {
+//        inputFocus.selectionStart = 0;
+//        inputFocus.selectionEnd = valueLen;
+//      }
       // 由于事件的机制这里要这么做
       return false;
     };
@@ -82,7 +82,7 @@
       inputEle.type = 'number';
       inputEle.className = 'input';
       inputEle.id = 'inputValue';
-      inputEle.value = 'no-select()';
+      inputEle.value = '1236589';
 
       cancelBtnEle.type = "button";
       cancelBtnEle.className = "btn-cancel";
