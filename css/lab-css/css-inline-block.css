@@ -16,14 +16,14 @@
 }
 
 .clear-fun2 {
-  letter-spacing: -4px;
+  letter-spacing: -5px;
 }
 .clear-fun2 .inline-block-element {
   letter-spacing: 0;
 }
 
 .clear-fun3 {
-  word-spacing: -4px;
+  word-spacing: -5px;
 }
 .clear-fun3 .inline-block-element {
   word-spacing: 0;
@@ -37,5 +37,5 @@
 }
 
 .clear-fun5 .inline-block-element {
-  margin-right: -4px;
+  margin-right: -5px;
 }
