@@ -1,18 +1,41 @@
-.inline-block-example1 {
+.inline-block-parent {
   margin: 0;
   width: 300px;
+  color: #fff;
   background-color: #340;
 }
-.inline-block-example1 li {
+.inline-block-element {
   display: inline-block;
   width: 100px;
   height: 60px;
+  color: #000;
   background-color: #eee;
 }
+.bg999 {
+  background-color: #999;
+}
 
-.inline-block-handle1 {
+.clear-fun2 {
+  letter-spacing: -4px;
+}
+.clear-fun2 .inline-block-element {
+  letter-spacing: 0;
+}
+
+.clear-fun3 {
+  word-spacing: -4px;
+}
+.clear-fun3 .inline-block-element {
+  word-spacing: 0;
+}
+
+.clear-fun4 {
   font-size: 0;
 }
-.inline-block-handle1 li {
-  font-size: 10px;
+.clear-fun4 .inline-block-element {
+  font-size: 14px;
+}
+
+.clear-fun5 .inline-block-element {
+  margin-right: -4px;
 }

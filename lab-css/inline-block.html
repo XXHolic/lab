@@ -17,37 +17,66 @@
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/6" target="_blank">CSS形状初级理解</a></h2> -->
   <div class="dib mb10 tl">
     <h3>用了display:inline-block，没有内容</h3>
-    <ul class="inline-block-example1">
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+    <div class="inline-block-parent">
+      <div class="inline-block-element"></div>
+      <div class="inline-block-element"></div>
+    </div>
     <h3>用了display:inline-block，有内容</h3>
-    <ul class="inline-block-example1">
-      <li>文字1</li>
-      <li>文字2</li>
-      <li>文字3</li>
-    </ul>
-    <h2>下面是处理方法：</h2>
-    <h3>标签连着写不产生换行或空隙</h3>
-    <h3>无文字</h3>
-    <ul class="inline-block-example1"><li></li><li></li><li></li></ul>
-    <h3>有文字</h3>
-    <ul class="inline-block-example1"><li>文字1</li><li>文字2</li><li>文字3</li></ul>
+    <div class="inline-block-parent">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element">远方</div>
+    </div>
 
-    <h3>font-size:0</h3>
-    <h3>无文字</h3>
-    <ul class="inline-block-example1 inline-block-handle1">
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
-    <h3>有文字</h3>
-    <ul class="inline-block-example1 inline-block-handle1">
-      <li>文字1</li>
-      <li>文字2</li>
-      <li>文字3</li>
-    </ul>
+    <h3>用了display:inline-block，没有内容，添加参照文字</h3>
+    <div class="inline-block-parent">
+      <div class="inline-block-element"></div>
+      <div class="inline-block-element"></div>xX文字
+    </div>
+    <h3>用了display:inline-block，有内容，添加参照文字</h3>
+    <div class="inline-block-parent">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element">远方</div>xX文字
+    </div>
+
+    <h2>去掉间隙的方法：</h2>
+    <h3>方法1：避免空格、换行、tab等不必要的字符</h3>
+    <div class="inline-block-parent">
+      <div class="inline-block-element">诗</div><div class="inline-block-element bg999">
+          远方
+      </div>
+      xX参照文字
+    </div>
+
+    <h3>方法2：使用letter-spacing</h3>
+    <div class="inline-block-parent clear-fun2">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element bg999">远方</div>
+      xX参照文字
+    </div>
+
+    <h3>方法3：使用word-spacing</h3>
+    <div class="inline-block-parent clear-fun3">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element bg999">远方</div>
+      xX参照文字
+    </div>
+
+    <h3>方法4：font-size:0</h3>
+    <div class="inline-block-parent clear-fun4">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element bg999">远方</div>
+      xX参照文字
+    </div>
+
+    <h3>方法5：使用margin负值</h3>
+    <div class="inline-block-parent clear-fun5">
+      <div class="inline-block-element">诗</div>
+      <div class="inline-block-element bg999">远方</div>
+      xX参照文字
+    </div>
+
+
+
   </div>
 </body>
 </html>
