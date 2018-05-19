@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" id="html">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -12,18 +12,29 @@
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
   <style>
-  
+    .show-state {
+      width: 300px;
+      text-align: left;
+    }
+    h3 {margin: 0;}
   </style>
 </head>
-<body>
-  <div id="clickBubbing">点击的区域</div>
+<body class="pt50 tc" id="body">
+  <div class="dib" id="clickBubbingParent">
+    <div class="mb10" id="clickBubbing">点击的元素，请点击</div>
 
-  <div>
-    冒泡顺序
-    <div></div>
-    <div></div>
+    <div class="show-state">
+      <div>使用的设备：<span id="deviceShow"></span></div>
+      <h3>冒泡顺序：</h3>
+      <div>元素父元素：<span id="parentState"></span></div>
+      <div>body元素：<span id="bodyState"></span></div>
+      <div>html元素：<span id="htmlState"></span></div>
+      <div>window对象：<span id="windowState"></span></div>
+    </div>
   </div>
 
+
+  <script src="../js/common/util.js"></script>
   <script src="../js/js-click.js"></script>
 </body>
 </html>
