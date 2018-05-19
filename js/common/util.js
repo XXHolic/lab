@@ -20,4 +20,33 @@ Util.getDeviceType = function() {
   } else {
     return "pc";
   }
+};
+
+/**
+ * 用于事件的处理
+ * ie 不支持参数默认赋值，link:https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Default_parameters
+ */
+Util.Event = {
+  addHandler: function(element, type, handler, useCapturing) {
+    if(element.addEventListener) {
+      // IE9、Firefox、Safari、Chrome 和Opera 支持DOM2 级事件处理程序。
+      element.addEventListener(type, handler, useCapturing || false);
+    } else if(element.attachEvent) {
+      // IE<9
+      element.attachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = handler;
+    }
+  },
+  removeHandler: function(element, type, handler,useCapturing) {
+    if(element.removeEventListener) {
+      // IE9、Firefox、Safari、Chrome 和Opera 支持DOM2 级事件处理程序。
+      element.removeEventListener(type, handler, useCapturing || false);
+    } else if(element.detachEvent) {
+      // IEe<9
+      element.detachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = null;
+    }
+  }
 }

@@ -27,24 +27,25 @@ window.onload = function() {
   var htmlState = document.getElementById('htmlState');
   var windowState = document.getElementById('windowState');
 
-  bubblingEle.onclick = function(e) {
+  Util.Event.addHandler(bubblingEle, 'click', function(e) {
     bubblingEle.innerText = '已点击，参考数：'+getRandomNum();
-  }
+  });
 
-  bubblingParentEle.onclick = function(e) {
+  Util.Event.addHandler(bubblingParentEle, 'click', function(e) {
     parentState.innerText = 'bubbling，参考数：'+getRandomNum(8);
-  }
+  });
 
-  bodyEle.onclick = function(e) {
+  Util.Event.addHandler(bodyEle, 'click', function(e) {
     bodyState.innerText = 'bubbling，参考数：'+getRandomNum(8);
-  }
+  });
 
-  HtmlEle.onclick = function(e) {
+  Util.Event.addHandler(HtmlEle, 'click', function(e) {
     htmlState.innerText = 'bubbling，参考数：'+getRandomNum(8);
-  }
+  });
 
-  window.onclick = function(e) {
+  Util.Event.addHandler(window, 'click', function(e) {
     windowState.innerText = 'bubbling，参考数：'+getRandomNum(8);
-  }
+  });
+
 }
 
