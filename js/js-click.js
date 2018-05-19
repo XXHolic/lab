@@ -1,4 +1,10 @@
 window.onload = function() {
+  var bubblingEle = document.getElementById('clickBubbling');
+  var bubblingParentEle = document.getElementById('clickBubblingParent');
+  var bodyEle = document.getElementById('body');
+  var HtmlEle = document.getElementById('html');
+  var showBubblingEle = document.getElementById('showBubblingEle');
+
   function getRandomNum(len) {
     var numString = String(Math.random());
     if (len) {
@@ -15,36 +21,39 @@ window.onload = function() {
     deviceShowEle.innerText = deviceTypeTxt;
   }
 
+  function createShowEle(text) {
+    var divEle = document.createElement('div');
+    divEle.innerText = text;
+    showBubblingEle.appendChild(divEle);
+  }
+
   showDeviceType();
 
-  var bubblingEle = document.getElementById('clickBubbing');
-  var bubblingParentEle = document.getElementById('clickBubbingParent');
-  var bodyEle = document.getElementById('body');
-  var HtmlEle = document.getElementById('html');
-
-  var parentState = document.getElementById('parentState');
-  var bodyState = document.getElementById('bodyState');
-  var htmlState = document.getElementById('htmlState');
-  var windowState = document.getElementById('windowState');
-
   Util.Event.addHandler(bubblingEle, 'click', function(e) {
-    bubblingEle.innerText = '已点击，参考数：'+getRandomNum();
+    bubblingEle.innerText = '已点击，参照数：'+getRandomNum();
+    showBubblingEle.innerHTML='';
+    var showText = '点击元素 bubbling ，参照数：'+getRandomNum(8);
+    createShowEle(showText);
   });
 
   Util.Event.addHandler(bubblingParentEle, 'click', function(e) {
-    parentState.innerText = 'bubbling，参考数：'+getRandomNum(8);
+    var showText = 'bubbling 到父元素 ，参照数：'+getRandomNum(8);
+    createShowEle(showText);
   });
 
   Util.Event.addHandler(bodyEle, 'click', function(e) {
-    bodyState.innerText = 'bubbling，参考数：'+getRandomNum(8);
+    var showText = 'bubbling 到 body 元素，参照数：'+getRandomNum(8);
+    createShowEle(showText);
   });
 
   Util.Event.addHandler(HtmlEle, 'click', function(e) {
-    htmlState.innerText = 'bubbling，参考数：'+getRandomNum(8);
+    var showText = 'bubbling 到 html 元素 ，参照数：'+getRandomNum(8);
+    createShowEle(showText);
   });
 
   Util.Event.addHandler(window, 'click', function(e) {
-    windowState.innerText = 'bubbling，参考数：'+getRandomNum(8);
+    var showText = 'bubbling 到 window，参照数：'+getRandomNum(8);
+    createShowEle(showText);
   });
 
 }

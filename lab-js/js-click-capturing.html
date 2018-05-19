@@ -20,17 +20,18 @@
   </style>
 </head>
 <body class="pt50 tc" id="body">
-  <div class="dib" id="clickBubblingParent">
-    <div class="mb10" id="clickBubbling">点击的元素，点击后显示冒泡顺序</div>
+  <div class="dib" id="clickCapturingParent">
+    <div class="mb10" id="clickCapturing">点击的元素，点击后显示捕获顺序</div>
 
     <div class="show-state">
       <div>使用的设备：<span id="deviceShow"></span></div>
-      <h3>冒泡顺序：</h3>
-      <div id="showBubblingEle"></div>
+      <button id="clearRecord">清除显示记录</button>
+      <h3>捕获顺序：</h3>
+      <div id="showCapturingEle"></div>
     </div>
   </div>
 
   <script src="../js/common/util.js"></script>
-  <script src="../js/js-click.js"></script>
+  <script src="../js/js-click-capturing.js"></script>
 </body>
 </html>
