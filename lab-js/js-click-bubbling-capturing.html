@@ -14,17 +14,25 @@
   <link rel="stylesheet" href="../css/lab-js/js-click.css">
 </head>
 <body class="pt50 tc" id="body">
-  <div class="dib" id="clickBubblingParent">
-    <div class="mb10 click-ele" id="clickBubbling">点击的元素，点击后显示冒泡顺序</div>
+  <div class="dib" id="clickParent">
+    <div class="mb10 click-ele" id="clickEle">点击的元素，点击后显示事件顺序</div>
 
     <div class="show-state">
       <div>使用的设备：<span id="deviceShow"></span></div>
-      <h3>冒泡顺序：</h3>
-      <div id="showBubblingEle"></div>
+      <h3>先冒泡绑定，再捕获绑定，事件顺序：</h3>
+      <div id="showEle"></div>
+    </div>
+
+    <div class="mb10 click-ele" id="clickEle2">点击的元素，点击后显示事件顺序</div>
+
+    <div class="show-state">
+      <div>使用的设备：<span id="deviceShow2"></span></div>
+      <h3>先捕获绑定，再冒泡绑定，事件顺序：</h3>
+      <div id="showEle2"></div>
     </div>
   </div>
 
   <script src="../js/common/util.js"></script>
-  <script src="../js/js-click-bubbling.js"></script>
+  <script src="../js/js-click-event.js"></script>
 </body>
 </html>

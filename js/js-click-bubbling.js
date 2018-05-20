@@ -30,7 +30,7 @@ window.onload = function() {
   showDeviceType();
 
   Util.Event.addHandler(bubblingEle, 'click', function(e) {
-    bubblingEle.innerText = '已点击，参照数：'+getRandomNum();
+    bubblingEle.innerText = '已点击，参照数：'+getRandomNum(8);
     showBubblingEle.innerHTML='';
     var showText = '点击元素 bubbling ，参照数：'+getRandomNum(8);
     createShowEle(showText);

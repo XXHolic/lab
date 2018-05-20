@@ -50,3 +50,13 @@ Util.Event = {
     }
   }
 }
+
+// 获取一个随机数字符串，用来做对比
+Util.getRandomNum = function(len) {
+  var numString = String(Math.random());
+  if (len) {
+    return numString.substring(0,len);
+  } else {
+    return numString;
+  }
+}

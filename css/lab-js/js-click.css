@@ -1,0 +1,11 @@
+.click-ele {
+  display: inline-block;
+  border: 1px solid #340;
+  width: 240px;
+}
+.show-state {
+  margin-bottom: 20px;
+  width: 300px;
+  text-align: left;
+}
+h3 {margin: 0;}

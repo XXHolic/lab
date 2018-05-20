@@ -4,7 +4,6 @@ window.onload = function() {
   var bodyEle = document.getElementById('body');
   var HtmlEle = document.getElementById('html');
   var showCapturingEle = document.getElementById('showCapturingEle');
-  var clearRecordEle = document.getElementById('clearRecord');
 
   function getRandomNum(len) {
     var numString = String(Math.random());
@@ -30,12 +29,8 @@ window.onload = function() {
 
   showDeviceType();
 
-  Util.Event.addHandler(clearRecordEle, 'click', function(e) {
-    showCapturingEle.innerHTML='';
-  });
-
   Util.Event.addHandler(capturingEle, 'click', function(e) {
-    capturingEle.innerText = '已点击，参照数：'+getRandomNum();
+    capturingEle.innerText = '已点击，参照数：'+getRandomNum(8);
     var showText = '点击元素 capturing，参照数：'+getRandomNum(8);
     createShowEle(showText);
   },true);
