@@ -56,5 +56,20 @@ window.onload = function() {
     createShowEle(showEle2,showText);
   });
 
+  // Util.Event.addHandler(clickEle2, 'click', function (e) {
+  //   clickEle2.innerText = '已点击1，capturing参照数：' + getRandomNum(8);
+  //   var showText = '点击元素1 capturing ，参照数：' + getRandomNum(8);
+  //   createShowEle(showEle2, showText);
+  // }, true);
+
+  var testEvent = function () {
+    console.info('999');
+  }
+
+  Util.Event.addHandler(clickEle2, 'click', testEvent);
+  Util.Event.addHandler(clickEle2, 'click', testEvent,true);
+
+
+
 }
 
