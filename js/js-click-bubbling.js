@@ -51,6 +51,11 @@ window.onload = function() {
     createShowEle(showText);
   });
 
+  Util.Event.addHandler(document, 'click', function (e) {
+    var showText = 'bubbling 到 document，参照数：' + getRandomNum(8);
+    createShowEle(showText);
+  });
+
   Util.Event.addHandler(window, 'click', function(e) {
     var showText = 'bubbling 到 window，参照数：'+getRandomNum(8);
     createShowEle(showText);

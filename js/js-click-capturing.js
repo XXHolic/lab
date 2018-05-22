@@ -50,6 +50,11 @@ window.onload = function() {
     createShowEle(showText);
   },true);
 
+  Util.Event.addHandler(document, 'click', function (e) {
+    var showText = 'document capturing ，参照数：' + getRandomNum(8);
+    createShowEle(showText);
+  }, true);
+
   Util.Event.addHandler(window, 'click', function(e) {
     var showText = 'window capturing，参照数：'+getRandomNum(8);
     createShowEle(showText);
