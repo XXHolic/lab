@@ -37,13 +37,15 @@ window.onload = function() {
   });
 
   Util.Event.addHandler(bubblingParentEle, 'click', function(e) {
-    e.stopPropagation();
+
     var showText = 'bubbling 到父元素 ，参照数：'+getRandomNum(8);
     createShowEle(showText);
   });
 
   Util.Event.addHandler(bodyEle, 'click', function(e) {
+    e.stopPropagation();
     var showText = 'bubbling 到 body 元素，参照数：'+getRandomNum(8);
+    bubblingEle.innerText = '已点击，body开始，没有冒泡了';
     createShowEle(showText);
   });
 

@@ -36,13 +36,14 @@ window.onload = function() {
   },true);
 
   Util.Event.addHandler(capturingParentEle, 'click', function(e) {
-    e.stopPropagation();
     var showText = '父元素 capturing，参照数：'+getRandomNum(8);
     createShowEle(showText);
   },true);
 
   Util.Event.addHandler(bodyEle, 'click', function(e) {
+    e.stopPropagation();
     var showText = 'body 元素 capturing，参照数：'+getRandomNum(8);
+    capturingEle.innerText = '已点击，body开始没有捕获了';
     createShowEle(showText);
   },true);
 
