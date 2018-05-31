@@ -60,3 +60,23 @@ Util.getRandomNum = function(len) {
     return numString;
   }
 }
+
+// 阻止默认行为
+Util.stopDefault = function(e) {
+  if (e && e.preventDefault) {
+    e.preventDefault();
+  } else {
+    // ie
+    window.event.returnValue = false;
+  }
+}
+
+// 阻止事件传播
+Util.stopPropagation = function(e) {
+  if (e && e.propagation) {
+    e.propagation();
+  } else {
+    // ie
+    window.event.cancelBubble = true;
+  }
+}
