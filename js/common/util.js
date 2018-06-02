@@ -48,6 +48,25 @@ Util.Event = {
     } else {
       element['on' + type] = null;
     }
+  },
+  getEvent: function(event) {
+    return event ? event : window.event;
+  },
+  // 阻止事件传播
+  stopPropagation: function(event) {
+    if (event.stopPropagation){
+      event.stopPropagation();
+    } else {
+      event.cancelBubble = true;
+    }
+  },
+  // 阻止默认行为
+  stopDefault: function(event) {
+    if (event.preventDefault){
+      event.preventDefault();
+    } else {
+        event.returnValue = false;
+    }
   }
 }
 
@@ -58,25 +77,5 @@ Util.getRandomNum = function(len) {
     return numString.substring(0,len);
   } else {
     return numString;
-  }
-}
-
-// 阻止默认行为
-Util.stopDefault = function(e) {
-  if (e && e.preventDefault) {
-    e.preventDefault();
-  } else {
-    // ie
-    window.event.returnValue = false;
-  }
-}
-
-// 阻止事件传播
-Util.stopPropagation = function(e) {
-  if (e && e.propagation) {
-    e.propagation();
-  } else {
-    // ie
-    window.event.cancelBubble = true;
   }
 }

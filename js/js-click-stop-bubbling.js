@@ -43,8 +43,8 @@ window.onload = function() {
   });
 
   Util.Event.addHandler(bodyEle, 'click', function(e) {
-    Util.stopPropagation(e);
-    console.info('e',e);
+    var event = Util.Event.getEvent(e);
+    Util.Event.stopPropagation(event);
     var showText = 'bubbling 到 body 元素，参照数：'+getRandomNum(8);
     bubblingEle.innerText = '已点击，body开始，没有冒泡了';
     createShowEle(showText);
