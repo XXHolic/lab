@@ -8,7 +8,7 @@
   <meta name="keywords" content="html,meta,click,delay,300">
   <meta content="找到了一篇关于点击延迟的介绍，还是要试试才知道">
   <meta name="format-detection" content="telephone=no">
-  <title>移动端禁止缩放示例</title>
+  <title>Click延迟 300 毫秒示例</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
@@ -22,9 +22,26 @@
     <a href="https://github.com/XXHolic/blog/issues/6" target="_blank">CSS形状初级理解</a>
   </h2> -->
   <div class="dib tl">
-
-
+    <button id="clickBtn">点击按钮</button>
+    <div>touch触发时间：<span id="touchTime"></span></div>
+    <div>click触发时间：<span id="clickTime"></span></div>
   </div>
+  <script>
+    var clickBtnEle = document.getElementById("clickBtn");
+    var touchTimeEle = document.getElementById("touchTime");
+    var clickTimeEle = document.getElementById("clickTime");
+    clickBtnEle.ontouchstart = function() {
+      console.info('touch');
+      var time = Date.now();
+      touchTimeEle.innerText = time;
+    }
+
+    clickBtnEle.onclick = function () {
+      console.info('click');
+      var time = Date.now();
+      clickTimeEle.innerText = time;
+    }
+  </script>
 </body>
 
 </html>
