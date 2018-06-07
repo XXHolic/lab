@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
   <style>
-
+    .wrap-part {width: 220px;margin: 0 auto;}
   </style>
 </head>
 
@@ -22,24 +22,37 @@
     <a href="https://github.com/XXHolic/blog/issues/6" target="_blank">CSS形状初级理解</a>
   </h2> -->
   <div class="dib tl">
-    <button id="clickBtn">点击按钮</button>
-    <div>touch触发时间：<span id="touchTime"></span></div>
-    <div>click触发时间：<span id="clickTime"></span></div>
+    <div class="wrap-part">
+      <button id="clickBtn">点击按钮</button>
+      <div>touch触发时间：
+        <span id="touchTime"></span>
+      </div>
+      <div>click触发时间：
+        <span id="clickTime"></span>
+      </div>
+      <div>相差时间：
+        <span id="extraTime"></span>
+      </div>
+    </div>
+
   </div>
   <script>
     var clickBtnEle = document.getElementById("clickBtn");
     var touchTimeEle = document.getElementById("touchTime");
     var clickTimeEle = document.getElementById("clickTime");
+    var extraTimeEle = document.getElementById("extraTime");
+    var startTime = 0;
     clickBtnEle.ontouchstart = function() {
       console.info('touch');
-      var time = Date.now();
-      touchTimeEle.innerText = time;
+      startTime = Date.now();
+      touchTimeEle.innerText = startTime;
     }
 
     clickBtnEle.onclick = function () {
       console.info('click');
       var time = Date.now();
       clickTimeEle.innerText = time;
+      extraTimeEle.innerText = time - startTime;
     }
   </script>
 </body>
