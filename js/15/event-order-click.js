@@ -9,10 +9,10 @@ var page = {
     var clickButtonEle = document.getElementById('clickButton');
 
     // onmouseenter 不支持冒泡
-    Util.Event.addHandler(clickButtonEle,'mouseenter', function(){
-      _self.appendRecord('onMouseEnter');
-      console.info('触发事件：onMouseEnter');
-    });
+    // Util.Event.addHandler(clickButtonEle,'mouseenter', function(){
+    //   _self.appendRecord('onMouseEnter');
+    //   console.info('触发事件：onMouseEnter');
+    // });
 
     Util.Event.addHandler(clickButtonEle,'click',function(){
       // _self.clickCount = _self.clickCount + 1;
