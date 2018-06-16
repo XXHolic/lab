@@ -8,24 +8,11 @@ var page = {
     var _self = this;
     var clickButtonEle = document.getElementById('clickButton');
 
-    // Util.Event.addHandler(clickButtonEle,'mouseover', function() {
-    //   // _self.count = _self.count + 1;
-    //   _self.appendRecord('onMouseOver');
-    //   console.info('触发事件：onMouseOver');
-    // });
     // onmouseenter 不支持冒泡
-    // Util.Event.addHandler(clickButtonEle,'mouseenter', function(){
-    //   _self.appendRecord('onMouseEnter');
-    //   console.info('触发事件：onMouseEnter');
-    // });
-
-    Util.Event.addHandler(clickButtonEle,'mousemove', function(){
-      _self.mouseMoveCount = _self.mouseMoveCount + 1;
-      _self.appendRecord('onMouseMove');
-      console.info('触发事件：onMouseMove');
+    Util.Event.addHandler(clickButtonEle,'mouseenter', function(){
+      _self.appendRecord('onMouseEnter');
+      console.info('触发事件：onMouseEnter');
     });
-
-
 
     Util.Event.addHandler(clickButtonEle,'click',function(){
       // _self.clickCount = _self.clickCount + 1;
