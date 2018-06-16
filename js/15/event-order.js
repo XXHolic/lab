@@ -64,14 +64,14 @@ var page = {
     Util.Event.addHandler(clickButtonEle,'click',function(){
       // _self.clickCount = _self.clickCount + 1;
       _self.appendRecord('onClick','click');
-      clickButtonEle.innerHTML = '已单击，参照：'+Util.getRandomNum(6);
+      clickButtonEle.innerText = '已单击，参照：'+Util.getRandomNum(6);
       console.info('触发事件：onClick');
     });
 
     Util.Event.addHandler(clickButtonEle,'dblclick',function(){
       // _self.dblClickCount = _self.dblClickCount + 1;
       _self.appendRecord('onDblClick','dblclick');
-      clickButtonEle.innerHTML = '已双击，参照：'+Util.getRandomNum(6);
+      clickButtonEle.innerText = '已双击，参照：'+Util.getRandomNum(6);
       console.info('触发事件：onDblClick');
     });
 
@@ -110,9 +110,9 @@ var page = {
     });
   },
   appendRecord: function(str,type) {
-    var typeMap = {count:'count',click:'clickCount',dblclick:'dblClickCount',mousedown:'clickDownCount',mouseup:'clickUpCount'};
-    var typeStr = type ? type:'count';
-    var _self = this;
+    // var typeMap = {count:'count',click:'clickCount',dblclick:'dblClickCount',mousedown:'clickDownCount',mouseup:'clickUpCount'};
+    // var typeStr = type ? type:'count';
+    // var _self = this;
     var recordEventEle = document.getElementById('recordEvent');
     var tempEle = document.createElement('div');
     // var showText = '第' + _self[typeMap[typeStr]] + '次触发：' + str;
