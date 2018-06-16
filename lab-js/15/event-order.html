@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" id="html" onclick='alert("ddd")'>
+<html lang="en" onclick="alert('html onclick')">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -7,22 +7,48 @@
   <meta name="keywords" content="js,html,fastclick">
   <meta content="测试fastclick的时候，发现事件打断点和不打端点执行有区别，感觉有点怪，就亲自试试">
   <meta name="format-detection" content="telephone=no">
-  <title>事件执行顺序示例</title>
+  <title>事件有效性测试示例</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <style>
-
+    .container-width {
+      max-width: 300px;
+      text-align: left;
+    }
+    h2 {margin: 0;}
+    .ele-base {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #333;
+    }
   </style>
 </head>
 <body class="pt50 tc" id="body">
   <!-- <h2 class="fix-header">对应文：
     <a href="https://github.com/XXHolic/html-css-point/issues/6" target="_blank" title="在IOS下，input文本框获取焦点时，自动全选已有值">在IOS下，input文本框获取焦点时，自动全选已有值</a>
   </h2> -->
-  <div class="dib pt30">
-    <button class="btn-show" id="clickButton">点击按钮</button>
+  <div class="dib pt30 container-width">
+    <h2>说明:</h2>
+    <p class="mb10">
+      head、meta、param、script、style、title 标签在页面上都是不可见的。尝试重写样式无效，绑定事件也是没有意义的。
+    </p>
+    <div class="mb10">
+        <base class="ele-base" href="" onclick="alert('base onclick')">这是 base 元素里面的文本，黑色小方块是重写该标签样式才出现的。这个元素适用页面中于指定的默认地址或者所有链接的目标地址。</base>
+    </div>
+    <div class="mb10">
+      <bdo onclick="alert('bdo onclick')">这是 bdo 元素里面文本，这个标签用来覆盖默认的文本方向</bdo>
+    </div>
+    <br onclick="alert('br onclick')">这是 br 标签里面的文本</br>
+    <br>
+    <div>
+      这是 iframe 元素
+        <iframe src="" width="100px" height="100px" style="background-color: aquamarine" onclick="alert('iframe onclick')">
+            <p>您的浏览器不支持  iframe 标签。</p>
+          </iframe>
+    </div>
+
   </div>
-  <script src="../../js/common/util.js"></script>
-  <script src='../../js/event-order.js'></script>
 </body>
 </html>
