@@ -35,18 +35,18 @@
       head、meta、param、script、style、title 标签在页面上都是不可见的。尝试重写样式无效，绑定事件也是没有意义的。
     </p>
     <div class="mb10">
-        <base class="ele-base" href="" onclick="alert('base onclick')">这是 base 元素里面的文本，黑色小方块是重写该标签样式才出现的。这个元素适用页面中于指定的默认地址或者所有链接的目标地址。</base>
+        <base class="ele-base" href="" onclick="alert('base onclick')">点击黑色方块可测试。这是 base 元素里面的文本，黑色小方块是重写该标签样式才出现的。这个元素适用页面中于指定的默认地址或者所有链接的目标地址。</base>
     </div>
     <div class="mb10">
-      <bdo onclick="alert('bdo onclick')">这是 bdo 元素里面文本，这个标签用来覆盖默认的文本方向</bdo>
+      <bdo onclick="alert('bdo onclick')">点击这里可测试。这是 bdo 元素里面文本，这个标签用来覆盖默认的文本方向</bdo>
     </div>
     <br onclick="alert('br onclick')">这是 br 标签里面的文本</br>
     <br>
     <div>
-      这是 iframe 元素
-        <iframe src="" width="100px" height="100px" style="background-color: aquamarine" onclick="alert('iframe onclick')">
-            <p>您的浏览器不支持  iframe 标签。</p>
-          </iframe>
+      这是 iframe 元素，点击方块可测试。
+        <iframe src="" width="50px" height="50px" style="background-color: aquamarine" onclick="alert('iframe onclick')">
+          <p>您的浏览器不支持  iframe 标签。</p>
+        </iframe>
     </div>
 
   </div>
