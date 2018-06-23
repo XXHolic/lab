@@ -11,15 +11,21 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
+  <style>
+    body{
+      touch-action: none;
+    }
+    .container-width {
+      width: 300px;
+    }
+  </style>
 </head>
 <body class="pt50 tc">
   <div class="dib">
     <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/14" target="_blank">JavaScript 事件</a></h2> -->
-    <div class="dib tl" id="container">
-      <button id="testBtn">点击按钮</button>
+    <div class="dib tl container-width" id="container">
+      <p>这个页面的body元素设置了<br />touch-action:none<br />看看是不是禁止了缩放</p>
     </div>
   </div>
-  <script src="../js/common/util.js"></script>
-  <script src='../js/pointer-events.js'></script>
 </body>
 </html>

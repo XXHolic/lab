@@ -5,7 +5,21 @@ window.onload = function() {
     return false;
   }
   var btnELe = document.getElementById('testBtn');
-  Util.Event.addHandler(btnELe,'pointerdown',function(){
-    console.info('PointerDown');
+  var clickTypeEle = document.getElementById('clickType');
+  // var tipTextEle = document.getElementById('tipText');
+
+  Util.Event.addHandler(btnELe,'pointerdown',function(event){
+    clickTypeEle.innerText = event.pointerType;
+    console.info('pointerType',event.pointerType);
   });
+
+  // Util.Event.addHandler(clickTypeEle,'click',function(event){
+
+  //   console.info('event',event);
+  // });
+
+  // Util.Event.addHandler(tipTextEle,'touchstart',function(event){
+
+  //   console.info('event',event);
+  // });
 };
