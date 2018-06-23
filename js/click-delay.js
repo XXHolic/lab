@@ -4,10 +4,12 @@ window.onload = function() {
 
   Util.Event.addHandler(colorBoxTouchEle,'touchstart',function(){
     colorBoxTouchEle.style.backgroundColor = "#340";
+    alert('touch');
   });
 
   Util.Event.addHandler(colorBoxClickEle,'click',function(){
     colorBoxClickEle.style.backgroundColor = "#340";
+    alert('click');
   });
 
 }
