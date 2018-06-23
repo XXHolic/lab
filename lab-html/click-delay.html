@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="html,meta,click,delay,300">
   <meta content="找到了一篇关于点击延迟的介绍，还是要试试才知道">
@@ -13,7 +12,11 @@
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
   <style>
-    .wrap-part {width: 220px;margin: 0 auto;}
+    .color-box {
+      border: 1px solid #333;
+      width: 200px;
+      height: 200px;
+    }
   </style>
 </head>
 
@@ -22,39 +25,13 @@
     <a href="https://github.com/XXHolic/blog/issues/6" target="_blank">CSS形状初级理解</a>
   </h2> -->
   <div class="dib tl">
-    <div class="wrap-part">
-      <button id="clickBtn">点击按钮</button>
-      <div>touch触发时间：
-        <span id="touchTime"></span>
-      </div>
-      <div>click触发时间：
-        <span id="clickTime"></span>
-      </div>
-      <div>相差时间：
-        <span id="extraTime"></span>
-      </div>
-    </div>
-
+    <div>绑定的事件是touchstart，点击下面的方块，观察变化</div>
+    <div class="color-box" id="colorBoxTouch"></div>
+    <div>绑定的事件是click，点击下面的方块，观察变化</div>
+    <div class="color-box" id="colorBoxClick"></div>
   </div>
-  <script>
-    var clickBtnEle = document.getElementById("clickBtn");
-    var touchTimeEle = document.getElementById("touchTime");
-    var clickTimeEle = document.getElementById("clickTime");
-    var extraTimeEle = document.getElementById("extraTime");
-    var startTime = 0;
-    clickBtnEle.ontouchstart = function() {
-      console.info('touch');
-      startTime = Date.now();
-      touchTimeEle.innerText = startTime;
-    }
-
-    clickBtnEle.onclick = function () {
-      console.info('click');
-      var time = Date.now();
-      clickTimeEle.innerText = time;
-      extraTimeEle.innerText = time - startTime;
-    }
-  </script>
+  <script src="../js/common/util.js"></script>
+  <script src='../js/pointer-events.js'></script>
 </body>
 
 </html>

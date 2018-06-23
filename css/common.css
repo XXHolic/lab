@@ -120,5 +120,8 @@ a:active, a:hover {
 .pt30 {
   padding-top: 30px;
 }
+.container-width {
+  width: 300px;
+}
 
 
