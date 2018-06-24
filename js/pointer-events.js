@@ -1,7 +1,7 @@
 window.onload = function() {
   if (!window.PointerEvent) {
     var container = document.getElementById('container');
-    container.innerHTML="此设备不支持 PointerEvent";
+    container.innerHTML="此应用不支持 PointerEvent";
     return false;
   }
   var btnELe = document.getElementById('testBtn');
