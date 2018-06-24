@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="js,css,guide,plug,free">
   <meta content="touch-action这个还是有些毛病的">
@@ -12,20 +11,25 @@
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
   <style>
-    body{
+    .ta {
       touch-action: none;
     }
-    .container-width {
-      width: 300px;
+    .click-box {
+      border: 1px solid #333;
+      width: 200px;
+      height: 200px;
     }
   </style>
 </head>
 <body class="pt50 tc">
   <div class="dib">
     <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/14" target="_blank">JavaScript 事件</a></h2> -->
-    <div class="dib tl container-width" id="container">
-      <p>这个页面的body元素设置了<br />touch-action:none<br />看看是不是禁止了缩放</p>
-    </div>
+    <div>这个是没加 touch-action:none，点击看看效果</div>
+    <div class="click-box" id="clickBox1"></div>
+    <div>这个是加了 touch-action:none，点击看看效果</div>
+    <div class="click-box ta" id="clickBox2"></div>
   </div>
+  <script src="../js/common/util.js"></script>
+  <script src='../js/touch-action.js'></script>
 </body>
 </html>
