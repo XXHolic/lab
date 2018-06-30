@@ -7,7 +7,6 @@
   "author": "thy",
   "license": "MIT",
   "devDependencies": {
-    "commitizen": "^2.10.1",
     "cz-conventional-changelog": "^2.1.0",
     "webpack": "^4.14.0"
   },
@@ -15,5 +14,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "commitizen": "^2.10.1"
   }
 }
