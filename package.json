@@ -7,13 +7,19 @@
   "author": "thy",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
     "commitizen": "^2.10.1",
     "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
     "webpack": "^4.14.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "scripts": {
+    "commitmsg": "commitlint -E GIT_PARAMS"
   }
 }
