@@ -23,10 +23,6 @@
     }
     .box-shadow-parent {
       overflow-y: auto;
-      /* position: absolute;
-      left: 0;
-      top: 0;
-      transform-origin: 0px -4px 0px; */
     }
   </style>
 </head>
@@ -37,14 +33,11 @@
   </h2> -->
   <div class="dib tl">
     <h3>box-shadow正常效果展示</h3>
-    <div class="show-box box-shadow">内容填充，来啊来啊来啊来啊来啊来啊来啊来啊来啊来啊来啊来啊来</div>
+    <div class="show-box box-shadow">显示区域，这个区域设置了 box-shadow 的属性</div>
     <h3>box-shadow非正常效果展示</h3>
-    <div class="show-box">
-      <div class="box-shadow-parent">
-        <div class="box-shadow dib">
-           内容填充，来啊来啊来啊来啊来啊来啊来
-        </div>
-        <div class="dib">啊来啊来啊来啊来啊来啊来</div>
+    <div class="show-box box-shadow-parent">
+      <div class="box-shadow dib">
+          显示区域，这个区域设置了 box-shadow 的属性
       </div>
     </div>
   </div>
