@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="css,box-shadow,overflow,overflow-y">
+  <meta content="box-shadow的问题头一次发现">
+  <meta name="format-detection" content="telephone=no">
+  <title>box-shadow 问题示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../css/newreset.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <style>
+    .show-box {
+      width: 150px;
+      height: 150px;
+    }
+    .box-shadow {
+      box-shadow: 0 1px 6px #900;
+    }
+    .box-shadow-parent {
+      width: 300px;
+    }
+    .bg1 {
+      background-color: #333;
+    }
+    .bg2 {
+      background-color: #340;
+    }
+    .w300 {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：
+    <a href="https://github.com/XXHolic/blog/issues/9" target="_blank">CSS浮动float相关初解</a>
+  </h2> -->
+  <div class="dib tl">
+    <p class="w300">下面的一块区域宽度是 300px 里面有2个元素，宽度都是150px，分别向两侧浮动，一个盒子有阴影，一个没有阴影。</p>
+    <p class="w300 mb10">如果阴影占据空间的话，有一个盒子就会被挤下去。</p>
+    <div class="box-shadow-parent">
+      <div class="show-box fl box-shadow"></div><div class="show-box fr bg2"></div>
+    </div>
+  </div>
+</body>
+
+</html>
