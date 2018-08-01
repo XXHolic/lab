@@ -12,7 +12,26 @@
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <style>
-
+    .test-box {
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+    .penetrate-shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      padding-top: 60px;
+      text-align: left;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .click-parent {
+      height: 60px;
+      background-color: rgba(0,0,0,.1);
+    }
   </style>
 </head>
 <body class="pt50 tc" id="body">
@@ -20,7 +39,18 @@
     <a href="https://github.com/XXHolic/html-css-point/issues/6" target="_blank" title="在IOS下，input文本框获取焦点时，自动全选已有值">在IOS下，input文本框获取焦点时，自动全选已有值</a>
   </h2> -->
   <div class="dib pt30">
-    <button class="btn-show" id="clickButton">点击按钮</button>
+    <div class="test-box mb10">
+      <button class="btn-click" id="clickButton1">点击按钮</button>
+      <div class="penetrate-shadow" id="shadowEle">这个是阴影，跟点击按钮时同一层级，在按钮之上</div>
+    </div>
+    <div class="test-box">
+      <div class="click-parent">
+        <button class="btn-click" id="clickButton2">点击按钮</button>
+        <p>按钮的父级绑定了事件</p>
+      </div>
+    </div>
+    <div class="click-log"></div>
+
   </div>
   <script src="../../js/common/util.js"></script>
   <script src='../../js/18/click-penetrate.js'></script>
