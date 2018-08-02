@@ -11,7 +11,7 @@ function pageInit() {
 
   var shadowEle = document.getElementById('shadowEle');
   Util.Event.addHandler(shadowEle, 'click', function () {
-
+    shadowEle.style.display="none";
   });
 }
 
