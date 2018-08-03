@@ -10,7 +10,7 @@ function pageInit() {
   });
 
   var shadowEle = document.getElementById('shadowEle');
-  Util.Event.addHandler(shadowEle, 'click', function () {
+  Util.Event.addHandler(shadowEle, 'touchstart', function () {
     shadowEle.style.display="none";
   });
 }
