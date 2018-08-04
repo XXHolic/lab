@@ -29,10 +29,6 @@
       text-align: left;
       background-color: rgba(0, 0, 0, 0.3);
     }
-    .click-parent {
-      height: 60px;
-      background-color: rgba(0,0,0,.1);
-    }
   </style>
 </head>
 <body class="pt50 tc" id="body">
@@ -41,16 +37,13 @@
   </h2> -->
   <div class="dib pt30">
     <div class="test-box mb10">
-      <button class="btn-click" id="clickButton1">点击按钮</button>
-      <div class="penetrate-shadow" id="shadowEle">这个是阴影，跟点击按钮时同一层级，在按钮之上</div>
+      <button class="btn-click" id="clickButton1">click事件点击</button>
+      <div class="penetrate-shadow" id="shadowEle">绑定touch事件，这个是阴影，跟点击按钮时同一层级，在按钮之上</div>
     </div>
     <div class="test-box">
-      <div class="click-parent">
-        <button class="btn-click" id="clickButton2">点击按钮</button>
-        <p>按钮的父级绑定了事件</p>
-      </div>
+      <button class="btn-click" id="clickButton2">click事件点击</button>
+      <div class="penetrate-shadow" id="shadowEle2">绑定click事件，这个是阴影，跟点击按钮时同一层级，在按钮之上</div>
     </div>
-    <div class="click-log"></div>
 
   </div>
   <script src="../../js/common/util.js"></script>
