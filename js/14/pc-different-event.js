@@ -31,30 +31,15 @@ window.onload = function() {
     createShowEle(showEle,showText);
   },true);
 
-  Util.Event.addHandler(clickEle, 'touchstart', function(e) {
-    var showText = 'bubbling touchstart ，参照数：'+getRandomNum(8);
+  Util.Event.addHandler(clickEle, 'mouseup', function(e) {
+    var showText = 'bubbling mouseup ，参照数：'+getRandomNum(8);
     createShowEle(showEle,showText);
   });
 
-  Util.Event.addHandler(clickEle, 'touchstart', function(e) {
-    var showText = 'capturing touchstart ，参照数：'+getRandomNum(8);
+  Util.Event.addHandler(clickEle, 'mouseup', function(e) {
+    var showText = 'capturing mouseup ，参照数：'+getRandomNum(8);
     createShowEle(showEle,showText);
   },true);
-
-  Util.Event.addHandler(clickEle, 'touchmove', function(e) {
-    var showText = 'bubbling touchmove ，参照数：'+getRandomNum(8);
-    createShowEle(showEle,showText);
-  });
-
-  Util.Event.addHandler(clickEle, 'touchend', function(e) {
-    var showText = 'bubbling touchend ，参照数：'+getRandomNum(8);
-    createShowEle(showEle,showText);
-  });
-
-  Util.Event.addHandler(clickEle, 'touchcancel', function(e) {
-    var showText = 'bubbling touchcancel ，参照数：'+getRandomNum(8);
-    createShowEle(showEle,showText);
-  });
 
 }
 

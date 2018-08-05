@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" id="html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,click,event">
+  <meta content="不同类型事件，不同阶段绑定的触发顺序也是头一次关注">
+  <meta name="format-detection" content="telephone=no">
+  <title>PC端不同类型事件，不同阶段绑定测试示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/lab-js/js-click.css">
+</head>
+<body class="pt50 tc" id="body">
+    <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/14" target="_blank">JavaScript 事件</a></h2>
+  <div class="dib pt30" id="clickParent">
+    <div class="mb10 click-ele" id="clickEle">点击的元素，点击后显示事件顺序</div>
+
+    <div class="show-state">
+      <div>使用的设备：<span id="deviceShow"></span></div>
+      <h3>事件顺序：</h3>
+      <div id="showEle"></div>
+    </div>
+  </div>
+
+  <script src="../../js/common/util.js"></script>
+  <script src="../../js/14/pc-different-event.js"></script>
+</body>
+</html>
