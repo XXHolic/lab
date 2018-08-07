@@ -31,6 +31,7 @@
 		 *
 		 * @type boolean
 		 */
+		// 点击是否被追踪
 		this.trackingClick = false;
 
 
@@ -39,6 +40,7 @@
 		 *
 		 * @type number
 		 */
+		// 追踪开始时的时间戳
 		this.trackingClickStart = 0;
 
 
@@ -47,6 +49,7 @@
 		 *
 		 * @type EventTarget
 		 */
+		// 被追踪的点击元素
 		this.targetElement = null;
 
 
@@ -55,6 +58,7 @@
 		 *
 		 * @type number
 		 */
+		// 触摸时的X坐标
 		this.touchStartX = 0;
 
 
@@ -63,6 +67,7 @@
 		 *
 		 * @type number
 		 */
+		// 触摸时的Y坐标
 		this.touchStartY = 0;
 
 
@@ -87,6 +92,7 @@
 		 *
 		 * @type Element
 		 */
+		// 快速点击层
 		this.layer = layer;
 
 		/**
@@ -94,6 +100,7 @@
 		 *
 		 * @type number
 		 */
+		// 触摸开始和接触的最小时长
 		this.tapDelay = options.tapDelay || 200;
 
 		/**
@@ -101,6 +108,7 @@
 		 *
 		 * @type number
 		 */
+		// 触摸开始和接触的最大时长
 		this.tapTimeout = options.tapTimeout || 700;
 
 		if (FastClick.notNeeded(layer)) {
@@ -225,6 +233,7 @@
 	 * @param {EventTarget|Element} target Target DOM element
 	 * @returns {boolean} Returns true if the element needs a native click
 	 */
+	// 判断是否需要元素的点击，返回true表示需要
 	FastClick.prototype.needsClick = function(target) {
 		switch (target.nodeName.toLowerCase()) {
 
@@ -261,6 +270,7 @@
 	 * @param {EventTarget|Element} target Target DOM element
 	 * @returns {boolean} Returns true if the element requires a call to focus to simulate native click.
 	 */
+	// 对于需要获取焦点的元素，模拟一个原生的click
 	FastClick.prototype.needsFocus = function(target) {
 		switch (target.nodeName.toLowerCase()) {
 		case 'textarea':
@@ -373,6 +383,7 @@
 	 * @param {EventTarget} targetElement
 	 * @returns {Element|EventTarget}
 	 */
+	// 一些老的浏览器，点击的元素可能是纯文本节点
 	FastClick.prototype.getTargetElementFromEventTarget = function(eventTarget) {
 
 		// On some older browsers (notably Safari on iOS 4.1 - see issue #56) the event target may be a text node.
@@ -395,6 +406,7 @@
 		var targetElement, touch, selection;
 
 		// Ignore multiple touches, otherwise pinch-to-zoom is prevented if both fingers are on the FastClick element (issue #111).
+		// 如果是多点触摸，就不执行
 		if (event.targetTouches.length > 1) {
 			return true;
 		}
@@ -402,6 +414,7 @@
 		targetElement = this.getTargetElementFromEventTarget(event.target);
 		touch = event.targetTouches[0];
 
+		// 对IOS兼容处理
 		if (deviceIsIOS) {
 
 			// Only trusted events will deselect text on iOS (issue #49)
@@ -436,19 +449,21 @@
 				this.updateScrollParent(targetElement);
 			}
 		}
-
+		// 追踪标志变为true
 		this.trackingClick = true;
+		// 追踪点击开始时间戳
 		this.trackingClickStart = event.timeStamp;
+		// 点击的元素
 		this.targetElement = targetElement;
-
+		// 点击区域的坐标
 		this.touchStartX = touch.pageX;
 		this.touchStartY = touch.pageY;
 
 		// Prevent phantom clicks on fast double-tap (issue #36)
+		// 防止快速双击
 		if ((event.timeStamp - this.lastClickTime) < this.tapDelay) {
 			event.preventDefault();
 		}
-		console.info('FastClick.prototype.onTouchStart end');
 		return true;
 	};
 
@@ -524,6 +539,7 @@
 	 */
 	FastClick.prototype.onTouchEnd = function(event) {
 		console.info('FastClick.prototype.onTouchEnd');
+		// question1: 为什么要这样赋值？
 		var forElement, trackingClickStart, targetTagName, scrollParent, touch, targetElement = this.targetElement;
 
 		if (!this.trackingClick) {
@@ -542,17 +558,20 @@
 
 		// Reset to prevent wrong click cancel on input (issue #156).
 		this.cancelNextClick = false;
-
+		// 最后点击时间戳，第一次赋值是在这里
 		this.lastClickTime = event.timeStamp;
-
+		// 只在touchend里面的临时变量
 		trackingClickStart = this.trackingClickStart;
+		// 追踪点击标志重置为false
 		this.trackingClick = false;
+		// 追踪开始点击时间戳重置
 		this.trackingClickStart = 0;
 
 		// On some iOS devices, the targetElement supplied with the event is invalid if the layer
 		// is performing a transition or scroll, and has to be re-detected manually. Note that
 		// for this to function correctly, it must be called *after* the event target is checked!
 		// See issue #57; also filed as rdar://13048589 .
+		// 解决bug
 		if (deviceIsIOSWithBadTarget) {
 			touch = event.changedTouches[0];
 
@@ -595,9 +614,9 @@
 		}
 
 		if (deviceIsIOS && !deviceIsIOS4) {
-
 			// Don't send a synthetic click event if the target element is contained within a parent layer that was scrolled
 			// and this tap is being used to stop the scrolling (usually initiated by a fling - issue #42).
+			// 如果目前元素的父元素是滚动的，且这个点击时用来停止滚动，不要使用合成点击事件
 			scrollParent = targetElement.fastClickScrollParent;
 			if (scrollParent && scrollParent.fastClickLastScrollTop !== scrollParent.scrollTop) {
 				return true;
@@ -621,6 +640,7 @@
 	 * @returns {void}
 	 */
 	FastClick.prototype.onTouchCancel = function() {
+		console.info('FastClick.prototype.onTouchCancel');
 		this.trackingClick = false;
 		this.targetElement = null;
 	};
