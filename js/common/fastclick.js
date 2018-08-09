@@ -314,13 +314,13 @@
 		touch = event.changedTouches[0];
 
 		// Synthesise a click event, with an extra attribute so it can be tracked
-		// 创建（合成）了一个自定义事件，这个方法要过时了
+		// 创建（合成或模拟）了一个点击事件，这个方法要过时了
 		clickEvent = document.createEvent('MouseEvents');
 		// 从第一个参数开始含义分别是：事件类型，是否可冒泡，是否可阻止事件默认行为，事件的AbstractView对象引用，事件的鼠标点击数量，事件的屏幕的x坐标，事件的屏幕的y坐标，事件的客户端x坐标，事件的客户端y坐标，事件发生时 control 键是否被按下，事件发生时 alt 键是否被按下，事件发生时 shift 键是否被按下，事件发生时 meta 键是否被按下，鼠标按键值，事件的相关对象（只在某些事件类型有用，例如 mouseover 和 mouseout，其它的传null）
 		clickEvent.initMouseEvent(this.determineEventType(targetElement), true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
 		// 这个是自定义属性
 		clickEvent.forwardedTouchEvent = true;
-		// 触发自定义（合成）的事件
+		// 触发自定义（合成）的事件，绑定的事件处理程序就会根据设置的属性触发，addEventListener是添加事件处理程序，可以添加多个，跟自定义的不冲突
 		targetElement.dispatchEvent(clickEvent);
 	};
 
