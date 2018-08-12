@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="js,click,event">
-  <meta content="js事件处理程序，发展到现在，变化还算好吧！">
+  <meta content="逻辑是个神奇的事情，不是亲自写的，很难预料">
   <meta name="format-detection" content="telephone=no">
-  <title>DOM2 级事件处理程序删除示例</title>
+  <title>三种方式注册事件处理程序</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -17,37 +17,26 @@
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/14" target="_blank">JavaScript 事件</a></h2> -->
   <div class="dib pt30">
-    <h3>DOM2 级事件处理程序删除示例</h3>
-    <button id="click">click</button>
-    <p class="container-width tl">按钮对click、dblclick事件先注册后删除处理程序。</p>
+    <h3>三种方式注册事件处理程序示例</h3>
+    <button id="click" onclick="alert('html way')">click</button>
     <div id="result"></div>
   </div>
   <script src="../../js/common/util.js"></script>
   <script>
-
-    function doubleClick() {
-      var text = 'double clicked';
-      console.info(text);
-      Util.appendText(result,text);
-    }
-
     var btn = document.getElementById('click');
     var result = document.getElementById('result');
 
+    btn.onclick = function () {
+      var text = 'DOM0 way';
+      console.info(text);
+      Util.appendText(result, text);
+    };
+
     btn.addEventListener("click", function () {
-      var text = 'clicked';
+      var text = 'DOM2 way';
       console.info(text);
-      Util.appendText(result,text);
+      Util.appendText(result, text);
     }, false);
-    btn.removeEventListener("click", function () {
-      var text = 'clicked';
-      console.info(text);
-      Util.appendText(result,text);
-    }, false);
-
-    btn.addEventListener("dblclick", doubleClick, false);
-    btn.removeEventListener("dblclick", doubleClick);
-
 
   </script>
 </body>
