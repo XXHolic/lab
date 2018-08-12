@@ -79,3 +79,10 @@ Util.getRandomNum = function(len) {
     return numString;
   }
 }
+
+// 插入文本
+Util.appendText = function(ele, text) {
+  var newELe = document.createElement('p');
+  newELe.innerText = (text || '')+Util.getRandomNum(5);
+  ele && ele.appendChild(newELe);
+}

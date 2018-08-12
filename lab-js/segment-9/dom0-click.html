@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" id="html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,click,event">
+  <meta content="js事件处理程序，发展到现在，变化还算好吧！">
+  <meta name="format-detection" content="telephone=no">
+  <title>DOM0 级事件处理程序</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/14" target="_blank">JavaScript 事件</a></h2> -->
+  <div class="dib pt30">
+    <h3>DOM0 级事件处理程序注册多个示例</h3>
+    <button id="click">click</button>
+    <p class="container-width tl">这个按钮用 DOM0 级事件处理程序 的方式，注册了2个事件处理程序，但生效的只有一个。</p>
+  </div>
+  <script>
+    var btn = document.getElementById('click');
+    btn.onclick = function() {
+      alert('First function');
+    }
+    btn.onclick = function() {
+      alert('Second function');
+    }
+  </script>
+</body>
+</html>
