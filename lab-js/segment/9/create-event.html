@@ -10,17 +10,21 @@
   <meta name="format-detection" content="telephone=no">
   <title>模拟事件</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
-  <link rel="stylesheet" href="../../../css/newreset.css">
   <link rel="stylesheet" href="../../../css/common.css">
 </head>
 
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/18" target="_blank">事件处理程序</a></h2> -->
   <div class="dib pt30">
-    <button id="clickOld">old way</button>
-    <button id="clickNew">new way</button>
-    <div id="result1"></div>
-    <div id="result2"></div>
+    <div class="mb10">
+      <input type="checkbox" id="checkbox" /><label for="checkbox">Checkbox</label>
+    </div>
+    <div>
+      <button class="mb10" id="clickOld">old way send click</button>
+    </div>
+    <div>
+      <button id="clickNew">new way send click</button>
+    </div>
   </div>
   <script src="../../../js/common/util.js"></script>
   <script src="../../../js/segment/9.create-event.js"></script>
