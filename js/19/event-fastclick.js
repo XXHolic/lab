@@ -6,6 +6,7 @@ function pageInit() {
       var clickEle = document.getElementById('clickButton');
       Util.Event.addHandler(clickEle,'click',function() {
         clickEle.innerText = '已点击，参照：'+Util.getRandomNum(4);
+        console.info('target onClick');
       });
     }, false);
   };
