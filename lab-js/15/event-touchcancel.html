@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,html,fastclick">
+  <meta content="测试fastclick的时候，发现事件打断点和不打端点执行有区别，感觉有点怪，就亲自试试">
+  <meta name="format-detection" content="telephone=no">
+  <title>touchcancel事件触发示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .container-width {
+      width: 300px;
+    }
+    .record-part {
+      position: absolute;
+      top: 170px;
+      bottom: 10px;
+      overflow-y: auto;
+    }
+    .btn-show {
+      display: inline-block;
+      border: 1px solid #900;
+
+      height: 25px;
+      line-height: 25px;
+    }
+    .w170 {
+      width: 170px;
+    }
+  </style>
+</head>
+<body class="pt50 tc">
+  <h2 class="fix-header">对应文：
+    <a href="https://github.com/XXHolic/blog/issues/15" target="_blank" title="Mouse Events & Touch Events ">Mouse Events & Touch Events </a>
+  </h2>
+  <div class="dib pt30 container-width">
+    <p class="tl">点击下面的按钮后，出现触发 touchcancel 事件的情况</p>
+    <div class="btn-show mb10 w170" id="clickButton">点击按钮</div>
+
+    <div class="tl">
+      <p>触发的事件显示：</p>
+      <div class="record-part" id="recordTouchMoveEvent"></div>
+      <div class="record-part" id="recordTouchCancelEvent"></div>
+    </div>
+
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script src='../../js/15/event-touchcancel.js'></script>
+</body>
+</html>
