@@ -1,24 +1,16 @@
 function pageInit() {
-  var square = document.querySelector('#clickButton');
+  // var square = document.querySelector('#clickButton');
+  var square = document.getElementById('clickButton');
 
-  // Create an instance of Hammer with the reference.
-  var manager = new Hammer(square);
+  var hammer = new Hammer(square);
 
-  // Create a recognizer
-  var Tap = new Hammer.Tap({
-    taps: 1
+  hammer.on('tap', function(e) {
+    alert('11')
+    console.log("You're pressing me!");
+    console.log(e);
   });
-
-  // Add the recognizer to the manager
-  manager.add(Tap);
-
-  // Subscribe to the desired event
-  manager.on('tap', function(e) {
-    // e.target.classList.toggle('expand');
-    console.info('ddd');
-    square.innerText = 'clicked,参照数：'+Util.getRandomNum(8);
-  });
-
 }
 
-pageInit();
+window.onload = function() {
+  pageInit();
+}
