@@ -1,10 +1,9 @@
-var bebel = require("@babel/core");
-import { transform } from "@babel/core";
-import * as babel from "@babel/core";
-var code = "()=>{console.info('babel.transform')}"
-babel.transform(code, options, function (err, result) {
+var babel = require("@babel/core");
+var code = "()=>{let a=3;a++}";
+babel.transform(code, {},function (err, result) {
+  console.info('ddd');
   console.info('code',result.code);
   console.info('result', result.map);
   console.info('result', result.ast);
-  result; // => { code, map, ast }
+  // result; // => { code, map, ast }
 });
