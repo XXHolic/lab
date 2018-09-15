@@ -7,10 +7,14 @@
   "author": "thy",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.2",
+    "babel-preset-es2015": "^6.24.1",
     "commitizen": "^2.10.1",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^0.14.3",
@@ -22,6 +26,9 @@
     }
   },
   "scripts": {
-    "commitmsg": "commitlint -E GIT_PARAMS"
-  }
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "babel": "babel",
+    "local-babel": "babel ./lab-js/20/src -d ./lab-js/20/lib"
+  },
+  "browserslist": "> 0.25%, not dead"
 }
