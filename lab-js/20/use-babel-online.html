@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,html,fastclick">
+  <meta content="babel 也可以在线使用，没接触的时候还真不知道">
+  <meta name="format-detection" content="telephone=no">
+  <title>在线使用 Babel 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：
+    <a href="https://github.com/XXHolic/segment/issues/6" target="_blank" title="在IOS下，input文本框获取焦点时，自动全选已有值">在IOS下，input文本框获取焦点时，自动全选已有值</a>
+  </h2> -->
+  <div class="dib pt30">
+    输出下面的内容，是使用箭头函数的方式。
+    <div id="output"></div>
+  </div>
+
+  <script src="../../js/common/babel.min.js"></script>
+  <script type="text/babel">
+    const getMessage = () => "Hello World";
+    const showEle = document.getElementById('output');
+    showEle.innerHTML = getMessage();
+  </script>
+</body>
+</html>
