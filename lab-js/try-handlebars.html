@@ -20,9 +20,10 @@
     <div id="showList"></div>
   </div>
   <script src="../js/common/handlebars-v4.0.12.js"></script>
-  <!--定义模板 -->
+  <!--定义模板 用 && 之类操作符一起判断 不行-->
   <script type="text/template" id="product-list-tepl">
     {{result.length}}
+    {{title}}
     <ul>
         {{#each result}}
          {{#if @index}}
@@ -32,6 +33,8 @@
             <a href="#">
                 <div class="product-text">
                         名称：{{productName}}；价格：{{productPrice}}； 索引：{{@index}}
+                        标题：{{../title}}
+                        数组长度：{{../result.length}}
                 </div>
             </a>
         </li>
@@ -42,6 +45,7 @@
 
   <script>
     var data = {
+      title:'测试标题',
       result: [
         { productName: "商品1", productPrice: 123 },
         { productName: "商品2", productPrice: 123 },
