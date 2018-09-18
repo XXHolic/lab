@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="js,css,html,input,select,selectAll">
+  <meta content="js模版接触到了handlebars，还是亲自试试">
+  <meta name="format-detection" content="telephone=no">
+  <title>handlebars 测试</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../css/newreset.css">
+  <link rel="stylesheet" href="../css/common.css">
+
+</head>
+
+<body class="pt50 tc" id="body">
+  <div class="dib pt30">
+    <div id="showList"></div>
+  </div>
+  <script src="../js/common/handlebars-v4.0.12.js"></script>
+  <!--定义模板 -->
+  <script type="text/template" id="product-list-tepl">
+    {{result.length}}
+    <ul>
+        {{#each result}}
+         {{#if @index}}
+
+         {{else}}
+        <li>
+            <a href="#">
+                <div class="product-text">
+                        名称：{{productName}}；价格：{{productPrice}}； 索引：{{@index}}
+                </div>
+            </a>
+        </li>
+        {{/if}}
+        {{/each}}
+    </ul>
+    </script>
+
+  <script>
+    var data = {
+      result: [
+        { productName: "商品1", productPrice: 123 },
+        { productName: "商品2", productPrice: 123 },
+        { productName: "商品3", productPrice: 123 }
+      ]
+    };
+    var tpl = document.getElementById("product-list-tepl").innerHTML;
+    //预编译模板
+    var template = Handlebars.compile(tpl);
+    //匹配json内容
+    var html = template(data);
+    //插入模板,到ul中
+    document.getElementById("showList").innerHTML = html;
+  </script>
+</body>
+
+</html>
