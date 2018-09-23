@@ -228,11 +228,14 @@
   $.fn.trigger = function(event, args){
     event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
     event._args = args
+    console.info("trigger-this",this);
     return this.each(function(){
       // handle focus(), blur() by calling them directly
       if (event.type in focus && typeof this[event.type] == "function") this[event.type]()
       // items in the collection might not be DOM elements
-      else if ('dispatchEvent' in this) this.dispatchEvent(event)
+      else if ('dispatchEvent' in this) {
+        this.dispatchEvent(event)
+      }
       else $(this).triggerHandler(event, args)
     })
   }

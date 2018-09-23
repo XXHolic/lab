@@ -128,9 +128,12 @@ var Zepto = (function() {
 
   function Z(dom, selector) {
     var i, len = dom ? dom.length : 0
-    for (i = 0; i < len; i++) this[i] = dom[i]
+    for (i = 0; i < len; i++) {
+      this[i] = dom[i]
+    }
     this.length = len
     this.selector = selector || ''
+
   }
 
   // `$.zepto.fragment` takes a html string and an optional tag name
@@ -229,6 +232,7 @@ var Zepto = (function() {
   // function just call `$.zepto.init, which makes the implementation
   // details of selecting nodes and creating Zepto collections
   // patchable in plugins.
+  // 这个js执行后，最后返回的是这个方法
   $ = function(selector, context){
     return zepto.init(selector, context)
   }
@@ -924,8 +928,9 @@ var Zepto = (function() {
       return this
     }
   })
-
+  // 放到原型链上去了，Z构造函数实例化后，公用的方法可以直接调用，例如 $('#test).on()
   zepto.Z.prototype = Z.prototype = $.fn
+  // console.info("Z.prototype",Z.prototype);
 
   // Export internal API functions in the `$.zepto` namespace
   zepto.uniq = uniq

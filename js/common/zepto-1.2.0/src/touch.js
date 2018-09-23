@@ -66,7 +66,8 @@
       .on('touchstart MSPointerDown pointerdown', function(e){
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
-        firstTouch = _isPointerType ? e : e.touches[0]
+        firstTouch = _isPointerType ? e : e.touches[0];
+        console.info("firstTouch",firstTouch);
         if (e.touches && e.touches.length === 1 && touch.x2) {
           // Clear out touch movement data if we have it sticking around
           // This can occur if touchcancel doesn't fire due to preventDefault, etc.
@@ -125,6 +126,7 @@
 
               // trigger universal 'tap' with the option to cancelTouch()
               // (cancelTouch cancels processing of single vs double taps for faster 'tap' response)
+              // 这里Event里面用的也是模拟事件
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
               // [by paper] fix -> "TypeError: 'undefined' is not an object (evaluating 'touch.el.trigger'), when double tap
@@ -165,4 +167,5 @@
     'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(eventName){
     $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
   })
+  // console.info('$.fn',$.fn);
 })(Zepto)
