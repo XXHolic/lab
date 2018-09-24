@@ -170,7 +170,6 @@
 
   ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown',
     'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(eventName){
-      // console.info("eventName",eventName);
     $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
   })
   // console.info('$.fn',$.fn);
