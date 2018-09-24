@@ -68,7 +68,7 @@
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
         Util.appendText(document.getElementById("showResult"),'document touchstart');
-        console.info('document touchstart MSPointerDown pointerdown');
+        console.info('document1 touchstart MSPointerDown pointerdown');
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0];
