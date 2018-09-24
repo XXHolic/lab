@@ -228,7 +228,6 @@
   $.fn.trigger = function(event, args){
     event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
     event._args = args
-    console.info("trigger-this",this);
     return this.each(function(){
       // handle focus(), blur() by calling them directly
       if (event.type in focus && typeof this[event.type] == "function") this[event.type]()
@@ -268,7 +267,10 @@
   })
 
   $.Event = function(type, props) {
-    if (!isString(type)) props = type, type = props.type
+    if (!isString(type)) {
+      props = type, type = props.type;
+    }
+    console.info("type",type);
     var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true
     if (props) for (var name in props) (name == 'bubbles') ? (bubbles = !!props[name]) : (event[name] = props[name])
     event.initEvent(type, bubbles, true)

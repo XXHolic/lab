@@ -27,6 +27,7 @@
   }
 
   function cancelAll() {
+    // console.info("touchcancel MSPointerCancel pointercancel");
     if (touchTimeout) clearTimeout(touchTimeout)
     if (tapTimeout) clearTimeout(tapTimeout)
     if (swipeTimeout) clearTimeout(swipeTimeout)
@@ -56,6 +57,7 @@
 
     $(document)
       .bind('MSGestureEnd', function(e){
+        console.info('document MSGestureEnd');
         var swipeDirectionFromVelocity =
           e.velocityX > 1 ? 'Right' : e.velocityX < -1 ? 'Left' : e.velocityY > 1 ? 'Down' : e.velocityY < -1 ? 'Up' : null
         if (swipeDirectionFromVelocity) {
@@ -64,10 +66,11 @@
         }
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
+        Util.appendText(document.getElementById("showResult"),'document touchstart');
+        console.info('document touchstart MSPointerDown pointerdown');
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0];
-        console.info("firstTouch",firstTouch);
         if (e.touches && e.touches.length === 1 && touch.x2) {
           // Clear out touch movement data if we have it sticking around
           // This can occur if touchcancel doesn't fire due to preventDefault, etc.
@@ -88,6 +91,7 @@
         if (gesture && _isPointerType) gesture.addPointer(e.pointerId)
       })
       .on('touchmove MSPointerMove pointermove', function(e){
+        console.info('document touchmove MSPointerMove pointermove');
         if((_isPointerType = isPointerEventType(e, 'move')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0]
@@ -99,6 +103,7 @@
         deltaY += Math.abs(touch.y1 - touch.y2)
       })
       .on('touchend MSPointerUp pointerup', function(e){
+        console.info('document touchend MSPointerUp pointerup');
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return
         cancelLongTap()
@@ -165,6 +170,7 @@
 
   ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown',
     'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(eventName){
+      // console.info("eventName",eventName);
     $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
   })
   // console.info('$.fn',$.fn);

@@ -21,12 +21,12 @@
   </h2> -->
   <div class="dib pt30">
     <button class="btn-show" id="clickButton">点击按钮</button>
-    <div id="showResult"></div>
   </div>
   <script src="../../js/common/util.js"></script>
-  <script src="../../js/common/zepto-1.2.0/src/zepto.js"></script>
-  <script src="../../js/common/zepto-1.2.0/src/event.js"></script>
-  <script src="../../js/common/zepto-1.2.0/src/touch.js"></script>
-  <script src='../../js/19/event-zepto.js'></script>
+  <script>
+    Util.Event.addHandler(document,'touchstart',function(){
+      console.info('touchstart');
+    });
+  </script>
 </body>
 </html>
