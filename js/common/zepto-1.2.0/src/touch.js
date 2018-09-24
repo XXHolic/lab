@@ -87,8 +87,7 @@
         touch.last = now
         longTapTimeout = setTimeout(longTap, longTapDelay)
         // adds the current touch contact for IE gesture recognition
-        if (gesture && _isPointerType) gesture.addPointer(e.pointerId);
-        e.preventDefault();
+        if (gesture && _isPointerType) gesture.addPointer(e.pointerId)
       })
       .on('touchmove MSPointerMove pointermove', function(e){
         console.info('document touchmove MSPointerMove pointermove');
@@ -103,6 +102,7 @@
         deltaY += Math.abs(touch.y1 - touch.y2)
       })
       .on('touchend MSPointerUp pointerup', function(e){
+        Util.appendText(document.getElementById("showResult"),'document touchend');
         console.info('document touchend MSPointerUp pointerup');
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return

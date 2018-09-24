@@ -48,7 +48,6 @@
   }
 
   function add(element, events, fn, data, selector, delegator, capture){
-    console.info('111',events);
     var id = zid(element), set = (handlers[id] || (handlers[id] = []))
     events.split(/\s/).forEach(function(event){
       if (event == 'ready') return $(document).ready(fn)
@@ -271,7 +270,6 @@
     if (!isString(type)) {
       props = type, type = props.type;
     }
-    console.info("type",type);
     var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true
     if (props) for (var name in props) (name == 'bubbles') ? (bubbles = !!props[name]) : (event[name] = props[name])
     event.initEvent(type, bubbles, true)

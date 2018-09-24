@@ -9,15 +9,17 @@ function pageInit() {
 
   $('#clickButton').tap(function () {
     var clickEle = document.getElementById('clickButton');
-    clickEle.innerText = '已点击，参照：' + Util.getRandomNum(4);
+    var randomText = '已点击，参照：' + Util.getRandomNum(4);
+    clickEle.innerText = randomText;
+    Util.appendText(document.getElementById("buttonResult"),"button tap");
     console.info('target tap');
   });
 
-  $('#clickButton').doubleTap(function () {
+  // $('#clickButton').doubleTap(function () {
     // var clickEle = document.getElementById('clickButton');
     // clickEle.innerText = '已点击，参照：' + Util.getRandomNum(4);
-    console.info('target doubleTap');
-  });
+    // console.info('target doubleTap');
+  // });
   // $('#clickButton').click(function () {
   //   console.info('target click');
   // });
