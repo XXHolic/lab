@@ -48,6 +48,7 @@
   }
 
   function add(element, events, fn, data, selector, delegator, capture){
+    console.info('111',events);
     var id = zid(element), set = (handlers[id] || (handlers[id] = []))
     events.split(/\s/).forEach(function(event){
       if (event == 'ready') return $(document).ready(fn)

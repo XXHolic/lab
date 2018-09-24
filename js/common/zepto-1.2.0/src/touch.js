@@ -27,14 +27,12 @@
   }
 
   function cancelAll() {
-    // console.info("touchcancel MSPointerCancel pointercancel");
     if (touchTimeout) clearTimeout(touchTimeout)
     if (tapTimeout) clearTimeout(tapTimeout)
     if (swipeTimeout) clearTimeout(swipeTimeout)
     if (longTapTimeout) clearTimeout(longTapTimeout)
     touchTimeout = tapTimeout = swipeTimeout = longTapTimeout = null
     touch = {}
-    return false;
   }
 
   function isPrimaryTouch(event){
@@ -68,7 +66,7 @@
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
         Util.appendText(document.getElementById("showResult"),'document touchstart');
-        console.info('document1 touchstart MSPointerDown pointerdown');
+        console.info('document touchstart MSPointerDown pointerdown');
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0];
@@ -89,7 +87,8 @@
         touch.last = now
         longTapTimeout = setTimeout(longTap, longTapDelay)
         // adds the current touch contact for IE gesture recognition
-        if (gesture && _isPointerType) gesture.addPointer(e.pointerId)
+        if (gesture && _isPointerType) gesture.addPointer(e.pointerId);
+        e.preventDefault();
       })
       .on('touchmove MSPointerMove pointermove', function(e){
         console.info('document touchmove MSPointerMove pointermove');
