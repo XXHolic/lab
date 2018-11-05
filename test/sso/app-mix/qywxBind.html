@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-store">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no,minimal-ui,viewport-fit=cover" />
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<title>微信绑定</title>
+	<link rel="stylesheet" href="css/weixin.css?v=20181105" />
+	<script>
+		(function () {
+				document.addEventListener('DOMContentLoaded', function () {
+						var html = document.documentElement;
+						var deviceWidth = html.clientWidth;
+						if(deviceWidth > 720) deviceWidth = 720;
+						html.style.fontSize = Math.ceil(deviceWidth / 7.2) + 'px';
+				}, false);
+		})();
+  </script>
+</head>
+<body>
+<div class="container">
+	<div class="container-main-h5">
+		<div class="logo"></div>
+		<div class="btn-wrap">
+			<a class="btn btn-bind" href="">绑定已有易订货账号</a>
+			<a class="btn btn-open" href="">开通易订货免费版</a>
+		</div>
+	</div>
+
+	<div class="container-main-pc">
+		<div class="logo"></div>
+		<div class="btn-wrap">
+			<a class="btn btn-bind" href="">绑定已有易订货账号</a>
+			<a class="btn btn-open" href="">开通易订货免费版</a>
+		</div>
+	</div>
+
+
+	<div class="alertbox" id="alertbox">
+		<div class="alert">
+			<div class="altop">
+				<h3>亲,您还不能创建账号哦!</h3>
+				<!-- <span class="norightimgSP"></span> -->
+				<img class="norightimg" src="images/noright.png?v=3">
+				<div class="alword">请向您的企业团队管理<br>员申请易订货登录账号</div>
+			</div>
+			<div class="albottom">
+				<button class="alok" onclick="fnok()">好</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+</body>
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/zepto.cookie.min.js?v=20181105"></script>
+<script type="text/javascript" src="js/common.js?v=20181105"></script>
+<script type="text/javascript" src="js/statistics.js"></script>
+<script>
+	// var ua = navigator.userAgent;
+	// var isWeixin = /MicroMessenger/i.test(ua);
+	var params = Public.getParam();
+	var corpid = params.corpid || '';
+	var client = params.client || '';
+	// var companyName = params.companyName || '';
+
+	(function init(){
+		isShowBind();
+		setJumpUrl();
+		$(window).resize(function () {
+			var html = document.documentElement;
+			var deviceWidth = html.clientWidth;
+			if (deviceWidth > 720) deviceWidth = 720;
+			html.style.fontSize = Math.ceil(deviceWidth / 7.2) + 'px';
+		})
+	})();
+
+	//是否显示可以绑定的界面
+	function isShowBind() {
+		var deviceType = Public.getDeviceType();
+		if (deviceType==="phone") {
+			$(".container-main-h5").show();
+			$("body").addClass('body-bg');
+		} else {
+			$(".container-main-pc").show();
+		}
+
+		if (params.errorMsg == 2) {
+			$('#alertbox').show();
+			$('.btn-wrap').show();
+		}
+		else {
+			$('.btn-wrap').show();
+		}
+
+	}
+
+	//设置跳转的utl
+	function setJumpUrl(){
+		$('.btn-bind').attr('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + corpid + '&redirect_uri=https%3a%2f%2fsso.dinghuo123.com%2fisv%2fqywexin%2flogin&response_type=code&scope=snsapi_base&state=' + corpid);
+
+		$('.btn-open').attr('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + corpid + '&redirect_uri=https%3a%2f%2fsso.dinghuo123.com%2fisv%2fqywexin%2fregister&response_type=code&scope=snsapi_base&state=' + corpid);
+	}
+
+
+	function fnok() {
+		document.querySelector("#alertbox").style.display = "none";
+	}
+
+</script>
+</html>
