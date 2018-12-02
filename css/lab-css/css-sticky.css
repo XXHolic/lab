@@ -1,0 +1,36 @@
+.ele-scroll {
+  overflow-y: auto;
+  border: 1px solid #900;
+  width: 300px;
+  height: 100px;
+}
+.ele-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+  color: #fff;
+  background-color: #333;
+}
+.ele-absolute {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.ele-scroll-parent {
+  overflow-y: auto;
+  width: 300px;
+  height: 200px;
+}
+.ele-sticky-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding-left: 20px;
+  color: #fff;
+  background-color: #333;
+}
+
+p {
+  padding-left: 20px;
+}
