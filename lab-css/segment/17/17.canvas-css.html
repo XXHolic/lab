@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,css">
+  <meta content="canvas 设置宽高的问题，使用css有效果">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 使用 css 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../../css/newreset.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <script src="../../../js/common/flex.js"></script>
+  <style>
+    .canvas-parent {
+      border: 1px solid #900;
+      width: 200px;
+      height: 200px;
+    }
+    .canvas-width {
+      width: 100%;
+      background-color: #333;
+    }
+    .canvas-height {
+      height: 100%;
+      background-color: #333;
+    }
+    .canvas-width-height {
+      height: 100%;
+      width: 100%;
+      background-color: #333;
+    }
+  </style>
+</head>
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/15" target="_blank">position 属性值 sticky</a></h2> -->
+  <div class="dib tl pt30">
+    <h3>下面的 canvas 设置有父元素包裹，宽高都是200px，<br />canvas 没有在标签上设置 width 和 height。</h3>
+    <h4>只设置了 width:100%</h4>
+    <div class="canvas-parent">
+      <canvas class="canvas-width"></canvas>
+    </div>
+    <h4>只设置了 height:100%</h4>
+    <div class="canvas-parent">
+      <canvas class="canvas-height"></canvas>
+    </div>
+    <h4>设置 width:100% height:100%</h4>
+    <div class="canvas-parent">
+      <canvas class="canvas-width-height"></canvas>
+    </div>
+
+  </div>
+</body>
+</html>
