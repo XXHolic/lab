@@ -15,7 +15,7 @@
 
   <style>
     .canvas-border {
-      border: 1px solid #900;
+      border: 2px solid #900;
     }
   </style>
 
@@ -24,8 +24,10 @@
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/20" target="_blank">canvas 显示模糊问题</a></h2> -->
   <div class="dib tl pt30" id="mainContent">
-    <h3>用 css 设置边框</h3>
-    <div id="cssSetBorder"></div>
+    <h3>用 css 设置边框，box-size:border-box</h3>
+    <div id="cssSetBorderBox"></div>
+    <h3>用 css 设置边框，box-size:content-box</h3>
+    <div id="cssSetBorderContent"></div>
     <h3>没用 css 设置边框</h3>
     <div id="normal"></div>
 
@@ -39,16 +41,27 @@
     img.src = '../../images/html5-rocks.png';
     img.onload = function() {
       canvasHDContext.drawImage(img,25,7,250,76);
-      document.getElementById('cssSetBorder').appendChild(canvasHD);
+      document.getElementById('cssSetBorderBox').appendChild(canvasHD);
     }
 
     var canvasHD2 = Util.CANVAS.createElement(300,90);
+    canvasHD2.setAttribute('class','canvas-border');
+    canvasHD2.style.boxSizing = 'content-box';
     var canvasHD2Context = canvasHD2.getContext('2d');
     var img2 = new Image();
     img2.src = '../../images/html5-rocks.png';
     img2.onload = function() {
       canvasHD2Context.drawImage(img2,25,7,250,76);
-      document.getElementById('normal').appendChild(canvasHD2);
+      document.getElementById('cssSetBorderContent').appendChild(canvasHD2);
+    }
+
+    var canvasHD3 = Util.CANVAS.createElement(300,90);
+    var canvasHD3Context = canvasHD3.getContext('2d');
+    var img3 = new Image();
+    img3.src = '../../images/html5-rocks.png';
+    img3.onload = function() {
+      canvasHD3Context.drawImage(img3,25,7,250,76);
+      document.getElementById('normal').appendChild(canvasHD3);
     }
   </script>
 </body>
