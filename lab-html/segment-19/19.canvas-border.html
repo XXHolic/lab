@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,blur,css,images">
+  <meta content="canvas 设置边框也会出现模糊">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 设置表框示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <style>
+    .canvas-border {
+      border: 1px solid #900;
+    }
+  </style>
+
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/20" target="_blank">canvas 显示模糊问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <h3>用 css 设置边框</h3>
+    <div id="cssSetBorder"></div>
+    <h3>没用 css 设置边框</h3>
+    <div id="normal"></div>
+
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script>
+    var canvasHD = Util.CANVAS.createElement(300,90);
+    canvasHD.setAttribute('class','canvas-border');
+    var canvasHDContext = canvasHD.getContext('2d');
+    var img = new Image();
+    img.src = '../../images/html5-rocks.png';
+    img.onload = function() {
+      canvasHDContext.drawImage(img,25,7,250,76);
+      document.getElementById('cssSetBorder').appendChild(canvasHD);
+    }
+
+    var canvasHD2 = Util.CANVAS.createElement(300,90);
+    var canvasHD2Context = canvasHD2.getContext('2d');
+    var img2 = new Image();
+    img2.src = '../../images/html5-rocks.png';
+    img2.onload = function() {
+      canvasHD2Context.drawImage(img2,25,7,250,76);
+      document.getElementById('normal').appendChild(canvasHD2);
+    }
+  </script>
+</body>
+
+</html>
