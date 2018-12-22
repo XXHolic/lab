@@ -90,7 +90,7 @@ Util.appendText = function(ele, text) {
 // canvas 各种处理
 Util.CANVAS = {
   // 处理显示模糊问题
-  createElement: function(w,h) {
+  createElement: function(w=300,h=150) {
     var ratio = window.devicePixelRatio || 1;
     var canvas = document.createElement('canvas');
     canvas.width = w * ratio; // 实际渲染像素
