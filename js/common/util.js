@@ -86,3 +86,18 @@ Util.appendText = function(ele, text) {
   newELe.innerText = (text || '')+Util.getRandomNum(5);
   ele && ele.appendChild(newELe);
 }
+
+// canvas 各种处理
+Util.CANVAS = {
+  // 处理显示模糊问题
+  createElement: function(w,h) {
+    var ratio = window.devicePixelRatio || 1;
+    var canvas = document.createElement('canvas');
+    canvas.width = w * ratio; // 实际渲染像素
+    canvas.height = h * ratio; // 实际渲染像素
+    canvas.style.width = `${w}px`; // 控制显示大小
+    canvas.style.height = `${h}px`; // 控制显示大小
+    canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+    return canvas;
+  }
+}
