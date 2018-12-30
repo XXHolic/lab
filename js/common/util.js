@@ -99,5 +99,17 @@ Util.CANVAS = {
     canvas.style.height = `${h}px`; // 控制显示大小
     canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
     return canvas;
+  },
+  // 生成有圆角的矩形
+  drawRoundedRect: function(context, x, y, width, height, radius) {
+    context.beginPath();
+    context.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 3 / 2);
+    context.lineTo(width - radius + x, y);
+    context.arc(width - radius + x, radius + y, radius, Math.PI * 3 / 2, Math.PI * 2);
+    context.lineTo(width + x, height + y - radius);
+    context.arc(width - radius + x, height - radius + y, radius, 0, Math.PI * 1 / 2);
+    context.lineTo(radius + x, height + y);
+    context.arc(radius + x, height - radius + y, radius, Math.PI * 1 / 2, Math.PI);
+    context.closePath();
   }
 }

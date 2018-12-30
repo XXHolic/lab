@@ -24,7 +24,7 @@
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/21" target="_blank">canvas 设置边框问题</a></h2> -->
   <div class="dib tl pt30" id="mainContent">
-    <h3>用 css 设置 canvas 圆角</h3>
+    <h3>用 clip() 形成的 canvas 圆角</h3>
     <div id="cssSetBorderRadius">
     </div>
     <h3>下面是 canvas 生成的图片</h3>
@@ -38,6 +38,8 @@
     var canvasHD = Util.CANVAS.createElement(300,90);
     canvasHD.setAttribute('class','canvas-border-radius');
     var canvasHDContext = canvasHD.getContext('2d');
+    Util.CANVAS.drawRoundedRect(canvasHDContext,0,0,300,90,10);
+    canvasHDContext.clip();
     var img = new Image();
     img.src = '../../images/html5-rocks.png';
     img.crossOrigin = "Anonymous";
