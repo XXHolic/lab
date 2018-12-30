@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,border-radius,css,images">
+  <meta content="canvas 设置圆角的问题">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 圆角示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <style>
+    .canvas-border-radius {
+      border-radius: 10px;
+    }
+  </style>
+
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/21" target="_blank">canvas 设置边框问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <h3>用 css 设置圆角</h3>
+    <div id="cssSetBorderRadius">
+    </div>
+    <h3>下面是上面生成的图片</h3>
+    <div>
+      <img src="" alt="" id="combineImg">
+    </div>
+
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script>
+    var canvasHD = Util.CANVAS.createElement(300,90);
+    canvasHD.setAttribute('class','canvas-border-radius');
+    var canvasHDContext = canvasHD.getContext('2d');
+    var img = new Image();
+    img.src = '../../images/html5-rocks.png';
+    img.crossOrigin = "Anonymous";
+    img.onload = function() {
+      canvasHDContext.drawImage(img,0,0,300,90);
+      document.getElementById('cssSetBorderRadius').appendChild(canvasHD);
+      var base64 = canvasHD.toDataURL();
+      document.getElementById('combineImg').src = base64;
+    }
+
+
+  </script>
+</body>
+
+</html>
