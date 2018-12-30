@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="../../css/common.css">
 
   <style>
-    .canvas-border-radius {
-      border-radius: 10px;
+    .generate-img {
+      width: 300px;
     }
   </style>
 
@@ -29,14 +29,13 @@
     </div>
     <h3>下面是 canvas 生成的图片</h3>
     <div>
-      <img src="" alt="" id="combineImg">
+      <img class="generate-img" src="" alt="" id="combineImg">
     </div>
 
   </div>
   <script src="../../js/common/util.js"></script>
   <script>
     var canvasHD = Util.CANVAS.createElement(300,90);
-    canvasHD.setAttribute('class','canvas-border-radius');
     var canvasHDContext = canvasHD.getContext('2d');
     var img = new Image();
     img.src = '../../images/html5-rocks.png';

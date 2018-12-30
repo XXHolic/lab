@@ -12,10 +12,9 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
-
   <style>
-    .canvas-border-radius {
-      border-radius: 10px;
+    .generate-img {
+      width: 300px;
     }
   </style>
 
@@ -25,18 +24,17 @@
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/21" target="_blank">canvas 设置边框问题</a></h2> -->
   <div class="dib tl pt30" id="mainContent">
     <h3>用 clip() 形成的 canvas 圆角</h3>
-    <div id="cssSetBorderRadius">
+    <div id="clipSetBorderRadius">
     </div>
     <h3>下面是 canvas 生成的图片</h3>
     <div>
-      <img src="" alt="" id="combineImg">
+      <img class="generate-img" src="" alt="" id="combineImg">
     </div>
 
   </div>
   <script src="../../js/common/util.js"></script>
   <script>
     var canvasHD = Util.CANVAS.createElement(300,90);
-    canvasHD.setAttribute('class','canvas-border-radius');
     var canvasHDContext = canvasHD.getContext('2d');
     Util.CANVAS.drawRoundedRect(canvasHDContext,0,0,300,90,10);
     canvasHDContext.clip();
@@ -45,7 +43,7 @@
     img.crossOrigin = "Anonymous";
     img.onload = function() {
       canvasHDContext.drawImage(img,0,0,300,90);
-      document.getElementById('cssSetBorderRadius').appendChild(canvasHD);
+      document.getElementById('clipSetBorderRadius').appendChild(canvasHD);
       var base64 = canvasHD.toDataURL();
       document.getElementById('combineImg').src = base64;
     }
