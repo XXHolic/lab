@@ -124,7 +124,7 @@ Util.CANVAS = {
     }
 
     if (typeof lineHeight == 'undefined') {
-      // 有些事情取值是字符串的值，比如 normal。所以要判断一下
+      // 有些情况取值结果是字符串，比如 normal。所以要判断一下
       var getLineHeight = window.getComputedStyle(canvas).lineHeight;
       var reg=/^[0-9]+.?[0-9]*$/;
       lineHeight = reg.test(getLineHeight)? getLineHeight:20;
@@ -137,13 +137,14 @@ Util.CANVAS = {
     // 每行显示的文字
     var showText = '';
     // 控制行数
-    var limitRow = row || 2;
+    var limitRow = row;
     var rowCount = 0;
 
     for (var n = 0; n < arrText.length; n++) {
       var singleText = arrText[n];
       var connectShowText = showText + singleText;
-      var isLimitRow = rowCount === (limitRow - 1);
+      // 没有传控制的行数，那就一直换行
+      var isLimitRow = limitRow ? rowCount === (limitRow - 1) : false;
       var measureText = isLimitRow ? (connectShowText+'……') : connectShowText;
       var metrics = context.measureText(measureText);
       var textWidth = metrics.width;

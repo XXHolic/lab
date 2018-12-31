@@ -16,9 +16,13 @@
 </head>
 
 <body class="pt50 tc">
-  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
+  <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/25" target="_blank">canvas 文字换行</a></h2>
   <div class="dib tl pt30" id="mainContent">
+    <h3>canvas 文字换行处理，控制 3 行</h3>
     <div id="canvasWrap">
+    </div>
+    <h3>canvas 文字换行处理，不控制行数</h3>
+    <div id="canvasWrap2">
     </div>
 
   </div>
@@ -30,6 +34,12 @@
     canvasHDContext.font = '16px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
     Util.CANVAS.textEllipsis(canvasHDContext,showText,0,30,200,20,3);
     document.getElementById('canvasWrap').appendChild(canvasHD);
+
+    var canvasHD2 = Util.CANVAS.createElement(200,100);
+    var canvasHDContext2 = canvasHD2.getContext('2d');
+    canvasHDContext2.font = '16px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    Util.CANVAS.textEllipsis(canvasHDContext2,showText,0,30,200,20);
+    document.getElementById('canvasWrap2').appendChild(canvasHD2);
 
   </script>
 </body>
