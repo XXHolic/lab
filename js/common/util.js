@@ -111,5 +111,62 @@ Util.CANVAS = {
     context.lineTo(radius + x, height + y);
     context.arc(radius + x, height - radius + y, radius, Math.PI * 1 / 2, Math.PI);
     context.closePath();
+  },
+  // 文本换行处理，并返回实际文字所占据的高度
+  textEllipsis: function(context, text, x, y, maxWidth, lineHeight, row) {
+    if (typeof text != 'string' || typeof x != 'number' || typeof y != 'number') {
+      return;
+    }
+    var canvas = context.canvas;
+
+    if (typeof maxWidth == 'undefined') {
+      maxWidth = canvas && canvas.width || 300;
+    }
+
+    if (typeof lineHeight == 'undefined') {
+      // 有些事情取值是字符串的值，比如 normal。所以要判断一下
+      var getLineHeight = window.getComputedStyle(canvas).lineHeight;
+      var reg=/^[0-9]+.?[0-9]*$/;
+      lineHeight = reg.test(getLineHeight)? getLineHeight:20;
+    }
+
+    // 字符分隔为数组
+    var arrText = text.split('');
+    // 文字最终占据的高度，放置在文字下面的内容排版，可能会根据这个来确定位置
+    var textHeight = 0;
+    // 每行显示的文字
+    var showText = '';
+    // 控制行数
+    var limitRow = row || 2;
+    var rowCount = 0;
+
+    for (var n = 0; n < arrText.length; n++) {
+      var singleText = arrText[n];
+      var connectShowText = showText + singleText;
+      var isLimitRow = rowCount === (limitRow - 1);
+      var measureText = isLimitRow ? (connectShowText+'……') : connectShowText;
+      var metrics = context.measureText(measureText);
+      var textWidth = metrics.width;
+
+      if (textWidth > maxWidth && n > 0 && rowCount !== limitRow) {
+        var canvasShowText = isLimitRow?measureText:showText;
+        context.fillText(canvasShowText, x, y);
+        showText = singleText;
+        y += lineHeight;
+        textHeight += lineHeight;
+        rowCount++;
+        if (isLimitRow) {
+          break;
+        }
+      } else {
+        showText = connectShowText;
+      }
+    }
+    if (rowCount !== limitRow) {
+      context.fillText(showText, x, y);
+    }
+
+    var textHeightValue = rowCount < limitRow ? (textHeight + lineHeight): textHeight;
+    return textHeightValue;
   }
 }

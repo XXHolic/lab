@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,text">
+  <meta content="canvas 文字换行是比较常见的需求">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 文字换行示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <div id="canvasWrap">
+    </div>
+
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script>
+    var canvasHD = Util.CANVAS.createElement(200,100);
+    var canvasHDContext = canvasHD.getContext('2d');
+    var showText = "江天一色无纤尘，皎皎空中孤月轮。 江畔何人初见月？江月何年初照人？ 人生代代无穷已，江月年年只相似。";
+    canvasHDContext.font = '16px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    Util.CANVAS.textEllipsis(canvasHDContext,showText,0,30,200,20,3);
+    document.getElementById('canvasWrap').appendChild(canvasHD);
+
+  </script>
+</body>
+
+</html>
