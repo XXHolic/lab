@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>下面是一个打印用的 iframe</p>
+  <button id="print" style="margin-bottom:10px;">打印</button>
+  <iframe id='iframePrint' style="width: 100%;height: 100%"></iframe>
+  <button id="printIE" style="margin-bottom:10px;">ie 打印</button>
+  <script>
+    var iframePrint = document.getElementById('iframePrint');
+    var srcDocString =
+      '<!doctype html>' +
+      '<html>' +
+      '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1,user-scalable=no,minimal-ui">' +
+      '<head><style>html,body{height:100%;width:100%;}</style></head>' +
+      '<body>' +
+      '<div style="page-break-after:always;height:100%;position:relative;">' +
+      '<!DOCTYPE html><html lang="zh-CN"><head><style>* {margin: 0;padding: 0;font-family: "微软雅黑";}.item{position:absolute;}.text1{text-align:center;}    </style></head><body><div class="item vline" style="left:1px;top:1px;height:676px;border-left:1px solid #000;">这是分页的第1页</div></body>' +
+      '</html>' +
+      '</div>' +
+      '<div style="page-break-after:always;height:100%;position:relative;">' +
+      '<!DOCTYPE html><html lang="zh-CN"><head><style>*{margin: 0;padding: 0;font-family: "微软雅黑";}.item{position:absolute;}.text1{text-align:center;}    </style></head><body><div class="item vline" style="left:1px;top:1px;height:676px;border-left:1px solid #000;">这是分页的第2页</div></body></html>' +
+      '</div>' +
+      '<div style="page-break-after:always;height:100%;position:relative;">' +
+      '<!DOCTYPE html><html lang="zh-CN"><head><style>* {margin: 0;padding: 0;font-family: "微软雅黑";}.item{position:absolute;}.text1{text-align:center;}</style></head><body><div class="item vline" style="left:1px;top:1px;height:676px;border-left:1px solid #000;">这是分页的第3页</div></body></html>' +
+      '</div>' +
+      '</body>' +
+      '</html>';
+
+    iframePrint.setAttribute('srcDoc', srcDocString);
+    console.info(document.querySelector('#iframePrint').contentWindow);
+
+    document.getElementById('print').onclick = function () {
+      // 有可能页面还没渲染完，就触发打印，打印页面会出现没有东西的情况。如果遇到这种情况，加个 setTimeout
+      document.querySelector('#iframePrint').contentWindow.print();
+    };
+
+    document.getElementById('printIE').onclick = function (e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+
+      } else {
+        window.event.returnValue == false;
+
+      }
+
+      var iframeNode = document.getElementById('printWindow');
+      if (iframeNode) {
+        window.document.body.removeChild(iframeNode); // 原本是放在最后的，但是IE会因为remove掉了而无法打开打印窗口，所以先放在这里了，防止多次创建
+
+      }
+
+      var iframe = parent.document.createElement('iframe');
+      iframe.id = 'printWindow';
+      iframe.style.display = 'none';
+      window.document.body.appendChild(iframe);
+
+      iframeNode = document.getElementById('printWindow');
+
+      var div = parent.document.createElement('div');
+      div.innerHTML = '这是 IE 打印的内容';
+      iframeNode.contentDocument.body.appendChild(div);
+      iframeNode.contentWindow.print();
+
+    };
+
+  </script>
+</body>
+
+</html>
