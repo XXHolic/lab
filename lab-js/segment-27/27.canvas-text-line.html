@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,text">
+  <meta content="canvas 文字换行是比较常见的需求">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 文字 textBaseline 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/25" target="_blank">canvas 文字换行</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <h3>canvas 英文显示，textBaseline 各个值的效果</h3>
+    <div id="canvasWrap"></div>
+
+    <h3>canvas 中文显示，textBaseline 各个值的效果</h3>
+    <div id="canvasWrap2"></div>
+
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script>
+    var canvasHD = Util.CANVAS.createElement(300,100);
+    var canvasHDContext = canvasHD.getContext('2d');
+    canvasHDContext.strokeStyle = 'red';
+    canvasHDContext.moveTo(0,50);
+    canvasHDContext.lineTo(300,50);
+    canvasHDContext.stroke();
+    canvasHDContext.font = '16px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    canvasHDContext.textBaseline = 'top';
+    canvasHDContext.fillText('Top',5,50);
+    canvasHDContext.textBaseline = 'bottom';
+    canvasHDContext.fillText('Bottom',35,50);
+    canvasHDContext.textBaseline = 'middle';
+    canvasHDContext.fillText('Middle',90,50);
+    canvasHDContext.textBaseline = 'alphabetic';
+    canvasHDContext.fillText('Alphabetic',145,50);
+    canvasHDContext.textBaseline = 'hanging';
+    canvasHDContext.fillText('Hanging',225,50);
+    document.getElementById('canvasWrap').appendChild(canvasHD);
+
+    var canvasHD2 = Util.CANVAS.createElement(300,100);
+    var canvasHDContext2 = canvasHD2.getContext('2d');
+    canvasHDContext2.strokeStyle = 'red';
+    canvasHDContext2.moveTo(0,50);
+    canvasHDContext2.lineTo(300,50);
+    canvasHDContext2.stroke();
+    canvasHDContext2.font = '16px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    canvasHDContext2.textBaseline = 'top';
+    canvasHDContext2.fillText('顶部',5,50);
+    canvasHDContext2.textBaseline = 'bottom';
+    canvasHDContext2.fillText('底部',35,50);
+    canvasHDContext2.textBaseline = 'middle';
+    canvasHDContext2.fillText('中间',90,50);
+    canvasHDContext2.textBaseline = 'alphabetic';
+    canvasHDContext2.fillText('字母',145,50);
+    canvasHDContext2.textBaseline = 'hanging';
+    canvasHDContext2.fillText('悬挂',225,50);
+    document.getElementById('canvasWrap2').appendChild(canvasHD2);
+
+  </script>
+</body>
+
+</html>
