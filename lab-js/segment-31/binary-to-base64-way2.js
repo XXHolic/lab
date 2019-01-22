@@ -3,14 +3,14 @@ window.onload = function() {
 
   var xhr = new XMLHttpRequest();
   xhr.open('get','https://xxholic.github.io/lab/images/logo.jpg');
-  xhr.responseType = 'blob'; // 安卓4.3的不支持
-  // xhr.responseType = 'arraybuffer';
+  // xhr.responseType = 'blob'; // 安卓4.3的不支持
+  xhr.responseType = 'arraybuffer';
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
-      // showImageObj.src = URL.createObjectURL(xhr.response);
+      var blobData = new Blob([xhr.response]);
       var reader = new FileReader();
       // 先转换为字符串
-      reader.readAsText(xhr.response, 'utf-8');
+      reader.readAsText(blobData, 'utf-8');
       reader.onload = function (e) {
           try {
             // var finalString = unescape(encodeURIComponent(reader.result))

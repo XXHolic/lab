@@ -7,9 +7,9 @@ window.onload = function() {
   // xhr.responseType = 'arraybuffer';
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
-      // showImageObj.src = URL.createObjectURL(xhr.response);
+      var blobData = new Blob([xhr.response]);
       var reader = new FileReader();
-      reader.readAsDataURL(xhr.response);
+      reader.readAsDataURL(blobData);
       reader.onload = function (e) {
           console.info(reader.result);
           showImageObj.src = reader.result;
