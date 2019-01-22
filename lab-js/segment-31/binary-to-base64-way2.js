@@ -9,10 +9,17 @@ window.onload = function() {
     if (xhr.readyState === 4) {
       // showImageObj.src = URL.createObjectURL(xhr.response);
       var reader = new FileReader();
+      // 先转换为字符串
       reader.readAsText(xhr.response, 'utf-8');
       reader.onload = function (e) {
-          console.info(reader.result);
-          showImageObj.src = "data:image/jpg;base64,"+window.btoa(reader.result);
+          try {
+            // var finalString = unescape(encodeURIComponent(reader.result))
+            showImageObj.src = "data:image/jpg;base64,"+window.btoa(reader.result);
+          } catch (error) {
+            document.getElementById('showError').innerText = error;
+            console.info('error',error)
+          }
+
       }
 
     }
