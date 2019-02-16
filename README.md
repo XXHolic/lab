@@ -1,2 +1,2 @@
-## Welcome to Lab Pages
-This is for test and fun!
+## Welcome to Lab
+- This is for test and fun!
