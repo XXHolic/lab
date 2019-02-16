@@ -7,7 +7,7 @@
   <meta name="keywords" content="css,html,input">
   <meta content="input 表单自动填充的解决方案尝试">
   <meta name="format-detection" content="telephone=no">
-  <title>阻止自动填充 input 帐号和密码</title>
+  <title>PC 阻止自动填充 input 帐号和密码</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
@@ -23,7 +23,6 @@
     <a href="https://github.com/XXHolic/segment/issues/4" target="_blank">阻止自动填充帐号 input</a>
   </h2>
   <div class="dib tl pt30">
-    <p>保存之后重新进入</p>
     <div class="close-float-method3">
       <form action="https://www.baidu.com">
         <div>
@@ -32,7 +31,7 @@
         </div>
         <div>
             <label for="username">密码</label>
-            <input type="password" name="password" autocomplete="off">
+            <input type="password" name="password" autocomplete="new-password">
         </div>
         <div>
             <input type="submit" id="submit" value="保存" >
