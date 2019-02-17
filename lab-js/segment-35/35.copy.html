@@ -29,12 +29,17 @@
     document.getElementById("copy").onclick = function() {
       var inputValueObj = document.getElementById("inputValue");
       var inputValue = inputValueObj.value;
-      inputValueObj.select()
       if (!inputValue) {
         alert('请先输入内容！');
         return false;
       }
+      inputValueObj.select();
+      var valueLen = inputValue.length;
       try {
+        if (inputValueObj.selectionStart && valueLen) {
+          inputValueObj.selectionStart = 0;
+          inputValueObj.selectionEnd = valueLen;
+        }
         if (document.execCommand('copy')) {
           alert('复制成功！');
         }
