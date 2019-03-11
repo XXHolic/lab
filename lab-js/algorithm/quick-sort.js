@@ -1,4 +1,15 @@
 window.onload = function() {
+ for (var index = 0; index < 5; index++) {
+   (function(param) {
+     var j = index;
+    setTimeout(function timer(){
+      console.info(param);
+    },param*1000);
+   })(index)
+
+
+ }
+
   var array = [1,5,7,8,9,2,3,4,13,14,15,10];
 
   var sum = 0;
