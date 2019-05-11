@@ -18,6 +18,7 @@ html {
   display: block;
 }
 .df {
+  display: -webkit-flex;
   display: flex;
 }
 .dt {
@@ -28,6 +29,11 @@ html {
 }
 .dit {
   display: inline-table;
+}
+.flex-column {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
 }
 /*
  *  用于控制方向的css
