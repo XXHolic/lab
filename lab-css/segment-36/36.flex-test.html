@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="flex,display,float,vertical-align">
+  <meta content="vertical-align 和 float 对 flex 的影响">
+  <meta name="format-detection" content="telephone=no">
+  <title>flex 属性测试</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .flex-container {
+      border: 1px solid #333;
+      width: 200px;
+      height: 100px;
+    }
+
+    .flex-item {
+      height: 60px;
+    }
+
+    .bg1 {
+      background-color: rgb(156, 84, 84);
+    }
+
+    .bg2 {
+      background-color: rgb(144, 230, 144);
+    }
+
+    .bg3 {
+      background-color: rgb(54, 122, 54);
+    }
+
+  </style>
+
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
+  <div class="dib tl pt30">
+    <p>测试 float 对 display: flex 的影响</p>
+    <div class="df mb10 flex-container">
+      <div class="flex-item bg1">flex item</div>
+      <div class="flex-item bg2 fr">flex item float</div>
+      <div class="flex-item bg3">flex item</div>
+    </div>
+    <p>测试 vertical-align 对 display: flex 的影响</p>
+    <div class="df flex-container">
+      <div class="flex-item bg1">flex item</div>
+      <div class="flex-item bg2 vam">flex item align</div>
+      <div class="flex-item bg3">flex item</div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
