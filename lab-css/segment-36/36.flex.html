@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="keywords" content="flex,display" />
+    <meta content="flex 项属性 flex 效果展示" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>flex 常见值效果展示</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+    <link rel="stylesheet" href="./flex.css" />
+  </head>
+
+  <body class="pt50 tc">
+    <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
+    <div class="dib tl pt30">
+      <p>flex 常见值效果展示</p>
+      <p>默认值 flex: initial 相当于 flex: 0 1 auto</p>
+      <div class="df mb10 flex-container">
+        <div class="flex-item bg1">item 1</div>
+        <div class="flex-item-initial bg2">item 2 flex initial</div>
+        <div class="flex-item bg3">item 3</div>
+      </div>
+      <p>flex: auto 相当于 flex:1 1 auto</p>
+      <div class="df mb10 flex-container">
+        <div class="flex-item bg1">item 1</div>
+        <div class="flex-item-auto bg2">item 2 has flex property</div>
+        <div class="flex-item bg3">item 3</div>
+
+      </div>
+      <p>flex: none 相当于 flex: 0 0 auto;</p>
+      <div class="df mb10 flex-container">
+        <div class="flex-item bg1">item 1</div>
+        <div class="flex-item-none bg2">item 2 has flex property,no shrink</div>
+        <div class="flex-item bg3">item 3</div>
+
+      </div>
+      <p>flex: 2 相当于 flex: 2 1 0</p>
+      <div class="df mb10 flex-container">
+        <div class="flex-item bg1">item 1</div>
+        <div class="flex-item-2 bg2">item 2 has flex property</div>
+        <div class="flex-item bg3">item 3</div>
+
+      </div>
+
+    </div>
+  </body>
+</html>

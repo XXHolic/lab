@@ -110,5 +110,46 @@
   align-content: space-around;
 }
 
+.flex-item-initial {
+  flex: initial;
+}
+.flex-item-auto {
+  flex: auto;
+}
+.flex-item-none {
+  flex: none;
+}
+.flex-item-2 {
+  flex: 2;
+}
+
+.order1 {
+  order: 1;
+}
+.order2 {
+  order: 2;
+}
+.order3 {
+  order: 3;
+}
+
+.as-auto {
+  align-self: auto;
+}
+.as-flex-start {
+  align-self: flex-start;
+}
+.as-flex-end {
+  align-self: flex-end;
+}
+.as-center {
+  align-self: center;
+}
+.as-baseline {
+  align-self: baseline;
+}
+.as-stretch {
+  align-self: stretch;
+}
 
 
