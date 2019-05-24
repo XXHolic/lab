@@ -19,7 +19,7 @@ window.onload = function() {
     return nums.length;
   };
 
-  var result = removeDuplicates([1, 1, 2, 2, 3, 3, 3, 3, 3]);
+  // var result = removeDuplicates([1, 1, 2, 2, 3, 3, 3, 3, 3]);
 
   // console.info("array length：", result);
 
@@ -47,4 +47,28 @@ window.onload = function() {
   };
 
   // rotate([1, 2, 3, 4], 4);
+
+  /**
+   * 判断数组中是否有重复的数字
+   * @param {number []} nums
+   * @returns {boolean}
+   */
+  var containsDuplicate = function(nums) {
+    var numsLen = nums.length || 0;
+
+    for (var index = 0; index < numsLen; index++) {
+      var data = nums[index];
+      var startIndex = nums.indexOf(data);
+      var endIndex = nums.lastIndexOf(data);
+      if (endIndex !== startIndex) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  var result = containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]);
+
+  console.info("result:", result);
 };
