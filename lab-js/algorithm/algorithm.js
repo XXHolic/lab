@@ -68,7 +68,48 @@ window.onload = function() {
     return false;
   };
 
-  var result = containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]);
+  // var result = containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2]);
+
+  // console.info("result:", result);
+
+  /**
+   *
+   * @param {number []} nums1
+   * @param {number []} nums2
+   * @returns {number []}
+   */
+  var intersect = function(nums1, nums2) {
+    var compare = function(x, y) {
+      return x - y;
+    };
+
+    nums1.sort(compare);
+    nums2.sort(compare);
+
+    var pos1 = 0;
+    var pos2 = 0;
+    var nums1Len = nums1.length || 0;
+    var nums2Len = nums2.length || 0;
+    var intersection = [];
+
+    while (pos1 < nums1Len && pos2 < nums2Len) {
+      var nums1Data = nums1[pos1];
+      var nums2Data = nums2[pos2];
+      if (nums1Data === nums2Data) {
+        intersection.push(nums1Data);
+        pos1++;
+        pos2++;
+      } else if (nums1Data > nums2Data) {
+        pos2++;
+      } else {
+        pos1++;
+      }
+    }
+
+    return intersection;
+  };
+
+  var result = intersect([1,2,2,1], [4,5,9]);
 
   console.info("result:", result);
 };
