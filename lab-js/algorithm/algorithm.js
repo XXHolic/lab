@@ -168,6 +168,40 @@ window.onload = function() {
     console.info("result:", nums);
   };
 
-  moveZeroes([0,0,1]);
-  // console.info("result:", result);
+  // moveZeroes([0,0,1]);
+
+  /**
+   * @param {number[]} nums
+   * @param {number} target
+   * @return {number[]}
+   */
+  var twoSum = function(nums, target) {
+    // var compare = function(x,y) {
+    //   return x-y;
+    // }
+    // nums.sort(compare);
+
+    // var index = nums.find((item,index)=>{
+    //   if(item>=target) {
+    //     return index;
+    //   }
+    // });
+
+    var numsEndIndex = nums.length-1;
+
+    for (let startIndex = 0; startIndex <= numsEndIndex; startIndex++) {
+      let startValue = nums[startIndex];
+      let anotherValue = target - startValue;
+      for (let endIndex = startIndex+1; endIndex <= numsEndIndex; endIndex--) {
+        if (anotherValue === target) {
+          return [startIndex, endIndex];
+        }
+      }
+    }
+
+    return indexArray;
+  };
+
+  var result = twoSum([-3,4,3,90],0);
+  console.info("result:", result);
 };
