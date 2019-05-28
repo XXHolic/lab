@@ -109,7 +109,61 @@ window.onload = function() {
     return intersection;
   };
 
-  var result = intersect([1,2,2,1], [4,5,9]);
+  // var result = intersect([1, 2, 2, 1], [4, 5, 9]);
 
-  console.info("result:", result);
+  /**
+   * @param {number[]} digits
+   * @return {number[]}
+   */
+  var plusOne = function(digits) {
+    var digitsLen = digits.length;
+    var plusResult = 0;
+    var index = digitsLen - 1;
+
+    do {
+      plusResult = digits[index] + 1;
+
+
+      if (plusResult === 10 ) {
+        digits[index] = 0;
+
+        if (index === 0) {
+          digits.unshift(1);
+        }
+      } else {
+        digits[index] = plusResult;
+      }
+      index--;
+    } while (plusResult === 10 && index >= 0);
+
+    return digits;
+  };
+
+  // var result = plusOne([9, 9, 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]);
+
+  var moveZeroes = function(nums) {
+    var numsLen = nums.length;
+    var zeroCount = 0;
+    var point = 0;
+
+    while (point<numsLen) {
+      if (nums[point] === 0) {
+        zeroCount++;
+        nums.splice(point, 1);
+        numsLen--;
+      } else {
+        point++;
+      }
+    }
+
+    while (zeroCount>0) {
+      nums.push(0);
+      zeroCount--;
+    }
+
+    console.info("result:", nums);
+  };
+
+  moveZeroes([0,0,1]);
+  // console.info("result:", result);
 };
