@@ -112,6 +112,7 @@ window.onload = function() {
   // var result = intersect([1, 2, 2, 1], [4, 5, 9]);
 
   /**
+   * 数组中形成的数字加 1
    * @param {number[]} digits
    * @return {number[]}
    */
@@ -140,7 +141,10 @@ window.onload = function() {
   };
 
   // var result = plusOne([9, 9, 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]);
-
+  /**
+   * 将数组中的 0 移到数组后面，其它非 0 数字位置相对不变
+   * @param {number []} nums
+   */
   var moveZeroes = function(nums) {
     var numsLen = nums.length;
     var zeroCount = 0;
