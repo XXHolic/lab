@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content=" this,function">
+  <meta content=" this 是一个比较容易弄混的概念。">
+  <meta name="format-detection" content="telephone=no">
+  <title>this 指向示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+function counter(num) {
+  console.info("counter: ",num);
+
+  this.count++;
+  // counter.count++;
+}
+
+counter.count = 0;
+
+var index;
+
+for (index = 0; index < 5; index++) {
+  counter(index);
+}
+
+console.info("counter.count: ",counter.count);
+
+  </script>
+</body>
+
+</html>
