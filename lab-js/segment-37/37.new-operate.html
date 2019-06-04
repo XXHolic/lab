@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="new,function,constructor">
+  <meta content="new 操作符常用在构造函数模式，跟传统的面向类的构造函数不一样。">
+  <meta name="format-detection" content="telephone=no">
+  <title>new 操作符示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+    function Book(name) {
+      this.name = name;
+    }
+
+    Book.prototype.printName = function() {
+      console.log("Print book name:",this.name);
+    };
+
+
+    console.info(Book.prototype.constructor === Book); // true
+    var newBook = new Book('How to read');
+
+
+    console.info(newBook.constructor === Book); // true
+
+    console.info("book name:",newBook.name);
+    newBook.printName();
+
+
+    console.info("Book.prototype ", Book.prototype);
+    console.info('newBook ', newBook);
+    console.info('newBook.__proto__ ', newBook.__proto__);
+
+  </script>
+</body>
+
+</html>
