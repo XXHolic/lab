@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content=" this,function,bind">
+  <meta content=" this 的绑定取决于调用的位置。">
+  <meta name="format-detection" content="telephone=no">
+  <title>this 隐式绑定示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+  function getColor() {
+    console.info(this.color);
+  }
+
+  var obj = {
+    color:'green',
+    getColor: getColor
+  };
+
+  var obj2 = {
+    color: 'blue',
+    getColor: getColor
+  };
+
+  var obj1 = {
+    color: 'green',
+    obj2: obj2
+  };
+
+  var color = 'red';
+
+  var getFunction = obj.getColor;
+
+  getFunction();
+
+
+  obj.getColor(); // 'green'
+  obj1.obj2.getColor();
+
+  setTimeout(obj.getColor,222);
+
+  </script>
+</body>
+
+</html>
