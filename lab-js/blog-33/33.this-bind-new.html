@@ -8,7 +8,7 @@
   <meta name="keywords" content=" this,function,bind">
   <meta content=" this 的绑定取决于调用的位置。">
   <meta name="format-detection" content="telephone=no">
-  <title>this 隐式绑定示例</title>
+  <title>this new 绑定示例</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -21,23 +21,14 @@
 
   </div>
   <script>
-  function getColor() {
-    console.info(this.color);
+  function getColor(color) {
+    this.color = color;
   }
 
-  var obj = {
-    color:'green'
-  };
+  var obj = new getColor('red');
+  console.info(obj.color); // 'red'
 
-  var getFunction = function() {
-    getColor.call(obj);
-  };
 
-  var color = 'red';
-
-  getColor.call('test');
-  getColor.call(obj);
-  getFunction();
 
   </script>
 </body>
