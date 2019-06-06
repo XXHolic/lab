@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="this,function,apply">
+  <meta content=" apply 是运行时用来指定 this 的绑定对象。">
+  <meta name="format-detection" content="telephone=no">
+  <title>apply 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+function getName() {
+  "use strict";
+  console.info(this);
+}
+var book1 = {
+  name: 'How to cry'
+};
+
+getName.call(book1);
+getName.call(null);
+getName.call(undefined);
+getName.call();
+getName.call(1);
+getName.call('one');
+getName.call(true);
+  </script>
+<script>
+  function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+  }
+
+  // console.info(isArray([])); // true
+  // console.info(isArray({})); // false
+
+  var obj = {
+    0:'apple',
+    1:'orange',
+    2:'banana',
+    length: 3,
+  };
+  var arr = Array.prototype.slice.call(obj);
+
+  // console.info(arr);
+</script>
+</body>
+
+</html>

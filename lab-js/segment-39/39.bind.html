@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="this,function,apply">
+  <meta content=" bind 方法创建一个新的函数，在调用时设置 this 关键字为提供的值。">
+  <meta name="format-detection" content="telephone=no">
+  <title>bind 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+  function getName() {
+    "use strict";
+    console.info(this);
+    console.info(arguments);
+  }
+  var book1 = {
+    name: 'How to cry',
+    getName: getName
+  };
+
+  var getName2 = book1.getName;
+  var getNameBind = getName2.bind(book1,1,2,3,[23]);
+
+  getName2();
+  getNameBind();
+
+  </script>
+<script>
+
+</script>
+</body>
+
+</html>
