@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="generator">
+  <meta content="迭代器用的好像不多，是一个很重要的概念">
+  <meta name="format-detection" content="telephone=no">
+  <title> iterator 示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+const produceNumber = (function() {
+  var nextNum;
+  return {
+    [Symbol.iterator]: function() { return this; },
+    next: function() {
+      if (nextNum === undefined) {
+        nextNum = 1;
+      } else {
+        nextNum = nextNum + 2;
+      }
+
+      return {done: nextNum>=9, value: nextNum}
+    }
+  }
+})();
+
+console.info(produceNumber.next()); // 1
+console.info(produceNumber.next()); // 3
+
+for (const iterator of produceNumber) {
+  console.info(iterator);
+}
+
+const str = 'string';
+const iter = str[Symbol.iterator]();
+console.info(iter.next());
+console.info(iter.next());
+console.info(iter.next());
+  </script>
+</body>
+
+</html>
