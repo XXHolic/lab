@@ -55,9 +55,9 @@
   var p = init.next().value;
   p.then(function(data) {
     console.info("promise data:",data);
-    it.next(data);
+    init.next(data);
   },function(err) {
-    it.threw(err);
+    init.threw(err);
   });
     </script>
   </body>
