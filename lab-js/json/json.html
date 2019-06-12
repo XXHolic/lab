@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="generator">
+  <meta content="json 数据处理很常见，其方法有参数还是蛮有用的">
+  <meta name="format-detection" content="telephone=no">
+  <title> json 方法示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+
+
+  </div>
+  <script>
+    var obj = {
+      num:1,
+      bool:true,
+      str: 'string',
+      nothing:null,
+      un:undefined,
+      arr:[1,2,3]
+    };
+
+    var json1 = JSON.stringify(obj,['str','nothing']);
+    console.info("json1:",json1);
+    var json2 = JSON.stringify(obj);
+    console.info("json2:",json2);
+    var json3 = JSON.stringify(obj,function(key,value) {
+      switch (key){
+        case 'num':
+          return 111;
+        case 'str':
+          return '12';
+        default:
+          return value;
+      }
+    });
+    console.info("json3:",json3);
+    var json4 = JSON.stringify(obj,null,4);
+    console.info("json4:",json4);
+
+    var json = '{"a":123}';
+    var objOrigin = JSON.parse(json,function(key,value) {
+      console.info('key',key);
+      if (key==='a') {
+        return 1;
+      } else {
+        return value; // 没有这个，会解析失败
+      }
+    });
+    console.info("objOrigin:",objOrigin);
+  </script>
+</body>
+
+</html>
