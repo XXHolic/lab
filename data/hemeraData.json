@@ -1,0 +1,20 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "id": 123,
+      "text": "todo1 get from request",
+      "completed": false
+    },
+    {
+      "id": 234,
+      "text": "todo2 get from request",
+      "completed": false
+    },
+    {
+      "id": 345,
+      "text": "todo3 get from request",
+      "completed": false
+    }
+  ]
+}
