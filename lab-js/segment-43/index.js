@@ -2,12 +2,12 @@ var fs = require("fs");
 var path = require("path");
 var currentPath = process.cwd();// 获取当前执行路径
 
-console.info("process.cwd()", process.cwd());
 
 var fileArr=[];
 
 function readDir(dir) {
   var exist = fs.existsSync(dir);
+  var excludeDir = /^(\.|node_module)/;
   if (!exist) {
     console.error("目录路径不存在");
     return;
@@ -18,11 +18,11 @@ function readDir(dir) {
     let file = pa[index];
     var pathName = path.join(dir, file);
     var info = fs.statSync(pathName);
-    if (info.isDirectory()) {
-      // console.info("dir:" + file);
+    if (info.isDirectory() && !excludeDir.test(file)) {
+      console.info("dir:" + file);
       readDir(pathName);
     } else {
-      if (path.extname(file) === '.json') {
+      if (path.extname(file) === ".json") {
         // console.info('get it');
         fileArr.push(pathName);
       }

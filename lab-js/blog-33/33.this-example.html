@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="keywords" content=" this,function,bind" />
+    <meta content=" this 的绑定取决于调用的位置。" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>this 绑定示例其它形式</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+
+  <body class="pt50 tc">
+    <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+    <div class="dib tl pt30" id="mainContent"></div>
+    <script>
+      var a = 1;
+      var obj = {
+        a: 2,
+        obj2: {
+          a: 3,
+          fun: function() {
+            console.info(this.a);
+          }
+        }
+      };
+
+      var getA = obj.obj2.fun;
+      getA(); //
+      obj.obj2.fun(); //
+
+      var b = 4;
+      var test1 = function() {
+        var b = 5;
+        console.info('rrr',b);
+        return;
+
+        var b = function() {}
+      };
+
+      test1();
+      console.info(b)
+
+      function getColor(color) {
+        this.color = color;
+      }
+
+      var obj = new getColor("red");
+      console.info(obj.color); // 'red'
+    </script>
+  </body>
+</html>
