@@ -1,13 +1,9 @@
 window.onload = function() {
 
-  var getJSONData = function(url,data={}) {
+  var getJSONData = function(url) {
 
     const promise = new Promise(function(resolve, reject) {
-      fetch(url,{
-        body:JSON.stringify(data),
-        cache: 'no-cache',
-        method:'POST'
-      }).then((response => {
+      fetch(url).then((response => {
         resolve(response.json());
       })).catch(error => {
         reject(error);
