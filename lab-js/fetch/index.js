@@ -1,7 +1,6 @@
 window.onload = function() {
 
-
-  var getJSONData = function(url) {
+  var getJSONData = function(url,data={}) {
 
     const promise = new Promise(function(resolve, reject) {
       fetch(url,{
@@ -29,19 +28,6 @@ window.onload = function() {
 
   console.info("thenResult:", thenResult);
 
-  const doAsyncThing = function() {
-    return new Promise(function(resolve, rejected) {
-      resolve(x);
-    });
-  };
-
-  doAsyncThing().then(function(value) {
-    console.info(value);
-  });
-
-  setTimeout(() => {
-    console.info(222);
-  }, 1000);
 
 
 };
