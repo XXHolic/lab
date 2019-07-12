@@ -3,9 +3,9 @@ window.onload = function() {
   var getJSONData = function(url) {
 
     const promise = new Promise(function(resolve, reject) {
-      fetch(url).then((response => {
+      fetch(url).then(response => {
         resolve(response.json());
-      })).catch(error => {
+      }).catch(error => {
         reject(error);
       });
     });
