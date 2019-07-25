@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>函数继承</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <script>
+      function father(name) {
+        this.name = name;
+        this.colors = ["red", "blue", "green"];
+      }
+      father.prototype.sayName = function() {
+        console.info(this.name);
+      };
+
+      function son(name, age) {
+        debugger;
+        //继承属性
+        // father.call(this, name);
+        father(name);
+
+        this.age = age;
+      }
+      //继承方法
+      debugger;
+      son.prototype = new father();
+      debugger;
+      son.prototype.constructor = son;
+      son.prototype.sayAge = function() {
+        console.info(this.age);
+      };
+      var instance1 = new son("Nicholas", 29);
+      instance1.colors.push("black");
+      console.info(instance1.colors); //"red,blue,green,black"
+      instance1.sayName(); //"Nicholas";
+      instance1.sayAge(); //29
+    </script>
+  </body>
+</html>
