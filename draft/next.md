@@ -23,7 +23,7 @@
 
 ### 第二阶段
 基于 create-react-app 的配置进行按需修改
-- eslint prettier，可以进行不同粒度（例如不同文件夹）进行配置。
+- eslint prettier，可以进行不同粒度（例如不同文件夹）进行配置。(done)
 - style lint。
 - test 参照 vue-cli3 中的引导。
 
