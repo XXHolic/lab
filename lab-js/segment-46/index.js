@@ -1,34 +1,33 @@
-class Person {
-  constructor(name='Tom') {
-    this.name = name;
-  }
+window.onload = function() {
+  // var str = new String("1");
+  // var num = new Number(1);
+  // var bool = new Boolean(true);
+  // var obj = new Object();
+  // var arr = new Array();
+  // var func = new Function('console.info("func")');
+  // func();
+  // var funcDirect = function() {
+  //   console.info("funcDirect");
+  // }
 
-  getName() {
-    return this.name;
-  }
-}
+  // console.info("str:", str);
+  // console.info("num:", num);
+  // console.info("bool:", bool);
+  // console.info("obj:", obj);
+  // console.info("arr:", arr);
+  // console.info("func:", func);
+  // console.info("funcDirect:", funcDirect);
 
-class Student extends Person {
-  constructor(name='student',age=15) {
-    super(name);
-    this.age = age;
-  }
-}
-
-let personA = new Person();
-console.info("personA", personA);
-let studentA = new Student();
-console.info("studentA", studentA);
-
-
-function People(name='Jery') {
-  this.name = name;
-}
-
-People.prototype.getName = function() {
-  return this.name;
-}
-
-var peopleA = new People();
-
-console.info("peopleA", peopleA);
+    var str = String();
+    var num = Number();
+    var bool = Boolean();
+    var obj = Object();
+    var arr = Array();
+    var func = Function();
+    console.info("str:", str);
+    console.info("num:", num);
+    console.info("bool:", bool);
+    console.info("obj:", obj);
+    console.info("arr:", arr);
+    console.info("func:", func);
+};
