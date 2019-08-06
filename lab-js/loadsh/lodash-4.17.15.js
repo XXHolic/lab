@@ -650,6 +650,7 @@
    * @returns {Array} Returns `array`.
    */
   function arrayPush(array, values) {
+    // test
     var index = -1,
         length = values.length,
         offset = array.length;
@@ -1186,7 +1187,7 @@
   }
 
   /**
-   * Creates a unary function that invokes `func` with its argument transformed.
+   * Creates a unary(一元) function that invokes `func` with its argument transformed.
    *
    * @private
    * @param {Function} func The function to wrap.
@@ -1194,6 +1195,7 @@
    * @returns {Function} Returns the new function.
    */
   function overArg(func, transform) {
+    // test
     return function(arg) {
       return func(transform(arg));
     };
@@ -2272,7 +2274,7 @@
 
     /**
      * Creates a stack cache object to store key-value pairs.
-     *
+     * 栈缓存对象保存 key-value
      * @private
      * @constructor
      * @param {Array} [entries] The key-value pairs to cache.
@@ -2607,9 +2609,9 @@
      *
      * @private
      * @param {*} value The value to clone.
-     * @param {boolean} bitmask The bitmask flags.
+     * @param {boolean} bitmask The bitmask flags. // 克隆类型标记
      *  1 - Deep clone
-     *  2 - Flatten inherited properties
+     *  2 - Flatten inherited properties // 展开继承属性
      *  4 - Clone symbols
      * @param {Function} [customizer] The function to customize cloning.
      * @param {string} [key] The key of `value`.
@@ -2629,6 +2631,7 @@
       if (result !== undefined) {
         return result;
       }
+      // 判断是否是对象 用的是 typeof，排除了 null
       if (!isObject(value)) {
         return value;
       }
@@ -2639,9 +2642,10 @@
           return copyArray(value, result);
         }
       } else {
+        // getTag 返回 toString 后结果
         var tag = getTag(value),
             isFunc = tag == funcTag || tag == genTag;
-
+        // 是否是 Buffer
         if (isBuffer(value)) {
           return cloneBuffer(value, isDeep);
         }
@@ -2687,8 +2691,11 @@
           key = subValue;
           subValue = value[key];
         }
+        // test
         // Recursively populate clone (susceptible to call stack limits).
-        assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
+        var temp = baseClone(subValue, bitmask, customizer, key, value, stack);
+        console.info(temp);
+        assignValue(result, key, temp);
       });
       return result;
     }
@@ -3480,6 +3487,7 @@
      * @returns {Array} Returns the array of property names.
      */
     function baseKeys(object) {
+      // test
       if (!isPrototype(object)) {
         return nativeKeys(object);
       }
@@ -5849,6 +5857,7 @@
      * @returns {Array} Returns the array of property names and symbols.
      */
     function getAllKeys(object) {
+      // test
       return baseGetAllKeys(object, keys, getSymbols);
     }
 
@@ -6376,6 +6385,7 @@
      * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
      */
     function isPrototype(value) {
+      // test
       var Ctor = value && value.constructor,
           proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
 
@@ -13305,6 +13315,7 @@
      * // => ['0', '1']
      */
     function keys(object) {
+      // test
       return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
     }
 
