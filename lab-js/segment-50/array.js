@@ -94,23 +94,23 @@ window.onload = function() {
   transferArr.reverse();
   console.info(transferArr); // [5, 4, 3, 2, 1]
 
-  let spliceArr = [1,2,3,4,5]
-  spliceArr.splice(1,0,"add");
+  let spliceArr = [1, 2, 3, 4, 5];
+  spliceArr.splice(1, 0, "add");
   console.info(spliceArr);
 
-  spliceArr.splice(1,1);
+  spliceArr.splice(1, 1);
   console.info(spliceArr);
 
-  spliceArr.splice(1,1,'replace');
+  spliceArr.splice(1, 1, "replace");
   console.info(spliceArr);
 
-  spliceArr.splice(1,2,'add less');
+  spliceArr.splice(1, 2, "add less");
   console.info(spliceArr);
 
-  spliceArr.splice(1,1,'add more','add more');
+  spliceArr.splice(1, 1, "add more", "add more");
   console.info(spliceArr);
 
-  let getArr = [{name:"Tom"},{age:19},{height:170}]
+  let getArr = [{ name: "Tom" }, { age: 19 }, { height: 170 }];
   for (const iterator of getArr.entries()) {
     console.info(iterator);
     // [0,{name:"Tom"}]
@@ -130,4 +130,20 @@ window.onload = function() {
     // {height:170}
   }
 
+  console.info(Array.from("name")); //  ["n", "a", "m", "e"]
+  console.info(Array.from({ name: "Tom", age: "19", length: 3 })); //  [undefined, undefined, undefined]
+  console.info(Array.from({ 0: "Tom", 1: "19", length: 3 })); //  ["Tom", "19", undefined]
+  console.info(Array.from({ length: 3 })); // [undefined, undefined, undefined]
+
+  console.info(Array.of(3)); // [3]
+  console.info(Array(3)); // [,,]
+
+  console.info(Array.of(1, 2, 3)); // [1, 2, 3]
+  console.info(Array.of(undefined)); // [undefined]
+
+  console.info(Array.isArray()); // false
+  console.info(Array.isArray([1])); // true
+  console.info(Array.isArray(new Array())); // true
+  // 鲜为人知的事实：其实 Array.prototype 也是一个数组。
+  console.info(Array.isArray(Array.prototype)); // true
 };
