@@ -12,31 +12,31 @@ window.onload = function() {
     if (item) {
       loop(list);
     } else {
-      console.info('done');
+      console.info("done");
     }
   };
 
   // loop(list);
 
   // 去重算法
-  var a = [1,2,3,4,5,5,4,3,6,2];
-  var b =[];
+  var a = [1, 2, 3, 4, 5, 5, 4, 3, 6, 2];
+  var b = [];
   for (let index = 0; index < a.length; index++) {
     const element = a[index];
-    if (b.indexOf(element)=== -1) {
+    if (b.indexOf(element) === -1) {
       b.push(element);
     }
   }
 
   // console.info(b);
 
-  var a1 = [1, 2, 3, 4, 5, 5,5, 4, 3, 6, 2];
+  var a1 = [1, 2, 3, 4, 5, 5, 5, 4, 3, 6, 2];
   for (let index = 0; index < a1.length; index++) {
     const element = a[index];
     let indexFront = a1.indexOf(element);
     let indexBehind = a1.lastIndexOf(element);
     while (indexFront !== indexBehind) {
-      a1.splice(indexBehind,1);
+      a1.splice(indexBehind, 1);
       indexBehind = a1.lastIndexOf(element);
     }
   }
@@ -51,5 +51,17 @@ window.onload = function() {
   }, []);
   console.log(result);
 
-
+  // 最优去重算法
+  var containsDuplicate = function(nums) {
+    let s = new Set();
+    while (nums.length) {
+      let temp = nums.pop();
+      if (s.has(temp)) {
+        return true;
+      } else {
+        s.add(temp);
+      }
+    }
+    return false;
+  };
 };

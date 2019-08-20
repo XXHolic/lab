@@ -146,4 +146,52 @@ window.onload = function() {
   console.info(Array.isArray(new Array())); // true
   // 鲜为人知的事实：其实 Array.prototype 也是一个数组。
   console.info(Array.isArray(Array.prototype)); // true
+
+  class LazyManClass {
+    constructor(name) {
+      this.name = name;
+      this.task = [];
+      console.info( `Hi I am ${name}`);
+      let _self = this;
+      setTimeout(function() {
+        _self.next();
+      },0);
+    }
+
+    next() {
+      let fun = this.task.shift();
+      fun && fun();
+    }
+
+    eat(para) {
+      this.task.push(this._eat.bind(this,para));
+      return this;
+    }
+    _eat(para) {
+      console.info(`I am eat ${para}`);
+      this.next();
+    }
+
+    sleep(time) {
+      console.info(`等待 ${time} 秒`);
+      this.task.push(this._sleep.bind(this,time));
+      return this;
+    }
+
+    _sleep(para) {
+
+      // let _self = this;
+      setTimeout(()=>{
+        this.next();
+      },para*1000);
+    }
+  }
+
+  function LazyMan(name) {
+    return new LazyManClass(name);
+  }
+
+  LazyMan('Tony');
+
+LazyMan('Tony').sleep(10).eat('lunch');
 };
