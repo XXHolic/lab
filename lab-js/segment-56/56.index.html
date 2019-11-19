@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="paste,event,js">
+  <meta content="粘贴格式化">
+  <meta name="format-detection" content="telephone=no">
+  <title>粘贴格式化</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .p-container {
+      overflow-y: auto;
+      border: 1px solid #333;
+      max-height: 100px;
+    }
+  </style>
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/37" target="_blank">复制到剪切板的问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <div>
+      <p>下面是换行的文本，复制后粘贴到下面的可编辑区域</p>
+      TAXES AND SURCHARGES<br />
+      UNUSED GOVERNMENT AND AIRPORT TAXES AND CARRIER<br />
+      IMPOSED SURCHARGES/YQ WILL BE REFUNDED<br />
+      --------------------------------------------------<br />
+      NO SHOW<br />
+      IN CASE OF A NO SHOW WITHIN A FARE COMPONENT THAT<br />
+      FARE COMPONENT BECOMES NON REFUNDABLE.<br />
+    </div>
+
+    <p>下面是使用 contenteditable 属性的标签，让粘贴的内容保持换行</p>
+    <p contenteditable="true" id='pContent' class="p-container"></p>
+    <button id="getPCon">获取内容</button>
+    <textarea name="" id="areaContent" cols="30" rows="3"></textarea>
+    <button id="getAreaCon">获取内容</button>
+
+
+  </div>
+  <script src="./index.js"></script>
+</body>
+
+</html>
