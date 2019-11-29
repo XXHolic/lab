@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>函数继承</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <div>
+      <button id="test">点击报错</button>
+    </div>
+    <script>
+    // window.onerror = function(message, source, lineno, colno, error) {
+    //   console.info('window.onerror:',message, source, lineno, colno, error);
+    // }
+
+    // 资源加载异常
+    window.addEventListener('error', (error) => {
+      console.info('addEventListener.onerror:',error);
+    }, true);
+
+    // promise 异常
+    window.addEventListener("unhandledrejection", function(error){
+      console.info('unhandledrejection:',error);
+    });
+
+    </script>
+    <script>
+      document.getElementById('test').onclick = function() {
+        throw new Error(' click error');
+      }
+      new Promise(()=>{
+        a+2;
+      })
+      throw new Error('normal error');
+
+    </script>
+    <link rel="stylesheet" href="./error.css" />
+  </body>
+</html>
