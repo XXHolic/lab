@@ -11,6 +11,8 @@ window.onload = function () {
     console.info(CSS.supports("display", "test"));
   }
 
+  isSupportCSS();
+
 
 
   function isSupportEvent(eventName) {
