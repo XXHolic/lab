@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <style>
-    body {
+    .pop-container {
       position: relative;
-      overflow-x: hidden;
+      width: 100px;
+      height: 100px;
+      background-color: rgb(147, 230, 79);
     }
     .pop{
       position: absolute;
@@ -33,10 +35,14 @@
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
   <div class="dib tl pt30" id="mainContent">
-   脱离了文档流，但还是可以左右滑动，这个是无法滑动
+   换了参考对象的 浮层效果
+   <div class="pop-container">
+      pop container
+    <div class="pop">pop</div>
+   </div>
 
   </div>
-  <div class="pop"></div>
+
 </body>
 
 </html>
