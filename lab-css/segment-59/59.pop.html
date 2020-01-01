@@ -13,11 +13,9 @@
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <style>
-    .pop-container {
+    body {
       position: relative;
-      width: 100px;
-      height: 100px;
-      background-color: rgb(147, 230, 79);
+      width: 150px;
     }
     .pop{
       position: absolute;
@@ -26,7 +24,7 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, .5);
-      transform: translateX(800)
+      transform: translateX(180%)
     }
   </style>
 
@@ -34,15 +32,10 @@
 
 <body class="pt50">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/24" target="_blank">canvas 图片圆角问题</a></h2> -->
-  <div class="dib tl pt30" id="mainContent">
-   换了参考对象的 浮层效果
-   <div class="pop-container">
-      pop container
-    <div class="pop">pop</div>
-   </div>
+   设置了 body 宽度为 150px
+   pop 的 transform: translateX(180%)
 
-  </div>
-
+  <div class="pop">pop</div>
 </body>
 
 </html>
