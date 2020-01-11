@@ -8,7 +8,7 @@
   <meta name="keywords" content="scroll,fixed,js,css,html">
   <meta content="滚动贴顶效果">
   <meta name="format-detection" content="telephone=no">
-  <title>滚动贴顶效果</title>
+  <title>滚动贴顶效果-sticky</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -23,6 +23,23 @@
     .header-img {
       width: 100%;
     }
+    body {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .title {
+      position: sticky;
+      top: 0;
+      margin: 0;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      background-color: #fff;
+    }
+    .tip {
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -30,9 +47,10 @@
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/64" target="_blank">textarea</a></h2> -->
   <div class="dib" id="mainContent">
     <img class="header-img" src="../../images/sg-60/header.jpeg" alt="header image">
-    <div id=""></div>
-    <h2 class="tc">坚定的锡兵</h2>
-    <div class="content"><p>
+    <h2 class="title" id="title">坚定的锡兵</h2>
+    <div class="content">
+      <p class="tip">使用 sticky 定位。</p>
+      <p>
     从前有二十五个锡做的兵士，他们都是兄弟，因为都是从一根旧的锡汤匙铸出来的。他们肩上扛着毛瑟枪，眼睛直直地向前看着。他们的一半是红的，一半是蓝的，非常美丽。他们呆在一个匣子里。匣子盖被一揭开，他们在这世界上所听到的第一句活是：“锡兵！”这句话是一个小孩子喊出来的，他拍着双手。这是他的生日，这些锡兵就是他所得到的一件礼物。他现在把这些锡兵摆在桌子上。</p>
 
     　　<p>每个兵都是一模一样的，只有一个稍微有点不同，他只有一条腿，因为他是最后铸出的，锡不够用了！但是他仍然能够用一条腿坚定地站着，跟别人用两条腿站着没有两样，而且后来最引人注意的也就是他。</p>
@@ -93,9 +111,9 @@
 
 　　<p>正在这时候，有一个小孩子拿起锡兵来，把他一股劲儿扔进火炉里去了。他没有说明任何理由，这当然又是鼻烟壶里的那个小妖精在捣鬼。</p>
 
-　　<p>锡兵站在那儿，全身亮起来了，感到自己身上一股可怕的热气。不过这热气究竟是从火里发出来的呢，还是从他的爱情中发出来的呢，他完全不知道。他的一切光彩现在都没有了。这是他在旅途中失去的呢，还是由于悲愁的结果，谁也说不出来。他望着那位娇小的姑娘，而她也在望着他。他觉得他的身体在慢慢地融化，但是他仍然扛着枪，坚定地站着不动。这时门忽然开了，一阵风闯进来，吹起这位小姐。她就象茜尔妃德②一样，飞向火炉，飞到锡兵的身边去，化为火焰，立刻不见了，这时锡兵已经化成了一个锡块。第二天，当女仆把炉灰倒出去的时候，她发现锡兵已经成了一颗小小的锡心。可是那位舞蹈家留下来的只是那颗亮晶晶的装饰品，但它现在已经烧得象一块黑炭了。</p></div>
+　　<p>锡兵站在那儿，全身亮起来了，感到自己身上一股可怕的热气。不过这热气究竟是从火里发出来的呢，还是从他的爱情中发出来的呢，他完全不知道。他的一切光彩现在都没有了。这是他在旅途中失去的呢，还是由于悲愁的结果，谁也说不出来。他望着那位娇小的姑娘，而她也在望着他。他觉得他的身体在慢慢地融化，但是他仍然扛着枪，坚定地站着不动。这时门忽然开了，一阵风闯进来，吹起这位小姐。她就象茜尔妃德一样，飞向火炉，飞到锡兵的身边去，化为火焰，立刻不见了，这时锡兵已经化成了一个锡块。第二天，当女仆把炉灰倒出去的时候，她发现锡兵已经成了一颗小小的锡心。可是那位舞蹈家留下来的只是那颗亮晶晶的装饰品，但它现在已经烧得象一块黑炭了。</p></div>
   </div>
-  <script src="./index.js"></script>
+  <!-- <script src="./index.js"></script> -->
 </body>
 
 </html>
