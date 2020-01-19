@@ -11,21 +11,37 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../css/newreset.css">
   <link rel="stylesheet" href="../css/common.css">
-  <link rel="stylesheet" href="../css/lab-css/css-zindex.css">
+  <style>
+    .modal-task {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      height: 100%;
+      z-index: 999;
+
+    }
+    .modal-task1 {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-task2 {
+      text-align: right;
+      background-color: rgba(219, 138, 31, 0.4);
+    }
+  </style>
 </head>
 <body class="pt50 tc">
   <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/blog/issues/9" target="_blank">CSS浮动float相关初解</a></h2> -->
-  <div class="dib tl">
-    <h3></h3>
-    <div class="zIndex-container pr">
-      <div class="zIndex-ele pa zIndex1">This is first element!</div>
-      <div class="zIndex-ele pa zIndex2">This is second element!</div>
-    </div>
-    <div class="zIndex-container pr">
-      <div class="zIndex-test">
-        <div class="zIndex-em">fdsafda</div>
+    <div>
+      <div>
+        <div class="modal-task modal-task1">浮层1</div>
       </div>
     </div>
-  </div>
+    <div>
+      <div>
+        <div class="modal-task modal-task2">在后面的 浮层2</div>
+      </div>
+    </div>
 </body>
 </html>
