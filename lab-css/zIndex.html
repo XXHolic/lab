@@ -22,10 +22,29 @@
       z-index: 999;
 
     }
-    .modal-task1 {
-      background-color: rgb(212, 172, 172);
+    .modal-wrap {
+
+      position: fixed;
+    overflow: auto;
+    top: 15px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    z-index: 999;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    transform: translateZ(1px);
     }
+    .modal-task1 {
+      background-color: rgb(212, 172, 172,.4);
+    }
+
     .modal-task2 {
+      /* display: none; */
       top: 40px;
       text-align: right;
       background-color: rgba(219, 138, 31, 1);
@@ -37,6 +56,7 @@
     <div>
       <div>
         <div class="modal-task modal-task1">前面的 浮层1</div>
+        <div class="modal-wrap">这是弹窗主要内容</div>
       </div>
     </div>
     <div>
@@ -44,5 +64,11 @@
         <div class="modal-task modal-task2">在后面的 浮层2</div>
       </div>
     </div>
+    <script>
+      var body = document.body;
+      var ele1Str = '<div><div><div class="modal-task modal-task1">前面的 浮层1</div></div></div>';
+      var ele2Str = '<div><div><div class="modal-task modal-task2">在后面的 浮层2</div></div></div>';
+
+    </script>
 </body>
 </html>
