@@ -81,6 +81,9 @@ window.onload = function() {
     case 'html-hidden.html':
       htmlStr = '<p>容器为 body 页面滚动，html 设置 overflow: hidden</p>' + htmlStr;
       break;
+    case 'full-screen.html':
+      htmlStr = '<p>全屏显示，请先“添加到主屏幕”，从主屏幕进入</p>' + htmlStr;
+      break;
   }
   document.querySelector('#container').innerHTML = htmlStr;
 }
