@@ -84,6 +84,8 @@ window.onload = function() {
     case 'full-screen.html':
       htmlStr = '<p>全屏显示，请先“添加到主屏幕”，从主屏幕对应图标进入</p>' + htmlStr;
       break;
-  }
+    }
+    htmlStr = '对应文：<a href="https://github.com/XXHolic/segment/issues/70" target="_blank">Safari 导航栏</a>' + htmlStr;
+
   document.querySelector('#container').innerHTML = htmlStr;
 }
