@@ -62,5 +62,25 @@ window.onload = function() {
 　　<p>正在这时候，有一个小孩子拿起锡兵来，把他一股劲儿扔进火炉里去了。他没有说明任何理由，这当然又是鼻烟壶里的那个小妖精在捣鬼。</p>
 
 　　<p>锡兵站在那儿，全身亮起来了，感到自己身上一股可怕的热气。不过这热气究竟是从火里发出来的呢，还是从他的爱情中发出来的呢，他完全不知道。他的一切光彩现在都没有了。这是他在旅途中失去的呢，还是由于悲愁的结果，谁也说不出来。他望着那位娇小的姑娘，而她也在望着他。他觉得他的身体在慢慢地融化，但是他仍然扛着枪，坚定地站着不动。这时门忽然开了，一阵风闯进来，吹起这位小姐。她就象茜尔妃德一样，飞向火炉，飞到锡兵的身边去，化为火焰，立刻不见了，这时锡兵已经化成了一个锡块。第二天，当女仆把炉灰倒出去的时候，她发现锡兵已经成了一颗小小的锡心。可是那位舞蹈家留下来的只是那颗亮晶晶的装饰品，但它现在已经烧得象一块黑炭了。</p></div>`;
+  var pathName = window.location.pathname;
+  var pathNameSplit = pathName.split('/');
+  var pageName = pathNameSplit[pathNameSplit.length-1];
+  switch(pageName) {
+    case 'index.html':
+      htmlStr = '<p>除了图片宽度样式，无任何其它 CSS ，无特殊结构html</p>' + htmlStr;
+      break;
+    case 'normalize.html':
+      htmlStr = '<p>只添加了 normalize 样式重置</p>' + htmlStr;
+      break;
+    case 'no-body.html':
+      htmlStr = '<p>容器非 body 的页面滚动</p>' + htmlStr;
+      break;
+    case 'body.html':
+      htmlStr = '<p>容器为 body 的页面滚动</p>' + htmlStr;
+      break;
+    case 'html-hidden.html':
+      htmlStr = '<p>容器为 body 的页面滚动，html 设置 overflow: hidden</p>' + htmlStr;
+      break;
+  }
   document.querySelector('#container').innerHTML = htmlStr;
 }
