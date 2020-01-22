@@ -79,7 +79,7 @@ window.onload = function() {
       htmlStr = '<p>容器为 body 的页面滚动</p>' + htmlStr;
       break;
     case 'html-hidden.html':
-      htmlStr = '<p>容器为 body 的页面滚动，html 设置 overflow: hidden</p>' + htmlStr;
+      htmlStr = '<p>容器为 body 页面滚动，html 设置 overflow: hidden</p>' + htmlStr;
       break;
   }
   document.querySelector('#container').innerHTML = htmlStr;
