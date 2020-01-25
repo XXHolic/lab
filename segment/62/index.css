@@ -1,0 +1,85 @@
+.container {
+  width: 250px;
+}
+
+.box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+.same-level-box1 {
+  top: 20px;
+  left: 15px;
+  z-index: 10;
+  background-color: rgb(155, 146, 146);
+}
+.same-level-box2 {
+  z-index: 5;
+  background-color: rgb(122, 236, 122);
+}
+.same-level-box3 {
+  top: 40px;
+  left: 30px;
+  z-index: 15;
+  background-color: rgb(92, 174, 221);
+}
+
+.diff-level-box1 {
+  top: 80px;
+  left: 15px;
+  z-index: 10;
+  background-color: rgb(155, 146, 146);
+}
+
+.diff-level-box2 {
+  z-index: 5;
+  background-color: rgb(122, 236, 122);
+}
+
+.container1 {
+  z-index: 3;
+  height: 100px;
+  background-color: rgb(92, 174, 221);
+}
+
+
+.diff-level-box3 {
+  top: 20px;
+  left: 120px;
+  z-index: 15;
+  background-color: rgb(155, 146, 146);
+}
+
+.diff-level-box4 {
+  top: -30px;
+  left: 130px;
+  z-index: 10;
+  background-color: rgb(122, 236, 122);
+}
+
+.container2 {
+  z-index: 5;
+  height: 100px;
+  background-color: rgb(92, 174, 221);
+}
+
+.container3 {
+  z-index: 3;
+  height: 100px;
+  background-color: rgb(131, 114, 224);
+}
+
+.diff-level-box5 {
+  top: 20px;
+  left: 180px;
+  z-index: 8;
+  background-color: rgb(155, 146, 146);
+}
+
+.diff-level-box6 {
+  top: -8px;
+  left: 105px;
+  z-index: 10;
+  background-color: rgb(122, 236, 122);
+}

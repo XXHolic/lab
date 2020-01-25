@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="z-index,css,html,position">
+  <meta content="不同层级堆叠">
+  <meta name="format-detection" content="telephone=no">
+  <title>不同层级堆叠</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/64" target="_blank">textarea</a></h2> -->
+  <div class="dib tl container">
+    <p>不同层级堆叠</p>
+    <p>父元素没有 z-index</p>
+    <div class="pr">
+      容器1
+      <div class="box diff-level-box1">容器1 后代<br/> z-index: 10</div>
+    </div>
+    <div class="pr" style="margin-bottom: 170px;">
+      容器2
+      <div class="box diff-level-box2">容器2 后代 <br/> z-index: 5</div>
+    </div>
+
+    <p>父元素之一有 z-index</p>
+    <div class="pr container1">
+      容器1 z-index:3
+      <div class="box diff-level-box3">容器1 后代<br/> z-index: 15</div>
+    </div>
+    <div class="pr" style="margin-bottom: 80px;">
+      容器2 无 z-index
+      <div class="box diff-level-box4">容器2 后代 <br/> z-index: 10</div>
+    </div>
+
+
+    <p>父元素都有 z-index</p>
+    <div class="pr container2">
+      容器1 z-index:5
+      <div class="box diff-level-box5">容器1 后代<br/> z-index: 8</div>
+    </div>
+    <div class="pr container3">
+      容器2 z-index: 3
+      <div class="box diff-level-box6">容器2 后代 <br/> z-index: 10</div>
+    </div>
+
+  </div>
+</body>
+
+</html>
