@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="z-index,css,html,position,scroll">
-  <meta content="浮层穿透滚动问题"">
+  <meta content="浮层穿透滚动问题，推测是 overflow-scrolling: touch,验证一下">
   <meta name="format-detection" content="telephone=no">
-  <title>浮层穿透滚动问题</title>
+  <title>无 overflow-scrolling: touch </title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
-  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/normalize.css">
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="./index.css">
 </head>
@@ -18,7 +18,7 @@
 <body class="pt50 tc">
   <div class="dib tl" id='container'>
     <button class="btn" id='showModal'>点击出现浮层</button>
-    <p>出现浮层后，仍然可以透过浮层滚动页面，这不是期望的现象</p>
+    <p>没有设置 overflow-scrolling: touch</p>
   </div>
   <script src="../../js/common/insertLink.js"></script>
   <script src="./index.js"></script>
