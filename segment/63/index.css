@@ -1,3 +1,7 @@
+body {
+  width: 100%;
+}
+
 .modal {
   overflow: hidden;
   position: fixed;
