@@ -120,6 +120,16 @@ a:active, a:hover {
   text-overflow: ellipsis;
   background-color: #fff;
 }
+.normal-header {
+  margin: 0;
+  box-shadow: 0 0 5px #333;
+  height: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color: #fff;
+}
 .pt50 {
   padding-top: 50px;
 }

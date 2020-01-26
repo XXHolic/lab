@@ -20,7 +20,9 @@ function modal() {
   document.body.appendChild(ele);
   btnEle.onclick = function() {
     document.body.removeChild(ele);
-    recoverEle();
+    if (recoverEle) {
+      recoverEle();
+    }
   }
 
 }
@@ -28,7 +30,7 @@ function modal() {
 
 
 window.onload = function() {
-  // insertLink({title:'z-index',linkIndex: 71})
+  insertLink({title:'h5 穿透滚动',linkIndex: 72,className:'normal-header'})
   var arr = Array(30);
   var container = document.querySelector('#container');
   for (let index = 0; index < arr.length; index++) {
