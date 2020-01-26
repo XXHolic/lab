@@ -20,9 +20,12 @@ function modal() {
   document.body.appendChild(ele);
   btnEle.onclick = function() {
     document.body.removeChild(ele);
+    recoverEle();
   }
 
 }
+
+
 
 window.onload = function() {
   // insertLink({title:'z-index',linkIndex: 71})
