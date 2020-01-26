@@ -5,6 +5,7 @@
  */
 function insertLink(params) {
   var linkType = params.type || 'segment';
+  var eleClass = params.className || 'fix-header';
   var linkIndex = params.linkIndex;
   var title = params.title;
   var url = '';
@@ -23,7 +24,7 @@ function insertLink(params) {
   }
 
   var insertEle = document.createElement('h2');
-  insertEle.setAttribute('class','fix-header');
+  insertEle.setAttribute('class',eleClass);
   var linkEle = document.createElement('a');
   linkEle.setAttribute('href',url);
   linkEle.setAttribute('target','_blank');
