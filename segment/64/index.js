@@ -69,17 +69,20 @@ window.onload = function() {
 
   document.body.appendChild(canvasEle);
 
-  // var canvasEle2 = Util.CANVAS.createElement();
-  // var canvasContext2 = canvasEle2.getContext('2d');
-  // var centerX = 100;
-  // var centerY = 50;
-  // var radius = 10;
-  // var startAngle = 0;
-  // var endAngle = 2*Math.PI;
-  // canvasContext2.beginPath()
-  // canvasContext2.arc(centerX,centerY,radius,startAngle,endAngle);
-  // canvasContext2.fillStyle = '#900';
-  // canvasContext2.fill();
-  // canvasContext2.closePath();
-  // document.body.appendChild(canvasEle2);
+  document.querySelector('#clear').onclick = function() {
+    var centerX = 248/2;
+    var centerY = 415/2;
+    var maxRadius = Math.sqrt( Math.pow(centerX,2) + Math.pow(centerY,2) ) + 1;
+    var radius = 10;
+    canvasContext.beginPath();
+    var count = setInterval(() => {
+      if (radius>maxRadius) {
+        clearInterval(count);
+      }
+      radius+=3;
+      canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      canvasContext.fill();
+    }, 10);
+
+  }
 }
