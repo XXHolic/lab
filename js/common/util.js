@@ -100,6 +100,16 @@ Util.CANVAS = {
     canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
     return canvas;
   },
+  // 绘制矩形
+  drawRect: function({context,x, y, width, height,fillStyle}){
+    context.beginPath();
+    if (fillStyle) {
+      context.fillStyle = fillStyle;
+      context.fill();
+    }
+    context.fillRect(x, y,width, height);
+    context.closePath();
+  },
   // 生成有圆角的矩形
   drawRoundedRect: function(context, x, y, width, height, radius) {
     context.beginPath();
