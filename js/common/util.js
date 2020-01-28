@@ -180,7 +180,7 @@ Util.CANVAS = {
     var textHeightValue = rowCount < limitRow ? (textHeight + lineHeight): textHeight;
     return textHeightValue;
   },
-  // 绘图处理
+  // 图像灰度处理
   toGray: function(context,dx, dy, dirtyX, dirtyY) {
     var imageData = context.getImageData(dx, dy, dirtyX, dirtyY);
     var colorDataArr = imageData.data;
