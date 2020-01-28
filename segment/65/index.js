@@ -1,6 +1,6 @@
 
 window.onload = function() {
-  // insertLink({title:'h5 穿透滚动',linkIndex: 72})；
+  insertLink({title:'Canvas 图像灰度处理',linkIndex: 74});
 
 
 
