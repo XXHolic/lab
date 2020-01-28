@@ -180,9 +180,16 @@ Util.CANVAS = {
     var textHeightValue = rowCount < limitRow ? (textHeight + lineHeight): textHeight;
     return textHeightValue;
   },
-  // 图像灰度处理
-  toGray: function(context,dx, dy, dirtyX, dirtyY) {
-    var imageData = context.getImageData(dx, dy, dirtyX, dirtyY);
+  /**
+   * 图像灰度处理
+   * @param {*} context canvas 上下文
+   * @param {*} sx 提取图像数据矩形区域的左上角 x 坐标。
+   * @param {*} sy 提取图像数据矩形区域的左上角 y 坐标。
+   * @param {*} sw 提取图像数据矩形区域的宽度。这要注意一下，canvas 标签上 width 属性值，不是渲染后实际宽度值，否则在高清手机屏幕下且做了高清处理，只能获取到部分图像宽度。
+   * @param {*} sh 提取图像数据矩形区域的高度。这要注意一下，canvas 标签上 height 属性值，不是渲染后实际高度值，否则在高清手机屏幕下且做了高清处理，只能获取到部分图像高度。
+   */
+  toGray: function(context,sx, sy, sw, sh) {
+    var imageData = context.getImageData(sx, sy, sw, sh);
     var colorDataArr = imageData.data;
     var colorDataArrLen = colorDataArr.length;
     for(var i = 0; i < colorDataArrLen; i+=4) {
