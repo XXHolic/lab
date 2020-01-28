@@ -1,0 +1,5 @@
+.bg-canvas {
+  background:no-repeat url(./poster.jpeg) center center;
+  background-size: 100%;
+  /* transition: all cubic-bezier(0.68, -0.55, 0.265, 1.55); */
+}
