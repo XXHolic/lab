@@ -23,7 +23,7 @@ window.onload = function() {
       }
 
     }
-    canvasContext.putImageData(imageData,0,0,248,415);
+    canvasContext.putImageData(imageData,0,0);
 
 
   document.body.appendChild(canvasEle);
