@@ -179,5 +179,18 @@ Util.CANVAS = {
 
     var textHeightValue = rowCount < limitRow ? (textHeight + lineHeight): textHeight;
     return textHeightValue;
+  },
+  // 绘图处理
+  toGray: function(context,dx, dy, dirtyX, dirtyY) {
+    var imageData = context.getImageData(dx, dy, dirtyX, dirtyY);
+    var colorDataArr = imageData.data;
+    var colorDataArrLen = colorDataArr.length;
+    for(var i = 0; i < colorDataArrLen; i+=4) {
+      var gray=(colorDataArr[i]+colorDataArr[i+1]+colorDataArr[i+2])/3;
+      colorDataArr[i] = gray;
+      colorDataArr[i+1] = gray;
+      colorDataArr[i+2] = gray;
+    }
+    context.putImageData(imageData,0,0);
   }
 }
