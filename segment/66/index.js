@@ -4,19 +4,16 @@ window.onload = function() {
 
   var canvasEle = Util.CANVAS.createElement(248,415);
   canvasEle.setAttribute('class','bg-canvas');
+
   var canvasContext = canvasEle.getContext('2d');
 
-  // var img = new Image();
-  // img.crossOrigin = "Anonymous";
-  // img.src = './poster.jpeg';
-  // img.onload = function() {
-  //   canvasEle.drawImage(img,0,0);
-  // }
-
-  // var img  = document.querySelector('#image');
-  // canvasContext.drawImage(img,0,0,248,415);
-  var rectProperty = {context:canvasContext,x:0, y:0, width:248, height:415,fillStyle:'rgba(0,0,0,0.5)'}
-  Util.CANVAS.drawRect(rectProperty);
+  var img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.src = './poster.jpeg';
+  img.onload = function() {
+    canvasContext.drawImage(img,0,0,248,415);
+    Util.CANVAS.toGray(canvasContext,0,0,248*2,415*2)
+  }
 
   canvasContext.globalCompositeOperation = "destination-out";
   var deviceType = Util.getDeviceType();
