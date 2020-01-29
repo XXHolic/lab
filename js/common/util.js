@@ -199,5 +199,51 @@ Util.CANVAS = {
       colorDataArr[i+2] = gray;
     }
     context.putImageData(imageData,0,0);
+  },
+  /**
+   * 获取透明所占百分比，初始参考透明值是 128
+   * @param {object} context canvas 上下文对象
+   * @param {number} opacity 透明度参考值
+   */
+  getOpacityPercentage: function(context, opacity = 128) {
+    var imageData = context.getImageData(0,0,248,415);
+    var colorDataArr = imageData.data;
+    // console.info('color data:',colorDataArr);
+    var colorDataArrLen = colorDataArr.length;
+    var eraseArea = [];
+    for(var i = 0; i < colorDataArrLen; i += 4) {
+      // 严格上来说，判断像素点是否透明需要判断该像素点的a值是否等于0，
+      if(colorDataArr[i + 3] < opacity) {
+        eraseArea.push(colorDataArr[i + 3]);
+      }
+    }
+    var divResult = eraseArea.length / (colorDataArrLen/4);
+    var pointIndex = String(divResult).indexOf('.');
+    if (pointIndex>-1) {
+      divResult = String(divResult).slice(0,pointIndex+5);
+    }
+    return Number(divResult).toFixed(2);
+
+  },
+  /**
+   * 清除画布
+   * @param {object} context canvas 上下文对象
+   * @param {number} width 画布高度
+   * @param {number} height 画布宽度
+   */
+  clear: function(context,width=0,height=0) {
+    var centerX = width/2;
+    var centerY = height/2;
+    var maxRadius = Math.sqrt( Math.pow(centerX,2) + Math.pow(centerY,2) ) + 1;
+    var radius = 10;
+    context.beginPath();
+    var count = setInterval(() => {
+      if (radius>maxRadius) {
+        clearInterval(count);
+      }
+      radius+=3;
+      context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      context.fill();
+    }, 10);
   }
 }
