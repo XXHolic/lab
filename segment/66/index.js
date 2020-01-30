@@ -61,7 +61,7 @@ var page = {
       var clearPosY = deviceType === 'phone'?event.touches[0].clientY:event.clientY;
       var centerX = clearPosX - canvasEle.offsetLeft;
       var centerY = clearPosY - canvasEle.offsetTop;
-      var radius = 8;
+      var radius = 10;
       canvasContext.beginPath();
       canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2);
       canvasContext.fill();
