@@ -87,6 +87,23 @@ Util.appendText = function(ele, text) {
   ele && ele.appendChild(newELe);
 }
 
+// 加载中提示
+Util.loading = {
+  create: function() {
+    var ele = document.createElement('div');
+    var text = document.createTextNode('loading ~ ~ ~');
+    ele.appendChild(text);
+    this.loadingEle = ele;
+  },
+  show:function() {
+    this.create.bind(this)();
+    document.querySelector('body').appendChild(this.loadingEle);
+  },
+  hide: function() {
+    document.querySelector('body').removeChild(this.loadingEl);
+  }
+}
+
 // canvas 各种处理
 Util.CANVAS = {
   // 处理显示模糊问题

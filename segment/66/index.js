@@ -94,6 +94,8 @@ var page = {
 
 
 window.onload = function() {
+  Util.loading.show();
   // insertLink({title:'h5 穿透滚动',linkIndex: 72})；
   page.init();
+  Util.loading.hide();
 }
