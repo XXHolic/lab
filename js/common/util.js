@@ -100,7 +100,7 @@ Util.loading = {
     document.querySelector('body').appendChild(this.loadingEle);
   },
   hide: function() {
-    document.querySelector('body').removeChild(this.loadingEl);
+    document.querySelector('body').removeChild(this.loadingEle);
   }
 }
 
