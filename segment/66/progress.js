@@ -88,6 +88,7 @@ var page = {
   pageEvent: function() {
     var canvasWidth = this.canvasWidth;
     var canvasHeight = this.canvasHeight;
+    var canvasContext = this.canvasContext;
     document.querySelector('#clear').onclick = function() {
       Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
     }
