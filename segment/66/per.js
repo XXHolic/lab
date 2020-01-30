@@ -5,6 +5,7 @@ var page = {
   canvasHeight: 415,
   init: function() {
     this.createCanvas();
+    this.pageEvent();
   },
   createCanvas: function() {
     var canvasObj = Util.CANVAS.createElement(this.canvasWidth,this.canvasHeight);
@@ -27,6 +28,8 @@ var page = {
     document.body.appendChild(this.canvasEle);
   },
   canvasEventInit: function() {
+    var canvasWidth = this.canvasWidth;
+    var canvasHeight = this.canvasHeight;
     var deviceType = Util.getDeviceType();
     var isStartClear = false; // 是否开始擦出，PC 上要按一下才算开始
     var isClearAll = false; // 是否全部以清除了
@@ -41,6 +44,12 @@ var page = {
     var endEventFun = function() {
       console.info('erase end');
       if (isClearAll) return;
+      var percentage = Util.CANVAS.getOpacityPercentage(canvasContext);
+      console.info('像素百分比：',percentage);
+      if (percentage > 0.5) {
+        Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
+        isClearAll = true;
+      }
       isStartClear = false;
     }
 
@@ -75,6 +84,13 @@ var page = {
       }
     }
   },
+  pageEvent: function() {
+    var canvasWidth = this.canvasWidth;
+    var canvasHeight = this.canvasHeight;
+    document.querySelector('#clear').onclick = function() {
+      Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
+    }
+  }
 }
 
 

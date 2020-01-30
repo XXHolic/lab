@@ -82,13 +82,6 @@ var page = {
         clearFun(event);
       }
     }
-  },
-  pageEvent: function() {
-    var canvasWidth = this.canvasWidth;
-    var canvasHeight = this.canvasHeight;
-    document.querySelector('#clear').onclick = function() {
-      Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
-    }
   }
 }
 
