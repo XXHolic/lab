@@ -81,7 +81,7 @@ var page = {
 
 window.onload = function() {
   Util.loading.show();
-  // insertLink({title:'h5 穿透滚动',linkIndex: 72})；
+  insertLink({title:'Canvas 橡皮擦效果',linkIndex: 75});
   page.init();
   Util.loading.hide();
 }
