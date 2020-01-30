@@ -5,7 +5,6 @@ var page = {
   canvasHeight: 415,
   init: function() {
     this.createCanvas();
-    this.pageEvent();
   },
   createCanvas: function() {
     var canvasObj = Util.CANVAS.createElement(this.canvasWidth,this.canvasHeight);
@@ -46,8 +45,8 @@ var page = {
       if (isClearAll) return;
       var percentage = Util.CANVAS.getOpacityPercentage(canvasContext);
       console.info('像素百分比：',percentage);
-      if (percentage > 0.5) {
-        Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
+      if (percentage > 0.3) {
+        canvasContext.clearRect(0,0,canvasWidth,canvasHeight);
         isClearAll = true;
       }
       isStartClear = false;
@@ -66,6 +65,7 @@ var page = {
       canvasContext.beginPath();
       canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2);
       canvasContext.fill();
+      canvasContext.closePath();
     }
 
 
@@ -82,13 +82,6 @@ var page = {
       canvasEle.onmousemove = function (event) {
         clearFun(event);
       }
-    }
-  },
-  pageEvent: function() {
-    var canvasWidth = this.canvasWidth;
-    var canvasHeight = this.canvasHeight;
-    document.querySelector('#clear').onclick = function() {
-      Util.CANVAS.clear(canvasContext,canvasWidth,canvasHeight);
     }
   }
 }
