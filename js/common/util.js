@@ -118,13 +118,25 @@ Util.CANVAS = {
     return canvas;
   },
   // 绘制矩形
-  drawRect: function({context,x, y, width, height,fillStyle}){
+  drawRect: function({context,x, y, width, height,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
     context.beginPath();
-    if (fillStyle) {
-      context.fillStyle = fillStyle;
-      context.fill();
-    }
-    context.fillRect(x, y,width, height);
+    context.rect(x, y,width, height);
+    context.fillStyle = fillStyle;
+    context.fill();
+    context.lineWidth = lineWidth;
+    context.strokeStyle = strokeStyle;
+    context.stroke();
+    context.closePath();
+  },
+  // 绘制圆形
+  drawArc: function({context, x, y, radius, startAngle, endAngle, anticlockwise=false,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
+    context.beginPath();
+    context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+    context.fillStyle = fillStyle;
+    context.fill();
+    context.lineWidth = lineWidth;
+    context.strokeStyle = strokeStyle;
+    context.stroke();
     context.closePath();
   },
   // 生成有圆角的矩形
