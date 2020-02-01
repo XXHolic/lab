@@ -46,8 +46,8 @@ var page = {
 
     this.canvasEle.onclick = function(event) {
       // 点击的坐标点
-      var clickPosX = (deviceType === 'phone'?event.touches[0].clientX:event.clientX)-canvasEle.offsetLeft;
-      var clickPosY = (deviceType === 'phone'?event.touches[0].clientY:event.clientY)-canvasEle.offsetTop;
+      var clickPosX = (deviceType === 'phone'&& event.touches?event.touches[0].clientX:event.clientX)-canvasEle.offsetLeft;
+      var clickPosY = (deviceType === 'phone'&& event.touches?event.touches[0].clientY:event.clientY)-canvasEle.offsetTop;
 
       for(var i = shapeNum-1;i>=0;i-- ) {
         var element = shapeArr[i];

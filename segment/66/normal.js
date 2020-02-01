@@ -48,9 +48,9 @@ var page = {
       if (!isStartClear || isClearAll) return;
       //清空像素,根据当前所在点
       // console.info('event',event);
-
-      var clearPosX = deviceType === 'phone' ? event.touches[0].clientX:event.clientX;
-      var clearPosY = deviceType === 'phone' ? event.touches[0].clientY:event.clientY;
+      // 模拟器中 判断是 phone，但返回的 event 没有 touches 属性，所以加了 event.touches 条件判断
+      var clearPosX = deviceType === 'phone'&& event.touches ? event.touches[0].clientX:event.clientX;
+      var clearPosY = deviceType === 'phone'&& event.touches ? event.touches[0].clientY:event.clientY;
       var centerX = clearPosX - canvasEle.offsetLeft;
       var centerY = clearPosY - canvasEle.offsetTop;
       var radius = 10;

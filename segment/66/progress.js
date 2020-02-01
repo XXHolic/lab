@@ -58,8 +58,8 @@ var page = {
       //清空像素,根据当前所在点
       // console.info('event',event);
 
-      var clearPosX = deviceType === 'phone'?event.touches[0].clientX:event.clientX;
-      var clearPosY = deviceType === 'phone'?event.touches[0].clientY:event.clientY;
+      var clearPosX = deviceType === 'phone'&&event.touches?event.touches[0].clientX:event.clientX;
+      var clearPosY = deviceType === 'phone'&&event.touches?event.touches[0].clientY:event.clientY;
       var centerX = clearPosX - canvasEle.offsetLeft;
       var centerY = clearPosY - canvasEle.offsetTop;
       var radius = 10;
