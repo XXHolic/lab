@@ -3,6 +3,15 @@ var page = {
   canvasContext:null,
   canvasWidth: 300,
   canvasHeight: 150,
+  circleCenterXPos: 61,
+  circleCenterYPos: 42,
+  xClearPos:52,
+  yClearPos:33,
+  xGetImageDataPos: 53,
+  yGetImageDataPos: 34,
+  getImageDataBaseWidth: 16,
+  isCollision:false,
+  drawTimeOut:null,
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -25,7 +34,7 @@ var page = {
       Util.CANVAS.drawArc(circleParams);
 
       // context.fillStyle = '#333';
-      // context.fillRect(45,30,10,2);
+      // context.fillRect(53,34,16,16);
       // var imgData = context.getImageData(45*2,30*2,10*2,2*2);
       // var imgData = context.getImageData(45*2,30*2,10*2,2);
       // console.info('imgData',imgData.data);
@@ -33,23 +42,33 @@ var page = {
     }
 
   },
-  rollCircle: function() {
-    var drawTimeOut = null;
+  rollCircle: function(type) {
+    var that = this;
     var context = this.canvasContext;
-    var xCenterPos = 61;
-    var xClearPos = 52;
-
+    that.drawTimeOut && clearTimeout(that.drawTimeOut);
+    const isUp = type === 'up';
+    const isRight = type === 'right';
+    const isLeft = type === 'left';
+    const isDown = type === 'down';
 
     var drawFrame = function() {
-      context.clearRect(xClearPos,33,18,18); // 使用这个方法后，像素数据会清除，透明度也是0，后面要判断这个
-      xCenterPos +=1;
-      xClearPos +=1;
-      var circleParams = {
-        context:context,x: xCenterPos, y: 42, radius:8, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
-      };
-      Util.CANVAS.drawArc(circleParams);
-      var isCollision = false;
-      var imgData = context.getImageData(xClearPos*2,66,19*2,19*2);
+      var imageDataWidth = that.getImageDataBaseWidth;
+      var imageXPos = that.xGetImageDataPos;
+      var imageYPos = that.yGetImageDataPos;
+      if (isRight) {
+        imageXPos +=2;
+      }
+      if (isLeft) {
+        imageXPos -=2;
+      }
+      if (isUp) {
+        imageYPos -=2;
+      }
+      if (isDown) {
+        imageYPos +=2;
+      }
+
+      var imgData = context.getImageData(imageXPos*2,imageYPos*2,imageDataWidth*2,imageDataWidth*2);
       var pixels = imgData.data;
       for (var index = 0, len = pixels.length; index < len; index+=4) {
         var red = pixels[index];
@@ -57,16 +76,42 @@ var page = {
         var blue = pixels[index+2];
         var alpha = pixels[index+3];
         if (red === 0 && green === 0 && blue ===0 && alpha!==0) {
-          isCollision = true;
+          that.isCollision = true;
           break;
         }
 
       }
-      console.info('isCollision',isCollision);
-      if (isCollision) {
-        clearTimeout(drawTimeOut);
+      if (that.isCollision) {
+        that.isCollision = false;
+        clearTimeout(that.drawTimeOut);
       } else {
-        drawTimeOut = setTimeout(function() {
+        context.clearRect(that.xClearPos,that.yClearPos,18,18); // 使用这个方法后，像素数据会清除，透明度也是0，要判断这个
+        if (isRight) {
+          that.circleCenterXPos +=1;
+          that.xClearPos +=1;
+          that.xGetImageDataPos +=1;
+        }
+        if (isLeft) {
+          that.circleCenterXPos -=1;
+          that.xClearPos -=1;
+          that.xGetImageDataPos -=1;
+        }
+        if (isUp) {
+          that.circleCenterYPos -=1;
+          that.yClearPos -=1;
+          that.yGetImageDataPos -=1;
+        }
+        if (isDown) {
+          that.circleCenterYPos +=1;
+          that.yClearPos +=1;
+          that.yGetImageDataPos +=1;
+        }
+
+        var circleParams = {
+          context:context,x: that.circleCenterXPos, y: that.circleCenterYPos, radius:8, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
+        };
+        Util.CANVAS.drawArc(circleParams);
+        that.drawTimeOut = setTimeout(function() {
           drawFrame();
         }, 10);
       }
@@ -79,7 +124,16 @@ var page = {
   pageEvent: function() {
     var that = this;
     document.querySelector('.arrow-right').onclick = function() {
-      that.rollCircle.bind(that)();
+      that.rollCircle.bind(that)('right');
+    };
+    document.querySelector('.arrow-up').onclick = function() {
+      that.rollCircle.bind(that)('up');
+    };
+    document.querySelector('.arrow-down').onclick = function() {
+      that.rollCircle.bind(that)('down');
+    };
+    document.querySelector('.arrow-left').onclick = function() {
+      that.rollCircle.bind(that)('left');
     };
   }
 }
