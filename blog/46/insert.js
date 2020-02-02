@@ -1,1 +1,1 @@
-// insertLink({title:'Canvas 橡皮擦效果',linkIndex: 75});
+insertLink({title:'Collision Detection',linkIndex: 46,type:'blog'});
