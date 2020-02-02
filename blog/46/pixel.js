@@ -1,8 +1,8 @@
 var page = {
   canvasEle:null,
   canvasContext:null,
-  canvasWidth: 226,
-  canvasHeight: 162,
+  canvasWidth: 300,
+  canvasHeight: 150,
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -16,7 +16,7 @@ var page = {
     var context = this.canvasContext = canvasObj.getContext('2d');
     var img = new Image();
     img.crossOrigin = "Anonymous";
-    img.src = './maze.png';
+    img.src = './pixel.png';
     img.onload = function() {
       context.drawImage(img,0,0,canvasWidth,canvasHeight);
       var circleParams = {
