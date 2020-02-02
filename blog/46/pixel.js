@@ -38,7 +38,7 @@ var page = {
       // var imgData = context.getImageData(45*2,30*2,10*2,2*2);
       // var imgData = context.getImageData(45*2,30*2,10*2,2);
       // console.info('imgData',imgData.data);
-      document.body.appendChild(canvasObj);
+      document.querySelector('#canvasContainer').appendChild(canvasObj);
     }
 
   },
