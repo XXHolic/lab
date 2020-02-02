@@ -85,7 +85,7 @@ var page = {
         that.isCollision = false;
         clearTimeout(that.drawTimeOut);
       } else {
-        context.clearRect(that.xClearPos,that.yClearPos,18,18); // 使用这个方法后，像素数据会清除，透明度也是0，要判断这个
+        context.clearRect(that.xClearPos,that.yClearPos,17,17); // 使用这个方法后，像素数据会清除，透明度也是0，要判断这个
         if (isRight) {
           that.circleCenterXPos +=1;
           that.xClearPos +=1;
