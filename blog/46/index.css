@@ -9,14 +9,14 @@
   width: 50px;
 }
 
-.error-up {
+.arrow-up {
   margin: 0 auto;
   width: 30px;
   border-bottom: 30px solid rgb(238, 240, 119);
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
 }
-.error-right {
+.arrow-right {
   position: absolute;
   top: 37px;
   right: -27px;
@@ -25,7 +25,7 @@
   border-left: 30px solid rgb(240, 59, 47);
   border-top: 15px solid transparent;
 }
-.error-down {
+.arrow-down {
   position: absolute;
   left: 10px;
   bottom: -4px;
@@ -34,7 +34,7 @@
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
 }
-.error-left {
+.arrow-left {
   position: absolute;
   top: 37px;
   left: -27px;

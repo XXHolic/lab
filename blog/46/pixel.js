@@ -78,7 +78,7 @@ var page = {
   },
   pageEvent: function() {
     var that = this;
-    document.querySelector('#btn').onclick = function() {
+    document.querySelector('.arrow-right').onclick = function() {
       that.rollCircle.bind(that)();
     };
   }
