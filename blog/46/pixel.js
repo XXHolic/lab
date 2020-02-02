@@ -56,7 +56,7 @@ var page = {
       var imageXPos = that.xGetImageDataPos;
       var imageYPos = that.yGetImageDataPos;
       if (isRight) {
-        imageXPos +=2;
+        imageXPos +=3;
       }
       if (isLeft) {
         imageXPos -=2;
