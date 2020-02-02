@@ -1,3 +1,45 @@
 .canvas-part {
   border: 1px solid #333;
 }
+
+.arrow-part {
+  position: relative;
+  margin: 0 auto;
+  height: 100px;
+  width: 50px;
+}
+
+.error-up {
+  margin: 0 auto;
+  width: 30px;
+  border-bottom: 30px solid rgb(238, 240, 119);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+}
+.error-right {
+  position: absolute;
+  top: 37px;
+  right: -27px;
+  width: 30px;
+  border-bottom: 15px solid transparent;
+  border-left: 30px solid rgb(240, 59, 47);
+  border-top: 15px solid transparent;
+}
+.error-down {
+  position: absolute;
+  left: 10px;
+  bottom: -4px;
+  width: 30px;
+  border-top: 30px solid rgb(15, 150, 87);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+}
+.error-left {
+  position: absolute;
+  top: 37px;
+  left: -27px;
+  width: 30px;
+  border-bottom: 15px solid transparent;
+  border-right: 30px solid rgb(62, 92, 226);
+  border-top: 15px solid transparent;
+}

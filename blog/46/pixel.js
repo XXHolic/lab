@@ -20,9 +20,15 @@ var page = {
     img.onload = function() {
       context.drawImage(img,0,0,canvasWidth,canvasHeight);
       var circleParams = {
-        context:context,x: 7, y: 8, radius: 4, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
+        context:context,x: 61, y: 42, radius: 8, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
       };
       Util.CANVAS.drawArc(circleParams);
+
+      // context.fillStyle = '#333';
+      // context.fillRect(45,30,10,2);
+      // var imgData = context.getImageData(45*2,30*2,10*2,2*2);
+      // var imgData = context.getImageData(45*2,30*2,10*2,2);
+      // console.info('imgData',imgData.data);
       document.body.appendChild(canvasObj);
     }
 
@@ -30,34 +36,27 @@ var page = {
   rollCircle: function() {
     var drawTimeOut = null;
     var context = this.canvasContext;
-    var xCenterPos = 7;
-    var xPos = 3;
-    // context.fillStyle = '#333';
-    // context.fillRect(120,2,20,2);
-    // var imgData = context.getImageData(120,2,20,2);
-    // console.info('imgData',imgData.data);
+    var xCenterPos = 61;
+    var xClearPos = 52;
+
+
     var drawFrame = function() {
-      // context.clearRect(xPos,3,10,8);
+      context.clearRect(xClearPos,33,18,18); // 使用这个方法后，像素数据会清除，透明度也是0，后面要判断这个
       xCenterPos +=1;
-      xPos +=1;
+      xClearPos +=1;
       var circleParams = {
-        context:context,x: xCenterPos, y: 8, radius:4, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
+        context:context,x: xCenterPos, y: 42, radius:8, startAngle:0, endAngle:2 * Math.PI,fillStyle:'#2e1bdd',strokeStyle:'#2e1bdd'
       };
       Util.CANVAS.drawArc(circleParams);
       var isCollision = false;
-      var imgData = context.getImageData(xPos,3,10,8);
+      var imgData = context.getImageData(xClearPos*2,66,19*2,19*2);
       var pixels = imgData.data;
-      console.info('pixels',pixels);
       for (var index = 0, len = pixels.length; index < len; index+=4) {
         var red = pixels[index];
         var green = pixels[index+1];
         var blue = pixels[index+2];
-        if (red === 0 && green === 0 && blue ===0) {
-          isCollision = true;
-          break;
-        }
-
-        if (red === 64 && green === 64 && blue === 64) {
+        var alpha = pixels[index+3];
+        if (red === 0 && green === 0 && blue ===0 && alpha!==0) {
           isCollision = true;
           break;
         }
