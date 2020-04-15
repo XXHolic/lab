@@ -23,10 +23,7 @@
         event.preventDefault();
       },true);
 
-      window.frames[0].onerror = function (message, source, lineno, colno, error) {
-        console.log('iframe onerror：',message, source, lineno, colno, error);
-        return true;
-      };
+
   </script>
 </head>
 
@@ -40,6 +37,12 @@
 
 
   </div>
+  <script>
+      window.frames[0].onerror = function (message, source, lineno, colno, error) {
+        console.log('iframe onerror：',message, source, lineno, colno, error);
+        return true;
+      };
+  </script>
 
 </body>
 
