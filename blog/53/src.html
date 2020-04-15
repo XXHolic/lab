@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,css,html,javascript,hit,test,collision,detection">
+  <meta content="src 类捕获示例"">
+  <meta name="format-detection" content="telephone=no">
+  <title>src 类捕获示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.info('DOM0 onerror：',message, source, lineno, colno, error);
+        return true;
+      }
+
+      window.addEventListener('error',function(event) {
+        console.info('DOM2 error：',event);
+        event.preventDefault();
+      },true);
+  </script>
+</head>
+
+<body class="pt50 tc">
+  <div>
+    src 类捕获示例，请打开控制台查看。
+    <div>
+      <img src='./demo.png'>
+    </div>
+    <div>
+      <video width="320" height="240" controls src="./demo.ogg">
+        您的浏览器不支持 video 标签。
+       </video>
+    </div>
+    <div>
+      <video width="320" height="240" controls>
+        <source src="https://www.runoob.com/try/demo_source/movie.mp4" type="video/mp4">
+        <track src="./b.vtt" kind="subtitles" srclang="en" label="english">
+      </video>
+    </div>
+    <div>
+      <audio src="./horse.ogg" controls>
+        您的浏览器不支持 audio 元素。
+      </audio>
+    </div>
+    <div>
+      <form action="demo_form.php">
+        First name: <input type="text" name="fname"><br>
+        <input type="image" src="submit.gif" alt="Submit" width="48" height="48">
+      </form>
+    </div>
+    <div>
+      <iframe src="./index2.html" frameborder="0"></iframe>
+    </div>
+
+
+
+
+  </div>
+  <script>
+  window.frames[0].onerror = function (message, source, lineno, colno, error) {
+    console.log('iframe onerror：',message, source, lineno, colno, error);
+    return true;
+  };
+  </script>
+  <script src="./demo.js"></script>
+
+</body>
+
+</html>
