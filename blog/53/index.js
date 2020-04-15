@@ -15,7 +15,7 @@ window.onload = function() {
     },
     windowErrorEvent: function() {
       window.onerror = function(message, source, lineno, colno, error) {
-        console.info('DOM0 onerror：',message, source, lineno, colno, error);
+        console.info('DOM0 onerror：',{message, source, lineno, colno, error});
         return true;
       }
 
@@ -27,7 +27,8 @@ window.onload = function() {
       const ele = document.querySelector("#onerror");
       const ele1 = document.querySelector("#onerror1");
       ele.onclick = this.causeError;
-      ele1.onclick = this.getSrcError;
+      // ele1.onclick = this.getSrcError;
+      ele1.onclick = this.getSyncError;
 
     },
     tryCatch: function () {
@@ -62,6 +63,11 @@ window.onload = function() {
       const ele = document.createElement('script');
       ele.setAttribute('src','./test.js');
       document.body.appendChild(ele);
+    },
+    getSyncError:function() {
+      setTimeout(() => {
+        name.forEach(() => {});
+      },1000)
     }
   }
 

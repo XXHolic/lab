@@ -12,17 +12,6 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
-  <script>
-      // window.onerror = function(message, source, lineno, colno, error) {
-      //   console.info('DOM0 onerror：',message, source, lineno, colno, error);
-      //   // return true;
-      // }
-
-      // window.addEventListener('error',function(event) {
-      //   console.info('DOM2 error：',event);
-      //   // event.preventDefault();
-      // },true);
-  </script>
 </head>
 
 <body class="pt50 tc">
@@ -35,13 +24,11 @@
     </div>
     <div>
       <p>onerror 事件</p>
-      <button id="onerror">点击触发一个错误</button><br />
-      <button id="onerror1">点击加载一个资源</button><br />
-      <!-- <img src="./poster.png" alt="" id="imgEle"> -->
+      <button id="onerror">点击触发一个普通错误</button><br />
+      <button id="onerror1">点击触发一个异步错误</button><br />
     </div>
   </div>
   <script src="./index.js"></script>
-  <!-- <script src="./demo.js"></script> -->
 
 </body>
 
