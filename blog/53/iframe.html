@@ -29,19 +29,36 @@
 
 <body class="pt50 tc">
   <div>
-    iframe 类捕获示例，请打开控制台查看。
+    iframe 异常捕获示例，请打开控制台查看。
 
     <div>
-      <iframe src="./index2.html" frameborder="0"></iframe>
+      <iframe id="myframe" src="./index2.html" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
     </div>
 
 
   </div>
   <script>
-      window.frames[0].onerror = function (message, source, lineno, colno, error) {
-        console.log('iframe onerror：',message, source, lineno, colno, error);
-        return true;
-      };
+    function error(e) {
+      console.info("DOM0 error:",e)
+    }
+    function load(e) {
+      console.info("DOM0 load:",e)
+      var that = document.getElementById('myframe');
+
+      try{
+        (that.contentWindow||that.contentDocument).location.href;
+      }catch(err){
+        //err:SecurityError: Blocked a frame with origin "http://*********" from accessing a cross-origin frame.
+        console.log('try-catch:',err);
+      }
+    }
+
+  </script>
+  <script>
+      // window.frames[0].onerror = function (message, source, lineno, colno, error) {
+      //   console.log('iframe onerror：',{message, source, lineno, colno, error});
+      //   return true;
+      // };
   </script>
 
 </body>
