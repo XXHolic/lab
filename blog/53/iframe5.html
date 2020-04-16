@@ -20,7 +20,7 @@
     <p>请打开控制台查看。</p>
 
     <div>
-      <iframe id="myframe" src="./index2.html" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
+      <iframe id="myframe" src="https://www.google.com" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
     </div>
 
 
@@ -31,11 +31,13 @@
     }
     function load(e) {
       console.info("DOM0 load:",e)
-      const frameEle = document.getElementById('myframe');
-      const frameEleContent = frameEle.contentDocument || {};
-      const title = frameEleContent.title;
-      if (title.indexOf('404')>-1) {
-        console.log('error:',"iframe page error");
+      var that = document.getElementById('myframe');
+      console.info('that.contentDocument',that.contentDocument);
+      try{
+        (that.contentWindow||that.contentDocument);
+      }catch(err){
+        //err:SecurityError: Blocked a frame with origin "http://*********" from accessing a cross-origin frame.
+        console.log('try-catch:',err);
       }
     }
 
