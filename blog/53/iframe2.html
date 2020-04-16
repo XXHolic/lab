@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,css,html,javascript,hit,test,collision,detection">
+  <meta content="iframe 类捕获示例"">
+  <meta name="format-detection" content="telephone=no">
+  <title>iframe 类捕获示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <div>
+    <p>使用方式： window.frames[0].onerror， 尝试iframe 异常捕获</p>
+    <p>请打开控制台查看。</p>
+
+    <div>
+      <iframe id="myframe" src="./index2.html" frameborder="0"></iframe>
+    </div>
+
+
+  </div>
+
+  <script>
+      window.frames[0].onerror = function (message, source, lineno, colno, error) {
+        console.log('iframe onerror：',{message, source, lineno, colno, error});
+        return true;
+      };
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,css,html,javascript,hit,test,collision,detection">
+  <meta content="href 类捕获示例"">
+  <meta name="format-detection" content="telephone=no">
+  <title>href 类捕获示例</title>
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.info('DOM0 onerror：',message, source, lineno, colno, error);
+      return true;
+    }
+
+    window.addEventListener('error',function(event) {
+      console.info('DOM2 error：',event);
+      event.preventDefault();
+    },true);
+</script>
+
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="./demo.css">
+
+</head>
+
+<body class="pt50 tc">
+  <div>
+    href 类捕获示例，请打开控制台查看。
+
+</body>
+
+</html>

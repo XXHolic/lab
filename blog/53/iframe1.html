@@ -13,47 +13,30 @@
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <script>
-      window.onerror = function(message, source, lineno, colno, error) {
-        console.info('DOM0 onerror：',{message, source, lineno, colno, error});
-        return true;
-      }
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.info('DOM0 onerror：',message, source, lineno, colno, error);
+      return true;
+    }
 
-      window.addEventListener('error',function(event) {
-        console.info('DOM2 error：',event);
-        event.preventDefault();
-      },true);
-
-
-  </script>
+    window.addEventListener('error',function(event) {
+      console.info('DOM2 error：',event);
+      event.preventDefault();
+    },true);
+</script>
 </head>
 
 <body class="pt50 tc">
   <div>
-    iframe 异常捕获示例，请打开控制台查看。
+    <p>用一般的 error 事件 尝试iframe 异常捕获</p>
+    <p>请打开控制台查看。</p>
 
     <div>
-      <iframe id="myframe" src="./index2.html" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
+      <iframe id="myframe" src="./index2.html" frameborder="0" ></iframe>
     </div>
 
 
   </div>
-  <script>
-    function error(e) {
-      console.info("DOM0 error:",e)
-    }
-    function load(e) {
-      console.info("DOM0 load:",e)
-      var that = document.getElementById('myframe');
 
-      try{
-        (that.contentWindow||that.contentDocument).location.href;
-      }catch(err){
-        //err:SecurityError: Blocked a frame with origin "http://*********" from accessing a cross-origin frame.
-        console.log('try-catch:',err);
-      }
-    }
-
-  </script>
   <script>
       // window.frames[0].onerror = function (message, source, lineno, colno, error) {
       //   console.log('iframe onerror：',{message, source, lineno, colno, error});
