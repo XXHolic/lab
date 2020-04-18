@@ -12,19 +12,6 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
-</head>
-
-<body class="pt50 tc">
-  <div class="tl">
-    <p>在标签上指定 onerror、onload 处理函数的方式， 尝试 iframe 异常捕获</p>
-    <p>请打开控制台查看。</p>
-
-    <div>
-      <iframe id="myframe" src="./index2.html" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
-    </div>
-
-
-  </div>
   <script>
     function error(e) {
       console.info("DOM0 error:",e)
@@ -40,6 +27,20 @@
     }
 
   </script>
+</head>
+
+<body class="pt50 tc">
+  <div class="tl">
+    <p>在标签上指定 onerror、onload 处理函数的方式， 尝试 iframe 异常捕获</p>
+    <p>请打开控制台查看。</p>
+
+    <div>
+      <iframe id="myframe" src="./index2.html" frameborder="0" onerror="error('fail');" onload="load('Done func');"></iframe>
+    </div>
+
+
+  </div>
+
   <script src="../../js/common/insertLink.js"></script>
   <script src="./insert.js"></script>
 </body>
