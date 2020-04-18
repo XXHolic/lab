@@ -27,6 +27,8 @@ window.onload = function() {
       if(window.Promise) {
         new Promise((resolve, reject)=>{
           reject('oh，hei hei');
+        }).catch((error)=>{
+          console.info('Promise error：',event);
         });
         Promise.reject('oh，hei')
       } else {
