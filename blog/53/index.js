@@ -26,15 +26,17 @@ window.onload = function() {
     promiseError: function() {
       if(window.Promise) {
         new Promise((resolve, reject)=>{
-          reject('oh，hei hei');
+          reject('oh，hei~');
         }).catch((error)=>{
           console.info('Promise error：',event);
         });
         try {
-          Promise.reject('oh，hei')
+          Promise.reject('oh，hei~hei~');
         } catch(e) {
           console.info('try-catch Promise error：',e);
         }
+
+        Promise.reject('oh，hei~ hei~ hei~')
 
       } else {
         console.error('Not Support Promise');
