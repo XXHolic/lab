@@ -30,7 +30,12 @@ window.onload = function() {
         }).catch((error)=>{
           console.info('Promise error：',event);
         });
-        Promise.reject('oh，hei')
+        try {
+          Promise.reject('oh，hei')
+        } catch(e) {
+          console.info('try-catch Promise error：',e);
+        }
+
       } else {
         console.error('Not Support Promise');
       }
