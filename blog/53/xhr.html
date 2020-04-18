@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="keywords" content="canvas,css,html,javascript,hit,test,collision,detection">
-  <meta content="fetch 异常捕捉示例"">
+  <meta content="XMLHttpRequest 异常捕捉示例"">
   <meta name="format-detection" content="telephone=no">
-  <title> fetch 异常捕捉示例</title>
+  <title> XMLHttpRequest 异常捕捉示例</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -21,28 +21,33 @@
 
 <body class="pt50 tc">
   <div class="tl">
-    fetch 异常捕捉示例，点击下面按钮后，请打开控制台查看。
+    XMLHttpRequest 异常捕捉示例，点击下面按钮后，请打开控制台查看。
     <div class="mb10">
-      <button id="ele">点击触发 404 请求</button><br />
+      <button id="ele">点击触发请求</button><br />
     </div>
   </div>
 
   <script>
     var ele = document.querySelector('#ele');
     ele.onclick = function() {
-      if (window.fetch) {
-        fetch('./demo.json').then(function(response) {
-          if (!response.ok) {
-            console.info('fetch 404 , HTTP status = ' + response.status);
-            return;
-          }
-          return response.json();
-        }).catch(function(error) {
-          console.info('fetch catch：',error);
-        });
-      } else {
-        alert('Not Support Fetch !');
-      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener("load" , function(evt) {
+        console.info('xhr load :', evt);
+      });
+      xhr.addEventListener("error", function(evt) {
+        console.info('xhr error :', evt);
+      });
+      xhr.addEventListener("abort", function(evt) {
+        console.info('xhr abort :', evt);
+      });
+      xhr.addEventListener("onreadystatechange", function(evt) {
+        console.info('xhr onreadystatechange :', evt);
+      });
+
+      xhr.get('GET','./demo.json');
+      xhr.send();
+
     }
   </script>
 </body>
