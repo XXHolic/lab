@@ -6,12 +6,33 @@ window.onload = function() {
     initEvent:function () {
       this.tryCatchEvent();
       this.windowErrorEvent();
+      this.promiseCatch();
     },
     tryCatchEvent: function () {
       const tryCatchEle = document.querySelector("#tryCatch");
       const tryCatchEle1 = document.querySelector("#tryCatch1");
       tryCatchEle.onclick = this.tryCatch;
       tryCatchEle1.onclick = this.tryCatchInvalid1;
+    },
+    promiseCatch: function() {
+      window.addEventListener("unhandledrejection", function(event){
+        console.info('unhandledrejection：',event);
+        event.preventDefault();
+      });
+
+      const ele = document.querySelector("#promise1");
+      ele.onclick = this.promiseError;
+    },
+    promiseError: function() {
+      if(window.Promise) {
+        new Promise((resolve, reject)=>{
+          reject('oh，hei hei');
+        });
+        Promise.reject('oh，hei')
+      } else {
+        console.error('Not Support Promise');
+      }
+
     },
     windowErrorEvent: function() {
       window.onerror = function(message, source, lineno, colno, error) {
