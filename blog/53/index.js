@@ -71,7 +71,7 @@ window.onload = function() {
     },
     tryCatchInvalid2: function () {
       try {
-        // 语法错误
+        // 语法异常
         // var name = 'Tom;
       } catch(error) {
         console.info('try-catch：', error);
