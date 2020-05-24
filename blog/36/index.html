@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="async,javascript,promise">
+  <meta content="async 的一些测试">
+  <meta name="format-detection" content="telephone=no">
+  <title>async</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <div class="mb10">
+  </div>
+  <script src="../../js/common/insertLink.js"></script>
+  <script>
+    async function trick () {
+      await new Promise((resolve) => {
+        resolve(1);
+        console.info(2);
+      });
+      console.info(3);
+    }
+    trick().then((data)=>{
+      console.info(data);
+    })
+    console.info(4);
+  </script>
+</body>
+
+</html>
