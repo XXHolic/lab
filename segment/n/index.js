@@ -2,6 +2,9 @@
 window.onload = function() {
   // insertLink({title:'Canvas 图像灰度处理',linkIndex: 74});
 
+  function drawLine() {
+
+  }
 
   function init() {
     var canvasEle = Util.CANVAS.createElement(200,100);
