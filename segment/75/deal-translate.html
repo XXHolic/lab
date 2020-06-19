@@ -17,7 +17,7 @@
 
 <body class="pt50 tc">
   <div class="dib" id='container'>
-    <p>方式 1：基于设置 DPI 设置相应的宽度</p>
+    <p>使用 translate 的方式尝试解决 1px 线显示模糊问题</p>
     <div id="canvasWrap"></div>
   </div>
   <script src="../../js/common/util.js?v=202001281113"></script>
@@ -39,14 +39,10 @@
     }
 
     var canvasEle = Util.CANVAS.createElement(300,150);
-    // var canvasEle = document.createElement('canvas');
-    // canvasEle.style.width = `300px`; // 控制显示大小
-    // canvasEle.style.height = `150px`; // 控制显示大小
     const context = canvasEle.getContext('2d');
     drawLine({context:context,startPointX:80,startPointY:30})
     context.translate(0.5, 0.5);
     document.querySelector('#canvasWrap').appendChild(canvasEle);
-    // Util.CANVAS.drawRect({context:context,x:0,y:0,width:300,height:150,strokeStyle:'#000'})
   </script>
 </body>
 
