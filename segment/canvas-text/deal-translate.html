@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,css,html,js,blue,line">
+  <meta content="Canvas 绘制 1 px 直线模糊（非高清屏）的问题"">
+  <meta name="format-detection" content="telephone=no">
+  <title>Canvas 绘制 1 px 直线模糊（非高清屏）的问题</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body class="pt50 tc">
+  <div class="dib" id='container'>
+    <p>使用 translate 的方式尝试解决 1px 线显示模糊问题</p>
+    <div id="canvasWrap"></div>
+  </div>
+  <script src="../../js/common/util.js?v=202001281113"></script>
+  <script src="../../js/common/insertLink.js"></script>
+  <script>
+    // 绘制线条
+    function drawLine({context,startPointX=0,startPointY=0,lineWidth=1,strokeStyle='#333'}) {
+      context.beginPath();
+      context.lineWidth = lineWidth;
+      context.strokeStyle=strokeStyle;
+      const linkStartPointX = startPointX;
+      const linkStartPointY = startPointY;
+      context.moveTo(linkStartPointX,linkStartPointY);
+      context.lineTo(linkStartPointX+50,linkStartPointY);
+      context.lineTo(linkStartPointX,linkStartPointY+30);
+      context.lineTo(linkStartPointX,linkStartPointY+80);
+      context.stroke();
+      context.closePath();
+    }
+
+    var canvasEle = Util.CANVAS.createElement(300,150);
+    const context = canvasEle.getContext('2d');
+    drawLine({context:context,startPointX:80,startPointY:30})
+    context.translate(0.5, 0.5);
+    document.querySelector('#canvasWrap').appendChild(canvasEle);
+  </script>
+</body>
+
+</html>
