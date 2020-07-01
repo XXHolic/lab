@@ -1,6 +1,7 @@
 .animal-mover {
   width: 299px;
   height: 200px;
-  background: url(./images/hornbill.png) no-repeat center center;
+  background:#333 url(./images/hornbill.png) no-repeat center center;
   background-size: cover;
+  /* -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); */
 }
