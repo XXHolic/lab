@@ -5,7 +5,7 @@
  */
 function insertLink(params) {
   var linkType = params.type || 'segment';
-  var eleClass = params.className || 'fix-header';
+  var eleClass = params.className || 'fix-header tc';
   var linkIndex = params.linkIndex;
   var title = params.title;
   var url = '';
