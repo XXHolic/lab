@@ -15,7 +15,7 @@ function checkIntoView() {
       }
     })
     var showMsg = intoViewEle.join('，');
-    document.querySelector('#result').innerHTML = '部分或全部已在可视区的元素有：<br />'+showMsg;
+    document.querySelector('#result').innerHTML = '部分或全部已在滚动可视区的元素有：<br />'+showMsg;
 }
 
 function testIntoView() {
