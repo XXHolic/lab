@@ -35,6 +35,9 @@ html {
   display: flex;
   flex-direction: column;
 }
+.flex-1 {
+  flex: 1;
+}
 /*
  *  用于控制方向的css
  */
