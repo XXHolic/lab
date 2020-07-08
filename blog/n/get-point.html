@@ -26,14 +26,6 @@
 <body class="pt50">
   <div id="container">
     <div class="pic"></div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
-    <div>滚动内容</div>
     <div id="pointResult"></div>
   </div>
   <!-- <script src="../../js/common/insertLink.js"></script> -->
@@ -93,14 +85,17 @@
 
     var pointArr = []
     showEle.onclick = function(e) {
-      var pointX = e.clientX
-      var pointY = e.clientY
-      var showEleLeft = showEleMSg.left;
-      var showEleTop = showEleMSg.top;
-      var showEleHeight = showEleMSg.height;
-      var showEleWidth = showEleMSg.width;
-      var leftSpace = pointX-showEleLeft
-      var topSpace = pointY-showEleTop + window.screenTop
+      console.info(e)
+      var pointX = e.layerX
+      var pointY = e.layerY
+      var showEleLeft = showEle.offsetLeft;
+      var showEleTop = showEle.offsetTop;
+      var showEleHeight = showEle.offsetHeight;
+      var showEleWidth = showEle.offsetWidth;
+      // var leftSpace = pointX-showEleLeft;
+      // var topSpace = pointY -showEleTop
+      var leftSpace = pointX;
+      var topSpace = pointY
       var leftPercent = ((leftSpace/showEleWidth)*100).toFixed(3) + '%'
       var topPercent = ((topSpace/showEleHeight)*100).toFixed(3)+ '%'
       var point = leftPercent+' '+topPercent;
