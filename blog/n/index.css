@@ -6,31 +6,6 @@
   /* -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); */
 }
 
-.color1 {
-  color: #dcc877;
-  color: #e4d784;
-  color: #e4b454;
-  color: #ca8a59;
-  color: #cb4c3b;
-  color: #da5032;
-  color: #ba3c0a;
-  color: #c34a2a;
-  color: #442d1e;
-  color: #302717;
-  color: #d36449;
-  color: #463c33;
-  color: #f4fbf3;
-  color: #ddd7c9;
-  color: #eee5d9;
-  color: #402b3b;
-  color: #cf7a59;
-  color: #333226;
-  color: #3d3328;
-  color: #341f24;
-  color: #d65100;
-  color: #744a0e;
-}
-
 .painting {
   position: relative;
   width: 1000px;
@@ -47,8 +22,17 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  /* transition: 1s cubic-bezier(0.7, 0.3, 0, 1);
-  clip-path: polygon(50% 50%, 50% 50%, 50% 50%); */
+  transition: 1s cubic-bezier(0.7, 0.3, 0, 1);
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%);
+}
+
+.piece::before {
+  content:"";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .piece1 {
@@ -60,7 +44,7 @@
   background-color: #e4b454;
 }
 .piece3 {
-  clip-path: polygon(72.600% 27.143%, 71.200% 30.286%,68.400% 28.143%);
+  clip-path: polygon(72.600% 27.143%, 71.200% 30.286%,68.400% 28.043%);
   background-color: #ca8a59;
 }
 .piece4 {
@@ -81,7 +65,7 @@
   background-color: #ba3c0a;
 }
 .piece8 {
-  clip-path: polygon(60.100% 19.571%,68.800% 24.843%,60.5% 36.429%);
+  clip-path: polygon(60.100% 19.571%,68.800% 24.843%,60.5% 36.988%);
   background-color: #c34a2a;
 }
 
@@ -90,11 +74,11 @@
   background-color: #cf7a59;
 }
 .piece10 {
-  clip-path: polygon(64.099% 31.143%,68.700% 41.286%,60.5% 36.429%);
+  clip-path: polygon(64.099% 31.143%,68.700% 41.286%,60.5% 36.988%);
   background-color: #d36449;
 }
 .piece11 {
-  clip-path: polygon(60.100% 19.571%,60.5% 36.429%,57.700% 27.429%);
+  clip-path: polygon(60.100% 19.571%,60.5% 36.988%,57.700% 27.429%);
   background-color: #a42812;
 }
 .piece12 {
@@ -103,18 +87,228 @@
 }
 
 .piece13 {
-  clip-path: polygon(60.100% 19.571%,57.700% 27.429%,56.400% 22.000%);
+  clip-path: polygon(60.100% 19.571%,57.700% 27.429%,56.200% 21.500%);
   background-color: #442d1e;
 }
 .piece14 {
-  clip-path: polygon(56.400% 22.000%,60.5% 36.429%,55.600% 34.429%);
-  background-color: #442d1e;
+  clip-path: polygon(56.200% 21.200%,60.5% 36.988%,55.600% 34.429%);
+  background-color: #302717;
 }
 .piece15 {
   clip-path: polygon(55.600% 34.429%,68.700% 41.286%,50.000% 50.286%);
-  background-color: #442d1e;
+  background-color: #463c33;
 }
 .piece16 {
   clip-path: polygon(68.700% 41.286%,61.400% 56.429%,50.000% 50.286%);
-  background-color: #442d1e;
+  background-color: #4b413b;
 }
+
+.piece17 {
+  /* clip-path: polygon(50.000% 50.286%,59.700% 55.571%,33.400% 58.357%); */
+  clip-path: polygon(50.000% 50.286%,59.700% 55.571%,30% 58.657%);
+  background-color: #302717;
+}
+.piece18 {
+  clip-path: polygon(55.600% 34.429%,50.000% 50.286%,38.600% 43.429%);
+  background-color: #3a332b;
+}
+.piece19 {
+  clip-path: polygon(55.600% 34.429%,37.000% 44.286%,43.500% 35.857%);
+  background-color: #4b413b;
+}
+.piece20 {
+  clip-path: polygon(38.600% 43.429%,50.000% 50.286%,23.800% 63.000%);
+  background-color: #333226;
+}
+
+.piece21 {
+  clip-path: polygon(33.400% 58.357%,22.000% 67.714%,26.000% 62.000%);
+  background-color: #3d3328;
+}
+.piece22 {
+  clip-path: polygon(45.200% 57.286%,44.700% 66.143%,33.400% 58.357%);
+  background-color: #ddd7c9;
+}
+.piece23 {
+  clip-path: polygon(59.700% 55.571%,44.500% 68.143%,45.200% 57.286%);
+  background-color: #f4fbf3;
+}
+.piece24 {
+  clip-path: polygon(33.400% 58.357%,37.900% 61.571%,12.400% 79.000%);
+  background-color: #eee5d9;
+}
+
+/* 由于层级关系 25 跟 30 调换 */
+.piece25 {
+  clip-path: polygon(60.900% 63.857%,44.300% 77.714%,42.200% 75.857%);
+  background-color: #744a0e;
+}
+.piece26 {
+  clip-path: polygon(52.900% 70.271%,54.400% 71.571%,54.300% 74.571%);
+  background-color: #931f00;
+}
+.piece27 {
+  clip-path: polygon(47.4% 66.057%,52.400% 75.000%,45.900% 67.286%);
+  background-color: #d65100;
+}
+.piece28 {
+  clip-path: polygon(51.100% 73.429%,52.400% 75.000%,52.100% 78.286%);
+  background-color: #744a0e;
+}
+
+.piece29 {
+  clip-path: polygon(48.4% 70.271%,49.3% 71.329%,45.700% 73.629%);
+  background-color: #931f00;
+}
+.piece30 {
+  clip-path: polygon(48.900% 64.857%,54.400% 71.571%,47.700% 65.857%);
+  background-color: #ba3c0a;
+}
+.piece31 {
+  clip-path: polygon(42.200% 75.857%,44.300% 77.714%,37.600% 87.286%);
+  background-color: #341f24;
+}
+.piece32 {
+  clip-path: polygon(44.300% 77.714%,40.700% 87.429%,37.600% 87.286%);
+  background-color: #170b02;
+}
+
+/* 底部阴影 */
+.hornbill .piece33 {
+  clip-path: none;
+}
+
+.hornbill .piece33::before {
+  content: '';
+  position: absolute;
+  left: 29%;
+  bottom: 11%;
+  width: 20%;
+  height: 3%;
+  background-image: -webkit-radial-gradient(closest-side, rgba(0, 0, 0, 0.85) 10%, rgba(0, 0, 0, 0.44) 30%, transparent 100%);
+}
+
+.hornbill .piece33::after {
+  content:'';
+  position: absolute;
+  left: 44%;
+  bottom: 11%;
+  width: 40%;
+  height: 3%;
+  clip-path: none;
+  background-image: -webkit-radial-gradient(closest-side, rgba(0, 0, 0, 0.2) 10%, rgba(0, 0, 0, 0.2) 30%, transparent 100%);
+}
+
+.shimmer .level-one .piece1::before {
+  animation: shimmer 0.8s 0.07s forwards;
+}
+.shimmer .level-one .piece2::before {
+  animation: shimmer 0.8s 0.12s forwards;
+}
+.shimmer .level-one .piece3::before {
+  animation: shimmer 0.8s 0.17s forwards;
+}
+.shimmer .level-one .piece4::before {
+  animation: shimmer 0.8s 0.22s forwards;
+}
+.shimmer .level-one .piece5::before {
+  animation: shimmer 0.8s 0.27s forwards;
+}
+.shimmer .level-one .piece6::before {
+  animation: shimmer 0.8s 0.32s forwards;
+}
+.shimmer .level-one .piece7::before {
+  animation: shimmer 0.8s 0.37s forwards;
+}
+.shimmer .level-one .piece8::before {
+  animation: shimmer 0.8s 0.42s forwards;
+}
+.shimmer .level-one .piece9::before {
+  animation: shimmer 0.8s 0.47s forwards;
+}
+.shimmer .level-one .piece10::before {
+  animation: shimmer 0.8s 0.52s forwards;
+}
+.shimmer .level-one .piece11::before {
+  animation: shimmer 0.8s 0.57s forwards;
+}
+.shimmer .level-one .piece12::before {
+  animation: shimmer 0.8s 0.62s forwards;
+}
+.shimmer .level-one .piece13::before {
+  animation: shimmer 0.8s 0.67s forwards;
+}
+.shimmer .level-one .piece14::before {
+  animation: shimmer 0.8s 0.72s forwards;
+}
+.shimmer .level-one .piece15::before {
+  animation: shimmer 0.8s 0.77s forwards;
+}
+.shimmer .level-one .piece16::before {
+  animation: shimmer 0.8s 0.82s forwards;
+}
+.shimmer .level-one .piece17::before {
+  animation: shimmer 0.8s 0.87s forwards;
+}
+.shimmer .level-one .piece18::before {
+  animation: shimmer 0.8s 0.92s forwards;
+}
+.shimmer .level-one .piece19::before {
+  animation: shimmer 0.8s 0.97s forwards;
+}
+.shimmer .level-one .piece20::before {
+  animation: shimmer 0.8s 1.02s forwards;
+}
+.shimmer .level-one .piece21::before {
+  animation: shimmer 0.8s 1.07s forwards;
+}
+.shimmer .level-one .piece22::before {
+  animation: shimmer 0.8s 1.12s forwards;
+}
+.shimmer .level-one .piece23::before {
+  animation: shimmer 0.8s 1.17s forwards;
+}
+.shimmer .level-one .piece24::before {
+  animation: shimmer 0.8s 1.22s forwards;
+}
+.shimmer .level-one .piece26::before {
+  animation: shimmer 0.8s 1.32s forwards;
+}
+.shimmer .level-one .piece27::before {
+  animation: shimmer 0.8s 1.37s forwards;
+}
+.shimmer .level-one .piece28::before {
+  animation: shimmer 0.8s 1.42s forwards;
+}
+.shimmer .level-one .piece29::before {
+  animation: shimmer 0.8s 1.47s forwards;
+}
+
+
+/* .animation-state1 .piece17 {
+  clip-path: polygon(50.000% 50.286%,59.700% 55.571%,28.400% 58.357%);
+  transition-duration: 0.2s;
+} */
+.animation-state1 .piece20 {
+  clip-path: polygon(38.600% 43.429%,50.000% 50.286%,23.800% 62.000%);
+  transition-duration: 0.2s;
+}
+.animation-state1 .piece21 {
+  clip-path: polygon(33.400% 58.357%,22.000% 65.714%,26.000% 60.000%);
+  transition-duration: 0.2s;
+}
+.animation-state1 .piece24 {
+  clip-path: polygon(33.400% 58.357%,37.900% 61.571%,12.400% 76.000%);
+  transition-duration: 0.2s;
+}
+
+
+@keyframes shimmer {
+  0% { background-color: rgba(255, 255, 255, 0); }
+  35% { background-color: rgba(255, 255, 255, 0.1); }
+  100% { background-color: rgba(255, 255, 255, 0); }
+  /* 0% { opacity: 0; }
+  35% { opacity: 0.1; }
+  100% { opacity: 0; } */
+}
+

@@ -15,17 +15,36 @@
   <link rel="stylesheet" href="./index.css">
 </head>
 
-<body class="pt50 tc">
+<body class="pt50 tc hornbill">
   <div>
     <div class="level-one">
       <div class="level-two">
-        <div class="painting">
-        </div>
+        <div class="painting"></div>
       </div>
+      <div></div>
     </div>
   </div>
   <!-- <script src="../../js/common/insertLink.js"></script> -->
   <script>
+    function addClass(ele,className) {
+      const eleObj = document.querySelector(ele)
+      let classAttribute = eleObj.getAttribute('class');
+      if (classAttribute.indexOf(className)===-1) {
+        classAttribute = `${classAttribute} ${className}`;
+      }
+      eleObj.setAttribute('class',classAttribute);
+    }
+
+    function removeClass(ele,className) {
+      const eleObj = document.querySelector(ele)
+      let classAttribute = eleObj.getAttribute('class');
+      if (classAttribute.indexOf(className) > -1) {
+        const reg = new RegExp(className,'g')
+        classAttribute = classAttribute.replace(reg,'');
+      }
+      eleObj.setAttribute('class',classAttribute);
+    }
+
     function createPaintEle() {
       const eleNum = 34;
       let str = '';
@@ -38,7 +57,55 @@
       document.querySelector('.painting').innerHTML = str;
 
     }
+
+    function animalStatesShimmer() {
+
+      setInterval(function(){
+
+        setTimeout(function(){
+          var bodyClass = document.body.getAttribute('class');
+          if (bodyClass.indexOf('shimmer')===-1) {
+            bodyClass = bodyClass + ' shimmer';
+          }
+          document.body.setAttribute('class',bodyClass);
+        }, 4000);
+        setTimeout(function(){
+          var bodyClass = document.body.getAttribute('class');
+          if (bodyClass.indexOf('shimmer')>-1) {
+            bodyClass = bodyClass.replace(/shimmer/g,'');
+          }
+          document.body.setAttribute('class',bodyClass);
+        }, 6000);
+
+      },7000);
+
+    }
+
+    function animal1(e) {
+
+      setInterval(function(){
+
+        setTimeout(function(){
+          addClass('body','animation-state1');
+        }, 1000);
+        setTimeout(function(){
+          removeClass('body','animation-state1');
+        }, 1100);
+        setTimeout(function(){
+          addClass('body','animation-state1');
+        }, 1400);
+        setTimeout(function(){
+          removeClass('body','animation-state1');
+        }, 1500);
+
+
+      },3000);
+
+      }
+
     createPaintEle()
+    // animalStatesShimmer()
+    // animal1()
   </script>
 </body>
 
