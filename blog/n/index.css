@@ -10,6 +10,7 @@
   position: relative;
   width: 1000px;
   height: 700px;
+  transform: scale(0.5);
 }
 .wrap-piece {
   position: absolute;
@@ -122,7 +123,7 @@
 }
 
 .piece21 {
-  clip-path: polygon(33.400% 58.357%,22.000% 67.714%,26.000% 62.000%);
+  clip-path:polygon(33.400% 58.357%,23.1% 66.714%,29% 59%);
   background-color: #3d3328;
 }
 .piece22 {
@@ -199,6 +200,13 @@
   background-image: -webkit-radial-gradient(closest-side, rgba(0, 0, 0, 0.2) 10%, rgba(0, 0, 0, 0.2) 30%, transparent 100%);
 }
 
+/* 嘴中的食物 */
+.piece34 {
+  clip-path: polygon(75.100% 29.429%,75.100% 29.429%,75.100% 29.429%);
+  background-color: #442d1e;
+}
+
+/* 闪烁 */
 .shimmer .level-one .piece1::before {
   animation: shimmer 0.8s 0.07s forwards;
 }
@@ -285,30 +293,63 @@
 }
 
 
-/* .animation-state1 .piece17 {
-  clip-path: polygon(50.000% 50.286%,59.700% 55.571%,28.400% 58.357%);
-  transition-duration: 0.2s;
-} */
+/* 抖动尾巴 */
 .animation-state1 .piece20 {
   clip-path: polygon(38.600% 43.429%,50.000% 50.286%,23.800% 62.000%);
   transition-duration: 0.2s;
 }
 .animation-state1 .piece21 {
-  clip-path: polygon(33.400% 58.357%,22.000% 65.714%,26.000% 60.000%);
-  transition-duration: 0.2s;
+  clip-path: polygon(33.400% 58.357%,22.9% 65.714%,28.8% 58.3%);
+  transition-duration: 0.1s;
 }
 .animation-state1 .piece24 {
   clip-path: polygon(33.400% 58.357%,37.900% 61.571%,12.400% 76.000%);
   transition-duration: 0.2s;
 }
 
+/* 张嘴 */
+.animation-state2 .piece1 {
+  clip-path: polygon(75.700% 24.429%,81.000% 31.000%,72.600% 27.143%);
+}
+.animation-state2 .piece2 {
+  clip-path: polygon(72.600% 27.143%,78.600% 35.900%,71.200% 30.286%);
+}
+.animation-state2 .piece34 {
+  clip-path: polygon(76.9% 29.214%,78.6% 31.886%,76.1% 32.214%);
+}
+
+/* 抬头 */
+.animation-state3 .piece1 {
+  clip-path: polygon(74.8% 22.629%,81.4% 26.6%,72.900% 26.143%);
+}
+.animation-state3 .piece2 {
+  clip-path: polygon(72.900% 26.143%,80.7% 30.1%,72.9% 29.486%);
+}
+.animation-state3 .piece3 {
+  clip-path: polygon(72.900% 26.143%, 72.9% 29.486%,68% 27.143%);
+}
+.animation-state3 .piece4 {
+  clip-path: polygon(74% 12.986%,74.8% 22.629%,72.900% 26.143%);
+}
+.animation-state3 .piece5 {
+  clip-path: polygon(74% 12.986%,72.900% 26.143%,65.200% 13.429%);
+}
+.animation-state3 .piece6 {
+  clip-path: polygon(67.500% 15.571%,72.900% 26.143%,60.100% 19.571%);
+}
+.animation-state3 .piece7 {
+  clip-path: polygon(69.1% 24.143%,72.900% 26.143%,66.200% 28.429%);
+}
+.animation-state3 .piece8 {
+  clip-path: polygon(60.100% 19.571%,69.1% 24.143%,60.5% 36.988%);
+}
+.animation-state3 .piece34 {
+  clip-path: polygon(77.9% 26.414%,79.5% 27.886%,77.8% 28.614%);
+}
 
 @keyframes shimmer {
-  0% { background-color: rgba(255, 255, 255, 0); }
+  0% { background-color: rgba(138, 102, 102, 0); }
   35% { background-color: rgba(255, 255, 255, 0.1); }
   100% { background-color: rgba(255, 255, 255, 0); }
-  /* 0% { opacity: 0; }
-  35% { opacity: 0.1; }
-  100% { opacity: 0; } */
 }
 

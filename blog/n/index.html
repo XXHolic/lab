@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="./index.css">
 </head>
-
+<!-- animation-state3 -->
 <body class="pt50 tc hornbill">
   <div>
     <div class="level-one">
@@ -101,11 +101,32 @@
 
       },3000);
 
-      }
+    }
+
+    function animal2(e) {
+
+      setInterval(function(){
+        removeClass('body','state-four');
+        setTimeout(function(){
+          addClass('body','animation-state2');
+        }, 1000);
+        setTimeout(function(){
+          removeClass('body','animation-state2');
+          addClass('body','animation-state3');
+        }, 2000);
+        setTimeout(function(){
+          removeClass('body','animation-state3');
+          addClass('body','state-four');
+        }, 3000);
+
+      },4000);
+
+    }
 
     createPaintEle()
-    // animalStatesShimmer()
-    // animal1()
+    animalStatesShimmer()
+    animal1()
+    animal2()
   </script>
 </body>
 
