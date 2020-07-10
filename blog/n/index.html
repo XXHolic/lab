@@ -32,6 +32,7 @@
       if (classAttribute.indexOf(className)===-1) {
         classAttribute = `${classAttribute} ${className}`;
       }
+      classAttribute = classAttribute.replace(/\s+/g,' ')
       eleObj.setAttribute('class',classAttribute);
     }
 
@@ -42,10 +43,15 @@
         const reg = new RegExp(className,'g')
         classAttribute = classAttribute.replace(reg,'');
       }
+      classAttribute = classAttribute.replace(/\s+/g,' ')
       eleObj.setAttribute('class',classAttribute);
     }
 
     function createPaintEle() {
+      if (typeof document.body.style.clipPath !== 'string') {
+        alert('Your browser does not support "clip-path" property');
+        return;
+      }
       const eleNum = 34;
       let str = '';
       for (let index = 0; index < eleNum; index++) {
@@ -61,20 +67,11 @@
     function animalStatesShimmer() {
 
       setInterval(function(){
-
         setTimeout(function(){
-          var bodyClass = document.body.getAttribute('class');
-          if (bodyClass.indexOf('shimmer')===-1) {
-            bodyClass = bodyClass + ' shimmer';
-          }
-          document.body.setAttribute('class',bodyClass);
+          addClass('body','shimmer');
         }, 4000);
         setTimeout(function(){
-          var bodyClass = document.body.getAttribute('class');
-          if (bodyClass.indexOf('shimmer')>-1) {
-            bodyClass = bodyClass.replace(/shimmer/g,'');
-          }
-          document.body.setAttribute('class',bodyClass);
+          removeClass('body','shimmer')
         }, 6000);
 
       },7000);
@@ -106,7 +103,6 @@
     function animal2(e) {
 
       setInterval(function(){
-        removeClass('body','state-four');
         setTimeout(function(){
           addClass('body','animation-state2');
         }, 1000);
@@ -116,7 +112,6 @@
         }, 2000);
         setTimeout(function(){
           removeClass('body','animation-state3');
-          addClass('body','state-four');
         }, 3000);
 
       },4000);
