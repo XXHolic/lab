@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="keywords" content="async,javascript,promise">
-  <meta content="图片">
+  <meta name="keywords" content="javascript,offsetTop,position,layerX">
+  <meta content="点击图片获取坐标点">
   <meta name="format-detection" content="telephone=no">
-  <title>async</title>
+  <title>点击图片获取坐标点</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -29,8 +29,10 @@
     <div class="pic"></div>
     <div id="pointResult"></div>
   </div>
-  <!-- <script src="../../js/common/insertLink.js"></script> -->
+  <script src="../../js/common/util.js"></script>
   <script>
+    Util.insertLink({title:'Read In Pieces',linkIndex: 57, type: 'blog'});
+
     Number.prototype.toFixed = function(length) {
         var carry = 0; //存放进位标志
         var num,multiple; //num为原浮点数放大multiple倍后的数，multiple为10的length次方
