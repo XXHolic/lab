@@ -3,15 +3,22 @@
   height: 200px;
   background:#333 url(./images/hornbill.png) no-repeat center center;
   background-size: cover;
-  /* -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); */
 }
 
 .painting {
+  margin: 0 auto;
   position: relative;
-  width: 1000px;
-  height: 700px;
-  transform: scale(0.5);
+  width: 500px;
+  height: 350px;
 }
+@media screen and (max-width: 500px) {
+  .painting {
+    width: 300px;
+    height: 210px;
+  }
+
+}
+
 .wrap-piece {
   position: absolute;
   width: 100%;
