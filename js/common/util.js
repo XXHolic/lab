@@ -117,6 +117,29 @@ Util.CANVAS = {
     canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
     return canvas;
   },
+  // 绘制三角形
+  drawTriangle: function({context,point,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
+    context.beginPath();
+    const loopLen = point.length;
+    console.info('point',point)
+    context.lineWidth = lineWidth;
+    context.strokeStyle = strokeStyle;
+    for (let index = 0; index < loopLen; index++) {
+      const [x,y] = point[index];
+      if (index === 0) {
+        context.moveTo(x,y);
+      } else {
+        context.lineTo(x,y);
+        if(index === loopLen-1) {
+          const [x,y] = point[0]
+          context.lineTo(x,y);
+        }
+      }
+
+    }
+    context.stroke();
+    context.closePath();
+  },
   // 绘制矩形
   drawRect: function({context,x, y, width, height,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
     context.beginPath();

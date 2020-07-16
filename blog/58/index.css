@@ -44,3 +44,7 @@
 td,th {
   padding: 4px 6px;
 }
+
+.canvas-part {
+  border: 1px solid #333;
+}
