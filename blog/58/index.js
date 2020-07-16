@@ -29,7 +29,8 @@ window.onload = function() {
       const p2 = data[i + 1 == len ? 0 : i + 1];
       const edge = getVector(p1,p2);
       const {x,y} = edge;
-      const normal = {x:-y,y:x};
+      const xVector = y == 0 ? y:-y;
+      const normal = {x:xVector,y:x};
       axes.push(normal);
     }
 
@@ -58,7 +59,9 @@ window.onload = function() {
   }
 
   // 检测是否重叠
-  function checkOverlap(axes,polygon1,polygon2) {
+  function checkOverlap(axes,polygon1,polygon2,ele) {
+    const showEle = document.querySelector(ele);
+    let htmlStr = '';
     const len = axes.length;
     for (let index = 0; index < len; index++) {
       const ele = axes[index];
@@ -68,18 +71,29 @@ window.onload = function() {
       const projectB = getProject(ele,polygon2);
       const bMin = projectB.min;
       const bMax = projectB.max;
-      console.info(`多边形 1 投影： ${aMin}-${aMax}`)
-      console.info(`多边形 2 投影： ${bMin}-${bMax}`)
-      if ( (aMin < bMin && aMin > bMax) || (bMin < aMax && bMin > aMin) ) {
+      if (showEle) {
+        htmlStr +=`<tr> <td>${index+1} (${ele.x},${ele.y})</td> <td>${aMin}</td> <td>${aMax}</td> <td>${bMin}</td> <td>${bMax}</td></tr>`
+      }
+
+      console.info(`潜在分轴${index+1} (${ele.x},${ele.y})`)
+      console.info(`多边形1 投影： min ${aMin} , max ${aMax}`)
+      console.info(`多边形2 投影： min ${bMin} , max ${bMax}`)
+      // 边界重叠了，也包含其中
+      if ( (aMin <= bMax && aMin >= bMin) || (bMin <= aMax && bMin >= aMin) ) {
+        if (index === len-1) {
+          showEle.innerHTML = htmlStr;
+          return true;
+        }
         continue;
       } else {
+        showEle.innerHTML = htmlStr;
         return false;
       }
     }
   }
 
 
-  function isCollision(convex1,convex2) {
+  function isCollision(convex1,convex2,ele) {
     let polygon1 = [];
     let polygon2 = [];
     let separateAxes = []
@@ -89,15 +103,23 @@ window.onload = function() {
     polygon1SeparateAxes = getSeparateAxis(polygon1);
     polygon2SeparateAxes = getSeparateAxis(polygon2);
     separateAxes = [...polygon1SeparateAxes,...polygon2SeparateAxes];
-    console.info({polygon1,polygon2,separateAxes})
-    return checkOverlap(separateAxes,polygon1,polygon2)
+    // console.info({polygon1,polygon2,separateAxes})
+    return checkOverlap(separateAxes,polygon1,polygon2,ele)
   }
 
   // 坐标顶点
   const rect1Dots = ['(10,50)', '(70,50)', '(70,100)', '(10,100)'];
-  const triangleDots = ['(120,50)','(120,90)','(80,70)'];
+  const triangle1Dots = ['(120,50)','(120,90)','(80,70)'];
 
-  const result = isCollision(rect1Dots,triangleDots)
+  const result1 = isCollision(rect1Dots,triangle1Dots,'#result1')
+
+  console.info({result1})
+
+  const rect2Dots = ['(10,130)', '(70,130)', '(70,180)', '(10,180)'];
+  const triangle2Dots = ['(90,130)','(90,170)','(50,150)'];
+
+  const result2 = isCollision(rect2Dots,triangle2Dots,'#result2')
+  console.info({result2})
 
 
 
