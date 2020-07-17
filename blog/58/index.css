@@ -46,5 +46,10 @@ td,th {
 }
 
 .canvas-part {
-  border: 1px solid #333;
+  border: 1px solid #eee;
+}
+
+.canvas-collision {
+  border: 1px solid #eee;
+  background-color: #ff9600;
 }
