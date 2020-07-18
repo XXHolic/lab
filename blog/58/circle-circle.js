@@ -1,11 +1,11 @@
-var page = {
+const page = {
   canvasEle:null,
   canvasContext:null,
   canvasWidth: 300,
   canvasHeight: 150,
   drawDynamicTimeout:null,
-  circleMoveAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  circleFixAttr:{x: 150, y: 75, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  circleMoveAttr:{x: 0, y: 0, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  circleFixAttr:{x: 150, y: 75, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -13,7 +13,7 @@ var page = {
   // 创建画布
   createCanvas: function() {
     let {canvasWidth,canvasHeight} = this;
-    var canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
+    let canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
     this.canvasEle = canvasObj;
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
@@ -29,7 +29,7 @@ var page = {
   },
   // 鼠标移动时动态绘制
   drawDynamic: function(event,isPc) {
-    var that = this;
+    let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
@@ -37,18 +37,17 @@ var page = {
       const point = isPc ? event:event.touches[0];
       const {offsetLeft,offsetTop} = this.canvasEle
       // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft-5);
-      const touchPosY = parseInt(point.pageY - offsetTop-5);
-      var xPos = isPc ? point.layerX:touchPosX;
-      var yPos = isPc ? point.layerY:touchPosY;
-      var circleParams = { context,...circleMoveAttr,...{x: xPos, y: yPos} };
-      var circleFixParams = { context,...circleFixAttr };
-      const {x,y} = circleFixAttr;
-      var isCollision = that.checkCollision({moveX:xPos,moveY:yPos,targetX:x,targetY:y});
+      const touchPosX = parseInt(point.pageX - offsetLeft-10);
+      const touchPosY = parseInt(point.pageY - offsetTop-10);
+      const xPos = isPc ? point.layerX:touchPosX;
+      const yPos = isPc ? point.layerY:touchPosY;
+      const circleParams = { context,...circleMoveAttr,...{x: xPos, y: yPos} };
+      let circleFixParams = { context,...circleFixAttr };
+      const {x,y,radius} = circleFixAttr;
+      const isCollision = that.checkCollision({moveX:xPos,moveY:yPos,targetX:x,targetY:y,radius1:radius,radius2:circleMoveAttr.radius});
       if (isCollision) {
-        that.canvasEle.setAttribute('class','canvas-collision')
-      } else {
-        that.canvasEle.setAttribute('class','canvas-part')
+        const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
+        circleFixParams = {...circleFixParams,...colorStyle}
       }
 
       context.clearRect(0,0,canvasWidth,canvasHeight);
@@ -58,17 +57,22 @@ var page = {
   },
   // 碰撞检测
   checkCollision:function(params) {
-    const {moveX,moveY,targetX,targetY} = params;
-    if (moveX == targetX && moveY == targetY) {
+    const {moveX,moveY,targetX,targetY,radius1,radius2} = params;
+    const minusX = targetX-moveX;
+    const minusY = targetY-moveY;
+    const radiusLen = radius1+radius2;
+    const compareRadius = radiusLen * radiusLen;
+    const len = minusX*minusX+minusY*minusY;
+    if (len<=compareRadius) {
       return true;
     }
     return false;
   },
   // 页面事件
   pageEvent: function() {
-    var that = this;
-    var isPc = Util.getDeviceType() === "pc";
-    var eventType = isPc ? 'onmousemove' : 'ontouchmove';
+    let that = this;
+    let isPc = Util.getDeviceType() === "pc";
+    let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
       that.drawDynamic.bind(that)(e,isPc);
     }
