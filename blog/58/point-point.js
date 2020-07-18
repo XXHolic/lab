@@ -77,12 +77,8 @@ var page = {
 
 
 window.onload = function() {
+  Util.insertLink({title:'Collision Detection ：Point',linkIndex: 59, type: 'blog'});
   Util.loading.show();
   page.init();
-  // try {
-  // } catch (error) {
-  //   alert('Page Error')
-  // }
-
   Util.loading.hide();
 }
