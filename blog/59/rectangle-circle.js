@@ -4,8 +4,8 @@ const page = {
   canvasWidth: 300,
   canvasHeight: 150,
   drawDynamicTimeout:null,
-  circleMoveAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  circleFixAttr:{x: 150, y: 75, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  moveAttr:{x: 0, y: 0, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  fixAttr:{x: 120, y: 45, width:60, height:60,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -23,9 +23,9 @@ const page = {
   },
   // 画布中初始状态
   drawInit: function() {
-    const {canvasContext:context,circleFixAttr} = this;
-    var circleFixParams = { context,...circleFixAttr };
-    Util.CANVAS.drawArc(circleFixParams);
+    const {canvasContext:context,fixAttr} = this;
+    var fixParams = { context,...fixAttr };
+    Util.CANVAS.drawRect(fixParams);
   },
   // 鼠标移动时动态绘制
   drawDynamic: function(event,isPc) {
@@ -33,7 +33,7 @@ const page = {
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
-      const {canvasContext:context,canvasWidth,canvasHeight,circleMoveAttr,circleFixAttr} = that;
+      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
       const point = isPc ? event:event.touches[0];
       const {offsetLeft,offsetTop} = this.canvasEle
       // 手指移动时，为了在移动端方便查看，偏移了一些像素。
@@ -41,28 +41,41 @@ const page = {
       const touchPosY = parseInt(point.pageY - offsetTop-10);
       const xPos = isPc ? point.layerX:touchPosX;
       const yPos = isPc ? point.layerY:touchPosY;
-      const circleParams = { context,...circleMoveAttr,...{x: xPos, y: yPos} };
-      let circleFixParams = { context,...circleFixAttr };
-      const {x,y,radius} = circleFixAttr;
-      const isCollision = that.checkCollision({moveX:xPos,moveY:yPos,targetX:x,targetY:y,radius});
+      const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
+      let fixParams = { context,...fixAttr };
+      const {x,y,width,height} = fixAttr;
+      const isCollision = that.checkCollision({moveX:xPos,moveY:yPos,radius:moveAttr.radius,rX:x,rY:y,rW:width,rH:height});
       if (isCollision) {
         const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
-        circleFixParams = {...circleFixParams,...colorStyle}
+        fixParams = {...fixParams,...colorStyle}
       }
 
       context.clearRect(0,0,canvasWidth,canvasHeight);
-      Util.CANVAS.drawArc(circleFixParams);
-      Util.CANVAS.drawArc(circleParams);
+      Util.CANVAS.drawRect(fixParams);
+      Util.CANVAS.drawArc(moveParams);
     }, 4);
   },
   // 碰撞检测
   checkCollision:function(params) {
-    const {moveX,moveY,targetX,targetY,radius} = params;
-    const minusX = targetX-moveX;
-    const compareRadius = radius * radius;
-    const minusY = targetY-moveY;
-    const len = minusX*minusX+minusY*minusY;
-    if (len<=compareRadius) {
+    const {moveX,moveY,radius,rX,rY,rW,rH} = params;
+    const rEndX = rX+rW;
+    const rEndY = rY+rH;
+    let nearestX=moveX, nearestY=moveY;
+    if (moveX<rX) {
+      nearestX = rX
+    } else if(moveX>rEndX) {
+      nearestX = rEndX
+    }
+
+    if (moveY<rY) {
+      nearestY = rY
+    } else if(moveY>rEndY) {
+      nearestY = rEndY
+    }
+    const distX = nearestX-moveX;
+    const distY = nearestY-moveY;
+    const distance = distX*distX + distY*distY;
+    if (distance<=radius*radius) {
       return true;
     }
     return false;
@@ -80,7 +93,7 @@ const page = {
 
 
 window.onload = function() {
-  Util.insertLink({title:'Collision Detection ：Point',linkIndex: 59, type: 'blog'});
+  Util.insertLink({title:'Collision Detection ：Rectangle',linkIndex: 60, type: 'blog'});
   Util.loading.show();
   page.init();
   // try {
