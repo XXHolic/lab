@@ -117,21 +117,40 @@ Util.CANVAS = {
     canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
     return canvas;
   },
-  // 绘制三角形
-  drawTriangle: function({context,point,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
+  // 根据提供的坐标点绘制直线
+  drawLine: function({context,points,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
     context.beginPath();
-    const loopLen = point.length;
-    console.info('point',point)
+    const loopLen = points.length;
+    // console.info('point',point)
     context.lineWidth = lineWidth;
     context.strokeStyle = strokeStyle;
     for (let index = 0; index < loopLen; index++) {
-      const [x,y] = point[index];
+      const [x,y] = points[index];
+      if (index === 0) {
+        context.moveTo(x,y);
+      } else {
+        context.lineTo(x,y);
+      }
+
+    }
+    context.stroke();
+    context.closePath();
+  },
+  // 绘制三角形
+  drawTriangle: function({context,points,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
+    context.beginPath();
+    const loopLen = points.length;
+    console.info('points',points)
+    context.lineWidth = lineWidth;
+    context.strokeStyle = strokeStyle;
+    for (let index = 0; index < loopLen; index++) {
+      const [x,y] = points[index];
       if (index === 0) {
         context.moveTo(x,y);
       } else {
         context.lineTo(x,y);
         if(index === loopLen-1) {
-          const [x,y] = point[0]
+          const [x,y] = points[0]
           context.lineTo(x,y);
         }
       }
