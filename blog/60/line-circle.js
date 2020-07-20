@@ -4,8 +4,9 @@ const page = {
   canvasWidth: 300,
   canvasHeight: 150,
   drawDynamicTimeout:null,
-  moveAttr:{x: 0, y: 0, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  moveAttr:{x: 0, y: 0, radius:14, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  moveProjectAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#f13939",fillStyle:"#f13939"},
+  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,lineCap:'round',strokeStyle:"rgba(0,148,255,.5)",fillStyle:"rgba(0,148,255,.5)"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -33,7 +34,7 @@ const page = {
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
-      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
+      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr,moveProjectAttr} = that;
       const point = isPc ? event:event.touches[0];
       const {offsetLeft,offsetTop} = this.canvasEle
       // 手指移动时，为了在移动端方便查看，偏移了一些像素。
@@ -44,13 +45,19 @@ const page = {
       const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
       let fixParams = { context,...fixAttr };
       const {points} = fixAttr;
-      const isCollision = that.checkCollision({moveX:xPos,moveY:yPos,radius:moveAttr.radius,points:points});
+      const checkCollisionParams = {moveX:xPos,moveY:yPos,radius:moveAttr.radius,points:points};
+      const isCollision = that.checkCollision(checkCollisionParams);
       if (isCollision) {
-        const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
+        const colorStyle = {strokeStyle:"rgba(255,155,0,.5)",fillStyle:"rgba(255,155,0,.5)"}
         fixParams = {...fixParams,...colorStyle}
       }
-
+      const closestPoint = that.getClosestPoint2(checkCollisionParams);
       context.clearRect(0,0,canvasWidth,canvasHeight);
+      if (closestPoint) {
+        const [x,y] = closestPoint;
+        const moveProjectParams = {context,...moveProjectAttr,...{x,y}}
+        Util.CANVAS.drawArc(moveProjectParams);
+      }
       Util.CANVAS.drawLine(fixParams);
       Util.CANVAS.drawArc(moveParams);
     }, 4);
@@ -97,18 +104,51 @@ const page = {
     }
     return [closestX,closestY];
   },
+  /**
+   * 使用另外一种跟简单的点积计算方式，计算线上离圆心最近的点坐标
+   * a 代表线的向量
+   * t 系数
+   * p1 直线上任意一点
+   * p0 非直线上的一点
+   * pt 直线上离 p0 最近的一点
+   *
+   * pt = p1 + t*a
+   * (a.x,a.y)*(pt.x-p0.x,pt.y-p0.y) = 0 // 垂直的向量，点积为 0
+   * (a.x,a.y)*( (p1+t*a).x-p0.x,(p1+t*a).y-p0.y) = 0 // 带入 pt
+   * a.x *(p1.x + t*a.x - p0.x) + a.y *(p1.y + t*a.y - p0.y)  = 0
+   * a.x*p1.x + a.x*t*a.x - a.x*p0.x + a.y*p1.y + a.y*t*a.y - a.y*p0.y = 0
+   * t*(a.x*a.x + a.y*a.y) + a.x*p1.x - a.x*p0.x + a.y*p1.y- a.y*p0.y=0
+   * t*(a.x*a.x + a.y*a.y) = a.x*(p0.x-p1.x)+a.y*(p0.y-p1.y)
+   */
+  getClosestPoint2:function(params){
+    const {moveX,moveY,points} = params;
+    const [point1,point2] = points;
+    const [x1,y1] = point1;
+    const [x2,y2] = point2;
+    const pointVectorX = x1 - x2;
+    const pointVectorY = y1 - y2;
+    const t = (pointVectorX*(moveX - x1) + pointVectorY*(moveY-y1))/(pointVectorX*pointVectorX+pointVectorY*pointVectorY);
+    const closestX = x1 + t*pointVectorX;
+    const closestY = y1 + t*pointVectorY;
+    const isOnLine = this.linePoint({points,closestX,closestY});
+    if(!isOnLine) {
+      return false;
+    }
+    return [closestX,closestY];
+  },
   // 碰撞检测
   checkCollision:function(params) {
     const {moveX,moveY,radius} = params;
     const movePoint = [moveX,moveY];
-    const closestPoint = this.getClosestPoint(params);
+    // const closestPoint = this.getClosestPoint(params);
+    const closestPoint = this.getClosestPoint2(params);
     if (!closestPoint) {
       return false;
     }
     const distance = this.calculateLen(closestPoint,movePoint);
 
-    if (distance<=radius) {
-      return true;
+    if (distance<=radius+5) {
+      return closestPoint;
     }
     return false;
   },

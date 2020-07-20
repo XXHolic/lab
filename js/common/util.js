@@ -118,11 +118,12 @@ Util.CANVAS = {
     return canvas;
   },
   // 根据提供的坐标点绘制直线
-  drawLine: function({context,points,lineWidth=1,strokeStyle="#fff",fillStyle="#fff"}){
+  drawLine: function({context,points,lineWidth=1,lineCap="butt",strokeStyle="#fff",fillStyle="#fff"}){
     context.beginPath();
     const loopLen = points.length;
     // console.info('point',point)
     context.lineWidth = lineWidth;
+    context.lineCap = lineCap;
     context.strokeStyle = strokeStyle;
     for (let index = 0; index < loopLen; index++) {
       const [x,y] = points[index];

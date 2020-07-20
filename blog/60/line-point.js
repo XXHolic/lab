@@ -5,7 +5,7 @@ const page = {
   canvasHeight: 150,
   drawDynamicTimeout:null,
   moveAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,lineCap:'round',strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
