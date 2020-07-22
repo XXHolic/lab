@@ -385,3 +385,18 @@ Util.getPointCoordinate = function (event,element,buffer=0) {
 
   return {xPos,yPos}
 }
+
+/**
+ * 获取随机数，包含最大值和最小值
+ * @param {*} min
+ * @param {*} max
+ */
+Util.getRandom = function(min, max) {
+  let minValue = min;
+  let maxValue = max;
+  if (minValue > maxValue) {
+    minValue = max;
+    maxValue = min;
+  }
+  return Math.floor(Math.random() * (maxValue - minValue + 1) ) + minValue;
+}
