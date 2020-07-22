@@ -149,7 +149,7 @@ const page = {
 
 
 window.onload = function() {
-  // Util.insertLink({title:'Collision Detection ：Rectangle',linkIndex: 60, type: 'blog'});
+  Util.insertLink({title:'Collision Detection ：Line',linkIndex: 61, type: 'blog'});
   Util.loading.show();
   page.init();
   // try {
