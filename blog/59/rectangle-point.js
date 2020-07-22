@@ -28,19 +28,13 @@ const page = {
     Util.CANVAS.drawRect(fixParams);
   },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event,isPc) {
+  drawDynamic: function(event) {
     let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
       const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
-      const point = isPc ? event:event.touches[0];
-      const {offsetLeft,offsetTop} = this.canvasEle
-      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft-10);
-      const touchPosY = parseInt(point.pageY - offsetTop-10);
-      const xPos = isPc ? point.layerX:touchPosX;
-      const yPos = isPc ? point.layerY:touchPosY;
+      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle,10);
       const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
       let fixParams = { context,...fixAttr };
       const {x,y,width,height} = fixAttr;
@@ -72,7 +66,7 @@ const page = {
     let isPc = Util.getDeviceType() === "pc";
     let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e,isPc);
+      that.drawDynamic.bind(that)(e);
     }
   }
 }

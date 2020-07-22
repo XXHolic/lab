@@ -29,13 +29,19 @@ const page = {
     Util.CANVAS.drawLine(fixParams);
   },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event) {
+  drawDynamic: function(event,isPc) {
     let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
       const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr,moveProjectAttr} = that;
-      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle);
+      const point = isPc ? event:event.touches[0];
+      const {offsetLeft,offsetTop} = this.canvasEle
+      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
+      const touchPosX = parseInt(point.pageX - offsetLeft-10);
+      const touchPosY = parseInt(point.pageY - offsetTop-10);
+      const xPos = isPc ? point.layerX:touchPosX;
+      const yPos = isPc ? point.layerY:touchPosY;
       const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
       let fixParams = { context,...fixAttr };
       const {points} = fixAttr;
@@ -152,7 +158,7 @@ const page = {
     let isPc = Util.getDeviceType() === "pc";
     let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e);
+      that.drawDynamic.bind(that)(e,isPc);
     }
   }
 }
@@ -162,6 +168,10 @@ window.onload = function() {
   Util.insertLink({title:'Collision Detection ：Line',linkIndex: 61, type: 'blog'});
   Util.loading.show();
   page.init();
+  // try {
+  // } catch (error) {
+  //   alert('Page Error')
+  // }
 
   Util.loading.hide();
 }

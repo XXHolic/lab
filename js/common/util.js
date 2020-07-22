@@ -356,3 +356,24 @@ Util.insertLink= function (params) {
   bodyEle.insertBefore(insertEle,bodyEle.firstElementChild);
 
 }
+
+/**
+ * 获取焦点坐标
+ * @param {object} event 事件对象
+ * @param {object} element 焦点所在的元素
+ * @param {object} buffer 偏移量，在手机上点击可能看不到，为了方便查看偏移一些距离
+ */
+Util.getPointCoordinate = function (event,element,buffer=0) {
+  let isPc = Util.getDeviceType() === "pc";
+  const point = isPc ? event:event.touches[0];
+  const {offsetLeft,offsetTop} = element
+  let xPos = parseInt(point.pageX - offsetLeft);
+  let yPos = parseInt(point.pageY - offsetTop);
+  // 手指移动时，为了在移动端方便查看，偏移了一些像素。
+  if (!isPc) {
+    xPos = xPos - buffer;
+    yPos = yPos - buffer;
+  }
+
+  return {xPos,yPos}
+}

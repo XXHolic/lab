@@ -28,19 +28,13 @@ var page = {
     Util.CANVAS.drawArc(circleFixParams);
   },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event,isPc) {
+  drawDynamic: function(event) {
     var that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
       const {canvasContext:context,canvasWidth,canvasHeight,circleMoveAttr,circleFixAttr} = that;
-      const point = isPc ? event:event.touches[0];
-      const {offsetLeft,offsetTop} = this.canvasEle
-      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft-5);
-      const touchPosY = parseInt(point.pageY - offsetTop-5);
-      var xPos = isPc ? point.layerX:touchPosX;
-      var yPos = isPc ? point.layerY:touchPosY;
+      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle,10);
       var circleParams = { context,...circleMoveAttr,...{x: xPos, y: yPos} };
       var circleFixParams = { context,...circleFixAttr };
       const {x,y} = circleFixAttr;
@@ -70,7 +64,7 @@ var page = {
     var isPc = Util.getDeviceType() === "pc";
     var eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e,isPc);
+      that.drawDynamic.bind(that)(e);
     }
   }
 }
