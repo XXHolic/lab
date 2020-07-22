@@ -6,7 +6,7 @@ const page = {
   drawDynamicTimeout:null,
   moveAttr:{x: 0, y: 0, radius:14, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
   moveProjectAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#f13939",fillStyle:"#f13939"},
-  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,lineCap:'round',strokeStyle:"rgba(0,148,255,.5)",fillStyle:"rgba(0,148,255,.5)"},
+  fixAttr:{points:[[130,40],[180,40],[150,70],[180,100],[130,100],[100,70]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -28,20 +28,25 @@ const page = {
     var fixParams = { context,...fixAttr };
     Util.CANVAS.drawLine(fixParams);
   },
+  // 绘制投影的最近的点
+  drawProjects: function({points}) {
+    const {canvasContext:context,moveProjectAttr} = this;
+    const pointsLen = points.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const closestPoint = points[index];
+      const [x,y] = closestPoint;
+      const moveProjectParams = {context,...moveProjectAttr,...{x,y}}
+      Util.CANVAS.drawArc(moveProjectParams);
+    }
+  },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event,isPc) {
+  drawDynamic: function(event) {
     let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
       const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr,moveProjectAttr} = that;
-      const point = isPc ? event:event.touches[0];
-      const {offsetLeft,offsetTop} = this.canvasEle
-      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft-10);
-      const touchPosY = parseInt(point.pageY - offsetTop-10);
-      const xPos = isPc ? point.layerX:touchPosX;
-      const yPos = isPc ? point.layerY:touchPosY;
+      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle,10);
       const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
       let fixParams = { context,...fixAttr };
       const {points} = fixAttr;
@@ -51,12 +56,10 @@ const page = {
         const colorStyle = {strokeStyle:"rgba(255,155,0,.5)",fillStyle:"rgba(255,155,0,.5)"}
         fixParams = {...fixParams,...colorStyle}
       }
-      const closestPoint = that.getClosestPoint2(checkCollisionParams);
+      const closestPoints = that.getAllClosestPoints(checkCollisionParams);
       context.clearRect(0,0,canvasWidth,canvasHeight);
-      if (closestPoint) {
-        const [x,y] = closestPoint;
-        const moveProjectParams = {context,...moveProjectAttr,...{x,y}}
-        Util.CANVAS.drawArc(moveProjectParams);
+      if (closestPoints.length) {
+        that.drawProjects({points:closestPoints});
       }
       Util.CANVAS.drawLine(fixParams);
       Util.CANVAS.drawArc(moveParams);
@@ -136,8 +139,33 @@ const page = {
     }
     return [closestX,closestY];
   },
-  // 碰撞检测
-  checkCollision:function(params) {
+  getAllClosestPoints:function(params){
+    const {moveX,moveY,points} = params;
+    const pointsLen = points.length;
+    let allClosestPoints = [];
+    for (let index = 0; index < pointsLen; index++) {
+      const point1 = points[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const point2 = points[next];
+
+      const [x1,y1] = point1;
+      const [x2,y2] = point2;
+      const pointVectorX = x1 - x2;
+      const pointVectorY = y1 - y2;
+      const t = (pointVectorX*(moveX - x1) + pointVectorY*(moveY-y1))/(pointVectorX*pointVectorX+pointVectorY*pointVectorY);
+      const closestX = x1 + t*pointVectorX;
+      const closestY = y1 + t*pointVectorY;
+      const isOnLine = this.linePoint({points:[point1,point2],closestX,closestY});
+      if(isOnLine) {
+        allClosestPoints.push([closestX,closestY])
+      }
+    }
+
+    return allClosestPoints;
+
+  },
+  // 直线与圆的碰撞
+  checkLineCircle:function(params) {
     const {moveX,moveY,radius} = params;
     const movePoint = [moveX,moveY];
     // const closestPoint = this.getClosestPoint(params);
@@ -147,9 +175,29 @@ const page = {
     }
     const distance = this.calculateLen(closestPoint,movePoint);
 
-    if (distance<=radius+5) {
+    if (distance<=radius) {
       return closestPoint;
     }
+    return false;
+  },
+  // 碰撞检测
+  checkCollision:function(params) {
+    const {moveX,moveY,radius,points} = params;
+    // const px = moveX, py = moveY;
+    const pointsLen = points.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const currentPoint = points[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const nextPoint = points[next];
+      const [cx,cy] = currentPoint;
+      const [nx,ny] = nextPoint;
+      const checkParams = {moveX,moveY,radius,points:[[cx,cy],[nx,ny]]}
+      const collision = this.checkLineCircle(checkParams);
+      if (collision) {
+        return true;
+      }
+    }
+
     return false;
   },
   // 页面事件
@@ -158,7 +206,7 @@ const page = {
     let isPc = Util.getDeviceType() === "pc";
     let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e,isPc);
+      that.drawDynamic.bind(that)(e);
     }
   }
 }

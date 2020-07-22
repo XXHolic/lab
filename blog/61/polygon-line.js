@@ -7,7 +7,7 @@ const page = {
   drawDynamicTimeout:null,
   moveAttr:{points:[[0,0],[20,20]],lineWidth:10,lineCap:'round',strokeStyle:"rgba(51,51,51,.5)",fillStyle:"rgba(51,51,51,.5)"},
   interSectionAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#f13939",fillStyle:"#f13939"},
-  fixAttr:{x: 120, y: 45, width:60, height:60,strokeStyle:"rgba(0,148,255,.5)",fillStyle:"rgba(0,148,255,.5)"},
+  fixAttr:{points:[[130,40],[180,40],[150,70],[180,100],[130,100],[100,70]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -28,40 +28,29 @@ const page = {
     const {canvasContext:context,fixAttr,moveAttr} = this;
     var fixParams = { context,...fixAttr };
     var moveAttrParams = { context,...moveAttr };
-    Util.CANVAS.drawRect(fixParams);
+    Util.CANVAS.drawLine(fixParams);
     Util.CANVAS.drawLine(moveAttrParams);
   },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event,isPc) {
+  drawDynamic: function(event) {
     let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
-      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr,interSectionAttr} = that;
-      const point = isPc ? event:event.touches[0];
-      const {offsetLeft,offsetTop} = this.canvasEle
-      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft);
-      const touchPosY = parseInt(point.pageY - offsetTop);
-      const xPos = isPc ? point.layerX:touchPosX;
-      const yPos = isPc ? point.layerY:touchPosY;
+      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
+      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle);
       const moveParams = { context,...moveAttr,...{points:[[0,0],[xPos,yPos]]} };
       let fixParams = { context,...fixAttr };
-      const {x,y,width,height} = fixAttr;
-      const checkCollisionParams = {moveX:xPos,moveY:yPos,rx:x,ry:y,rw:width,rh:height};
+      const {points} = fixAttr;
+      const checkCollisionParams = {moveX:xPos,moveY:yPos,points};
       const collisionResult = that.checkCollision(checkCollisionParams);
       context.clearRect(0,0,canvasWidth,canvasHeight);
       if (collisionResult) {
-        const colorStyle = {strokeStyle:"rgba(255,155,0,.5)",fillStyle:"rgba(255,155,0,.5)"}
+        const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
         fixParams = {...fixParams,...colorStyle}
-        for (const ele of collisionResult.values()) {
-          const {x,y} = ele;
-          const interSectionParams = {context,...interSectionAttr,...{x,y}};
-          Util.CANVAS.drawArc(interSectionParams);
-        }
       }
 
-      Util.CANVAS.drawRect(fixParams);
+      Util.CANVAS.drawLine(fixParams);
       Util.CANVAS.drawLine(moveParams);
     }, 4);
   },
@@ -94,7 +83,7 @@ const page = {
    * t2 = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1))
    *
    */
-  getInterSectionPoint:function(params) {
+  checkLineLine:function(params) {
     const {points} = params;
     const [p1,p2,p3,p4] = points;
     const [x1,y1] = p1;
@@ -105,36 +94,26 @@ const page = {
     const t2 = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
 
     if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {
-      return {point:{x:t1*x2,y:t1*y2}}
+      return true
     }
     return false;
   },
   // 碰撞检测
   checkCollision:function(params) {
-    const {moveX,moveY,rx,ry,rw,rh} = params;
-    const x1 = 0,y1=0,x2=moveX,y2=moveY;
-    const left = this.getInterSectionPoint({points:[[x1,y1],[x2,y2],[rx,ry],[rx,ry+rh]]});
-    const top = this.getInterSectionPoint({points:[[x1,y1],[x2,y2],[rx,ry],[rx+rw,ry]]});
-    const right = this.getInterSectionPoint({points:[[x1,y1],[x2,y2],[rx+rw,ry],[rx+rw,ry+rh]]});
-    const bottom = this.getInterSectionPoint({points:[[x1,y1],[x2,y2],[rx,ry+rh],[rx+rw,ry+rh]]});
-
-    if (left || right || top || bottom) {
-      let points = [];
-      if (left) {
-        points.push(left.point)
+    const {moveX,moveY,points} = params;
+    const pointsLen = points.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const currentPoint = points[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const nextPoint = points[next];
+      const collision = this.checkLineLine({points:[[0,0],[moveX,moveY],currentPoint,nextPoint]});
+      if (collision) {
+        return collision;
       }
-      if (right) {
-        points.push(right.point)
-      }
-      if (top) {
-        points.push(top.point)
-      }
-      if (bottom) {
-        points.push(bottom.point)
-      }
-      return points;
     }
+
     return false;
+
   },
   // 页面事件
   pageEvent: function() {
@@ -142,7 +121,7 @@ const page = {
     let isPc = Util.getDeviceType() === "pc";
     let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e,isPc);
+      that.drawDynamic.bind(that)(e);
     }
   }
 }

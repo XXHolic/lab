@@ -5,7 +5,7 @@ const page = {
   canvasHeight: 150,
   drawDynamicTimeout:null,
   moveAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{points:[[110,90],[190,50]],lineWidth:10,lineCap:'round',strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  fixAttr:{points:[[130,40],[180,40],[150,70],[180,100],[130,100],[100,70]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -28,19 +28,13 @@ const page = {
     Util.CANVAS.drawLine(fixParams);
   },
   // 鼠标移动时动态绘制
-  drawDynamic: function(event,isPc) {
+  drawDynamic: function(event) {
     let that = this;
     that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
 
     that.drawDynamicTimeout = setTimeout(function() {
       const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
-      const point = isPc ? event:event.touches[0];
-      const {offsetLeft,offsetTop} = this.canvasEle
-      // 手指移动时，为了在移动端方便查看，偏移了一些像素。
-      const touchPosX = parseInt(point.pageX - offsetLeft-10);
-      const touchPosY = parseInt(point.pageY - offsetTop-10);
-      const xPos = isPc ? point.layerX:touchPosX;
-      const yPos = isPc ? point.layerY:touchPosY;
+      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle,10);
       const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
       let fixParams = { context,...fixAttr };
       const {points} = fixAttr;
@@ -66,17 +60,23 @@ const page = {
   // 碰撞检测
   checkCollision:function(params) {
     const {moveX,moveY,points} = params;
-    const [point1,point2] = points;
-    const buffer = 0.1;
-    const movePoint = [moveX,moveY];
-    const lineLen = this.calculateLen(point1,point2);
-    const d1 = this.calculateLen(movePoint,point1);
-    const d2 = this.calculateLen(movePoint,point2);
-
-    if (d1+d2 >= lineLen-buffer && d1+d2 <= lineLen+buffer) {
-      return true;
+    const px = moveX, py = moveY;
+    let collision = false;
+    const pointsLen = points.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const currentPoint = points[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const nextPoint = points[next];
+      const [cx,cy] = currentPoint;
+      const [nx,ny] = nextPoint;
+      const judgeX = px < (nx-cx)*(py-cy) / (ny-cy)+cx;
+      const judgeY = (cy >= py && ny < py) || (cy < py && ny >= py);
+      if (judgeX && judgeY) {
+        collision = !collision;
+      }
     }
-    return false;
+
+    return collision;
   },
   // 页面事件
   pageEvent: function() {
@@ -84,7 +84,7 @@ const page = {
     let isPc = Util.getDeviceType() === "pc";
     let eventType = isPc ? 'onmousemove' : 'ontouchmove';
     this.canvasEle[eventType] = function(e) {
-      that.drawDynamic.bind(that)(e,isPc);
+      that.drawDynamic.bind(that)(e);
     }
   }
 }
