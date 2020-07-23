@@ -1,0 +1,8 @@
+.canvas-part {
+  border: 1px solid #eee;
+}
+
+.canvas-collision {
+  border: 1px solid #eee;
+  background-color: #ff9600;
+}
