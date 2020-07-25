@@ -4,11 +4,12 @@ const page = {
   canvasWidth: 300,
   canvasHeight: 150,
   drawDynamicTimeout:null,
-  moveAttr:{x: 0, y: 0, radius:6, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{points:[[150,50],[200,100],[100,100]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  angle:0,
+  moveAttr:{points:[[-40,-40],[40,-40],[40,40],[-40,40]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  fixAttr:{points:[[-30,-30],[30,-30],[30,30],[-30,30]],isClose:true,strokeStyle:"#333",fillStyle:"#333"},
   init: function() {
     this.createCanvas();
-    this.pageEvent();
+    // this.pageEvent();
   },
   // 创建画布
   createCanvas: function() {
@@ -18,36 +19,104 @@ const page = {
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
-    this.drawInit();
+    this.drawDynamic();
     document.body.appendChild(canvasObj);
   },
-  // 画布中初始状态
-  drawInit: function() {
-    const {canvasContext:context,fixAttr} = this;
-    var fixParams = { context,...fixAttr };
-    Util.CANVAS.drawLine(fixParams);
-  },
-  // 鼠标移动时动态绘制
-  drawDynamic: function(event) {
-    let that = this;
-    that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout);
-
-    that.drawDynamicTimeout = setTimeout(function() {
-      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
-      const {xPos,yPos} = Util.getPointCoordinate(event,this.canvasEle,10);
-      const moveParams = { context,...moveAttr,...{x: xPos, y: yPos} };
-      let fixParams = { context,...fixAttr };
-      const {points} = fixAttr;
-      const isCollision = that.checkCollision({moveX:xPos,moveY:yPos,points:points});
-      if (isCollision) {
-        const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
-        fixParams = {...fixParams,...colorStyle}
+  /**
+   * 获取点在实际画布中的位置坐标 αβ
+   * 圆心坐标 O（0，0），假设点 A（x,y）顺时针旋转角度 β 后达到点 B(m,n)，下面来推导一下 B 点坐标
+   * A 到圆心的距离： dist1 = |OA| = y/sin(α)=x/cos(α)
+   * B 到圆心的距离： dist2 = |OB| = n/sin(α-β)=m/cos(α-β)
+   * 只是旋转 所以 dist1 = dist2，建设旋转的半径为 r ：
+   * r = y/sin(α)=x/cos(α)=n/sin(α-β)=m/cons(α-β)
+   *
+   * y/(sin(α)cos(β)+cos(α)sin(β)) = x/(cos(α)cos(β)-sin(α)sin(β))
+   * x * (sin(α)cos(β)+cos(α)sin(β)) = y * (cos(α)cos(β)-sin(α)sin(β))
+   * x *sin(α)cos(β) + x*cos(α)sin(β) = y*cos(α)cos(β) - y*sin(α)sin(β)
+   * x *sin(α)cos(β) - y*cos(α)cos(β) = - y*sin(α)sin(β) - x*cos(α)sin(β)
+   * cos(β) * (y*cos(α) - x *sin(α)) = sin(β) (y*sin(α) + x*cos(α))
+   *
+   *
+   * 三角函数公式知：
+   * sin(α+β)=sin(α)cos(β)+cos(α)sin(β)
+   * sin(α-β)=sin(α)cos(β)-cos(α)sin(β)
+   * cos(α+β)=cos(α)cos(β)-sin(α)sin(β)
+   * cos(α-β)=cos(α)cos(β)+sin(α)sin(β)
+   *
+   * 可以得出：
+   * m = r*cos(α-β) = r * cos(α)cos(β) + r * sin(α)sin(β) =  x * cos(β) + y * sin(β)
+   * n = r*sin(α-β) = r * sin(α)cos(β) - r * cos(α)sin(β) =  y * cos(β) - x * sin(β)
+   *
+   * 逆时针则相反：
+   * m =  x * cos(β) - y * sin(β)
+   * n =  y * cos(β) + x * sin(β)
+   *
+   */
+  getPosition: function(obj) {
+    const {canvasContext:context} = this;
+    const {points} = obj;
+    const {translateData,rotateData} = context;
+    const newPoints = points.map(ele => {
+      let [x,y] = ele;
+      if (rotateData) {
+        rotateX = x * Math.cos(rotateData) + y * Math.sin(rotateData);
+        rotateY = y * Math.cos(rotateData) - x * Math.sin(rotateData);
+        x = rotateX;
+        y = rotateY;
       }
 
+      if (translateData) {
+        x = x+translateData.x;
+        y = y+translateData.y;
+      }
+      return [x,y];
+    })
+    return newPoints;
+  },
+  // 画布中初始状态
+  draw: function() {
+    const {canvasContext:context,fixAttr,moveAttr} = this;
+    this.angle += 1
+    // this.angle = 45
+    const calculateAngle = this.angle * Math.PI / 180
+    Util.CANVAS.resetTransform(context)
+    let fixParams = { context,...fixAttr };
+    context.translateData = {x:80,y:75};
+    context.translate(80,75);
+    context.rotateData = calculateAngle;
+    context.rotate(calculateAngle);
+    const fixNewPoints = this.getPosition(fixAttr);
+    // console.info('newPoints',newPoints)
+    Util.CANVAS.drawLine(fixParams);
+
+    // context.fillRect(0,0,100,100)
+    Util.CANVAS.resetTransform(context)
+
+    let moveParams = { context,...moveAttr };
+    context.translateData = {x:170,y:75};
+    context.translate(170,75);
+    context.rotateData = calculateAngle;
+    context.rotate(calculateAngle);
+    const moveNewPoints = this.getPosition(moveAttr);
+    const isCollision = this.checkPolygonPolygon({movePoints:moveNewPoints,fixPoints:fixNewPoints})
+    // console.info({fixNewPoints,moveNewPoints,isCollision})
+      if (isCollision) {
+        const colorStyle = {strokeStyle:"#ff9600",fillStyle:"#ff9600"}
+        moveParams = {...moveParams,...colorStyle}
+      }
+
+    Util.CANVAS.drawLine(moveParams);
+    Util.CANVAS.resetTransform(context)
+  },
+  //
+  drawDynamic: function(event) {
+    let that = this;
+
+    that.drawDynamicTimeout = setInterval(function() {
+      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
       context.clearRect(0,0,canvasWidth,canvasHeight);
-      Util.CANVAS.drawLine(fixParams);
-      Util.CANVAS.drawArc(moveParams);
-    }, 4);
+      that.draw(context);
+    }, 10);
   },
   calculateLen: function(point1,point2) {
     const [x1,y1] = point1;
@@ -57,22 +126,51 @@ const page = {
     const len = Math.sqrt(distX*distX + distY*distY);
     return len;
   },
-  // 碰撞检测
-  checkCollision:function(params) {
-    const {moveX,moveY,points} = params;
-    const px = moveX, py = moveY;
-    const [point1,point2,point3] = points;
-    const [x1,y1] = point1;
-    const [x2,y2] = point2;
-    const [x3,y3] = point3;
-    const areaOrig = Math.abs( (x2-x1)*(y3-y1) - (x3-x1)*(y2-y1) );
-    const area1 = Math.abs( (x1-px)*(y2-py) - (x2-px)*(y1-py) );
-    const area2 = Math.abs( (x2-px)*(y3-py) - (x3-px)*(y2-py) );
-    const area3 = Math.abs( (x3-px)*(y1-py) - (x1-px)*(y3-py) );
+  checkLineLine:function(params) {
+    const {points} = params;
+    const [p1,p2,p3,p4] = points;
+    const [x1,y1] = p1;
+    const [x2,y2] = p2;
+    const [x3,y3] = p3;
+    const [x4,y4] = p4;
+    const t1 = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3))/((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+    const t2 = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
 
-    if (area1 + area2 + area3 === areaOrig) {
-      return true;
+    if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {
+      return true
     }
+    return false;
+  },
+  checkPolygonLine:function(params) {
+    const {linePoints,points} = params;
+    const pointsLen = points.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const currentPoint = points[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const nextPoint = points[next];
+      const collision = this.checkLineLine({points:[...linePoints,currentPoint,nextPoint]});
+      if (collision) {
+        return collision;
+      }
+    }
+
+    return false;
+  },
+  // 碰撞检测
+  checkPolygonPolygon:function(params) {
+    const {movePoints,fixPoints} = params;
+    // const rx = moveX,ry=moveY;
+    const pointsLen = fixPoints.length;
+    for (let index = 0; index < pointsLen; index++) {
+      const currentPoint = fixPoints[index];
+      const next = index === pointsLen-1 ? 0:index+1;
+      const nextPoint = fixPoints[next];
+      const collision = this.checkPolygonLine({linePoints:[currentPoint,nextPoint],points:movePoints});
+      if (collision) {
+        return true;
+      }
+    }
+
     return false;
   },
   // 页面事件
@@ -88,7 +186,7 @@ const page = {
 
 
 window.onload = function() {
-  Util.insertLink({title:'Collision Detection ：Line',linkIndex: 61, type: 'blog'});
+  // Util.insertLink({title:'Collision Detection ：Line',linkIndex: 61, type: 'blog'});
   Util.loading.show();
   page.init();
   // try {

@@ -306,12 +306,28 @@ Util.CANVAS = {
 
   },
   /**
+   * canvas.transform(a, b, c, d, e, f)
+   * a-水平缩放，b-垂直倾斜，c-水平倾斜，d-垂直缩放，e-水平移动，f-垂直移动
+   *
+   * 为了方便使用 ，再次包装一下，参照 CSS 中的方法命名
+   * @param {object} context canvas 上下文对象
+   * @param {number} x 水平方向的移动
+   * @param {number} y 垂直方向的移动
+   */
+  // transform: function({context,x=0,y=0}) {
+  //   context.transform(1,0,0,1,x,y);
+  // },
+  resetTransform: function(context) {
+    var ratio = window.devicePixelRatio || 1;
+    context.setTransform(ratio,0,0,ratio,0,0);
+  },
+  /**
    * 清除画布
    * @param {object} context canvas 上下文对象
    * @param {number} width 画布高度
    * @param {number} height 画布宽度
    */
-  clear: function(context,width=0,height=0) {
+  clear: function(context,width = 0,height = 0) {
     var centerX = width/2;
     var centerY = height/2;
     var maxRadius = Math.sqrt( Math.pow(centerX,2) + Math.pow(centerY,2) ) + 1;
@@ -325,7 +341,7 @@ Util.CANVAS = {
       context.arc(centerX, centerY, radius, 0, Math.PI * 2);
       context.fill();
     }, 10);
-  }
+  },
 }
 
 /**
