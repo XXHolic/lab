@@ -55,25 +55,13 @@ const page = {
   getPosition: function(obj) {
     const {canvasContext:context} = this;
     const {points} = obj;
-    const {translateData,rotateData} = context;
     const newPoints = points.map(ele => {
       let [x,y] = ele;
-      if (rotateData) {
-        rotateX = x * Math.cos(rotateData) + y * Math.sin(rotateData);
-        rotateY = y * Math.cos(rotateData) - x * Math.sin(rotateData);
-        x = rotateX;
-        y = rotateY;
-      }
-
-      if (translateData) {
-        x = x+translateData.x;
-        y = y+translateData.y;
-      }
-      return [x,y];
+      return Util.CANVAS.getPosition(context,x,y);
     })
     return newPoints;
   },
-  // 画布中初始状态
+  // 画布状态
   draw: function() {
     const {canvasContext:context,fixAttr,moveAttr} = this;
     this.angle += 1
@@ -81,22 +69,16 @@ const page = {
     const calculateAngle = this.angle * Math.PI / 180
     Util.CANVAS.resetTransform(context)
     let fixParams = { context,...fixAttr };
-    context.translateData = {x:80,y:75};
-    context.translate(80,75);
-    context.rotateData = calculateAngle;
-    context.rotate(calculateAngle);
+    Util.CANVAS.translate(context,80,75);
+    Util.CANVAS.rotate(context,calculateAngle);
     const fixNewPoints = this.getPosition(fixAttr);
-    // console.info('newPoints',newPoints)
     Util.CANVAS.drawLine(fixParams);
 
-    // context.fillRect(0,0,100,100)
     Util.CANVAS.resetTransform(context)
 
     let moveParams = { context,...moveAttr };
-    context.translateData = {x:170,y:75};
-    context.translate(170,75);
-    context.rotateData = calculateAngle;
-    context.rotate(calculateAngle);
+    Util.CANVAS.translate(context,170,75);
+    Util.CANVAS.rotate(context,calculateAngle);
     const moveNewPoints = this.getPosition(moveAttr);
     const isCollision = this.checkPolygonPolygon({movePoints:moveNewPoints,fixPoints:fixNewPoints})
     // console.info({fixNewPoints,moveNewPoints,isCollision})
@@ -108,7 +90,7 @@ const page = {
     Util.CANVAS.drawLine(moveParams);
     Util.CANVAS.resetTransform(context)
   },
-  //
+  //动态绘制
   drawDynamic: function(event) {
     let that = this;
 

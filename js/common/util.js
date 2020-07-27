@@ -306,20 +306,67 @@ Util.CANVAS = {
 
   },
   /**
-   * canvas.transform(a, b, c, d, e, f)
-   * a-水平缩放，b-垂直倾斜，c-水平倾斜，d-垂直缩放，e-水平移动，f-垂直移动
+   * canvas.transform(sx, ry, rx, sy, tx, ty)
+   * sx-0-水平缩放，ry-1-垂直倾斜，rx-2-水平倾斜，sy-3-垂直缩放，tx-4-水平移动，ty-5-垂直移动
    *
    * 为了方便使用 ，再次包装一下，参照 CSS 中的方法命名
    * @param {object} context canvas 上下文对象
    * @param {number} x 水平方向的移动
    * @param {number} y 垂直方向的移动
    */
-  // transform: function({context,x=0,y=0}) {
-  //   context.transform(1,0,0,1,x,y);
-  // },
+  translate: function(context,x=0,y=0) {
+    if (!context.transformData) {
+      Util.CANVAS.resetTransform(context)
+    }
+    context.translate(x,y);
+    let [sx,ry,rx,sy,tx,ty] = context.transformData;
+    tx = sx * x + rx * y;
+    ty = ry * x + sy * y;
+    context.transformData = [sx,ry,rx,sy,tx,ty]
+  },
+  rotate: function(context,angle) {
+    if (!context.transformData) {
+      Util.CANVAS.resetTransform(context)
+    }
+
+    context.rotate(angle);
+    let c = Math.cos(angle);
+    let s = Math.sin(angle);
+    let [sx,ry,rx,sy,tx,ty] = context.transformData;
+    let newSX = sx * c + rx * s;
+    let newRY = ry * c + sy * s;
+    let newRX = sx * -s + rx * c;
+    let newSY = ry * -s + sy * c;
+    context.transformData = [newSX,newRY,newRX,newSY,tx,ty]
+  },
+  scale: function(context,x=1,y=1) {
+    if (!context.transformData) {
+      Util.CANVAS.resetTransform(context)
+    }
+    context.scale(x,y);
+    let [sx,ry,rx,sy,tx,ty] = context.transformData;
+    let newSX = sx * x;
+    let newRY = ry * x;
+    let newRX = rx * y;
+    let newSY = sy * y;
+    context.transformData = [newSX,newRY,newRX,newSY,tx,ty]
+  },
   resetTransform: function(context) {
     var ratio = window.devicePixelRatio || 1;
+    context.transformData = [ratio,0,0,ratio,0,0];
     context.setTransform(ratio,0,0,ratio,0,0);
+  },
+  // 获取点的坐标
+  getPosition: function(context,px,py) {
+    if (!context.transformData) {
+      console.info('no data')
+    }
+    let x = px;
+    let y = py;
+    let [sx,ry,rx,sy,tx,ty] = context.transformData;
+    px = x * sx + y*rx + tx;
+    py = x * ry + y*sy + ty;
+    return [px,py];
   },
   /**
    * 清除画布
