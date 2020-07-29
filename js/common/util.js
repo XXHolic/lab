@@ -353,7 +353,7 @@ Util.CANVAS = {
   },
   resetTransform: function(context) {
     var ratio = window.devicePixelRatio || 1;
-    context.transformData = [ratio,0,0,ratio,0,0];
+    context.transformData = [1,0,0,1,0,0];
     context.setTransform(ratio,0,0,ratio,0,0);
   },
   // 获取点的坐标
