@@ -122,7 +122,7 @@ window.onload = function() {
   console.info({result2})
 
 
-  // Util.insertLink({title:'Read In Pieces',linkIndex: 57, type: 'blog'});
+  Util.insertLink({title:'Collision Detection ：Separating Axis Theorem',linkIndex: 65, type: 'blog'});
   Util.loading.show();
 
   Util.loading.hide();
