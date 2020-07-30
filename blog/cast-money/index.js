@@ -1,3 +1,47 @@
+// 包裹东西的实体
+class Entity {
+  constructor(x=0,y=0,height=10,width=10) {
+    const moneyType = ['￥','$','€','￡','₣'];
+    this.x = x;
+    this.y = y;
+    this.width = height;
+    this.height = width;
+    this.isCollision = false;
+    const randomIndex = Util.getRandom(0,4);
+    this.text = moneyType[randomIndex]
+  }
+
+
+
+  fallMax = 300
+
+  addContent(type) {
+
+  }
+
+  draw(context,fallSpeed=1) {
+    const {x, y, width, height,text} = this;
+    if (y>=this.fallMax) {
+      this.isCollision = true
+    }
+    if (this.isCollision) {
+      return;
+    }
+    this.y = y + fallSpeed;
+    context.font = '12px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    context.fillStyle = '#333';
+    context.fillText(text,x,this.y);
+    Util.CANVAS.drawRect({context,x, y:this.y, width, height,strokeStyle:"#ff9600"});
+  }
+
+  getAllPosition() {
+    const {x, y, width, height} = this;
+    const points = [[x,y],[x+width,y],[x+width,y+width],[x,y+height]];
+    return points;
+  }
+
+}
+
 const page = {
   canvasEle:null,
   canvasContext:null,
@@ -6,8 +50,8 @@ const page = {
   drawDynamicTimeout:null,
   angle:0,
   isCollision:false,
-  moveAttr:{x: 50, y: 200, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{points:[[-20,-20],[20,-20],[20,20],[-20,20]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  moveAttr:{x: 22, y: 50, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  fixAttr:{x:280,y:280,width:20,height:20,strokeStyle:"#ff9600",fillStyle:"#ff9600"},
   init: function() {
     this.createCanvas();
     this.pageEvent();
@@ -20,7 +64,8 @@ const page = {
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
-    this.drawInit();
+    // this.drawInit();
+    this.engineLoop();
     document.body.appendChild(canvasObj);
   },
   // 画布初始状态
@@ -28,9 +73,9 @@ const page = {
     const {canvasContext:context,fixAttr,moveAttr} = this;
 
     let fixParams = { context,...fixAttr };
-    Util.CANVAS.translate(context,500,280);
-    Util.CANVAS.drawLine(fixParams);
-    Util.CANVAS.resetTransform(context);
+    // Util.CANVAS.translate(context,500,280);
+    // Util.CANVAS.drawLine(fixParams);
+    // Util.CANVAS.resetTransform(context);
 
 
     // const moveNewPoints = this.getPosition(moveAttr);
@@ -38,14 +83,10 @@ const page = {
     let moveParams = { context,...moveAttr };
     Util.CANVAS.drawArc(moveParams);
   },
-  getPosition: function(obj) {
-    const {canvasContext:context} = this;
-    const {points} = obj;
-    const newPoints = points.map(ele => {
-      let [x,y] = ele;
-      return Util.CANVAS.getPosition(context,x,y);
-    })
-    return newPoints;
+  getRectCoordinate: function(obj) {
+    const {x,y,width,height} = obj;
+    const points = [[x,y],[x+width,y],[x+width,y+height],[x,y+height]]
+    return points;
   },
   //动态绘制
   drawDynamic: function(event) {
@@ -59,37 +100,64 @@ const page = {
   },
   // 引擎
   engineLoop: function() {
+    const moveMin = 20,moveMax=580;
+    const fallMin = 70,fallMax = 300;
+    // const newEntity = new Entity();
+    // console.info({newEntity})
+    let speed = 1;
+    let fallArr = [];
     const that = this;
-    // const engine = function () {
+    const engine = function () {
       const {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = that;
 
       let fixParams = { context,...fixAttr };
-
-
-      context.clearRect(0,0,canvasWidth,canvasHeight);
-      Util.CANVAS.translate(context,500,280);
-      Util.CANVAS.drawLine(fixParams);
-      const fixNewPoints = that.getPosition(fixAttr);
-      Util.CANVAS.resetTransform(context);
-
       let moveParams = { context,...moveAttr };
-      // console.info('fixNewPoints',fixNewPoints)
-      // const moveNewPoints = that.getPosition(moveAttr);
-      // const [x,y] = moveNewPoints;
-      // const {points} = fixAttr;
-      const {x,y,radius} = moveAttr;
-      const checkCollisionParams = {moveX:x,moveY:y,radius:radius,points:fixNewPoints};
-      that.checkPolygonPolygon(checkCollisionParams);
+
+      const {x,y} = moveAttr;
+      const fixPoints = that.getRectCoordinate(fixAttr);
+
+      for (let index = 0,len = fallArr.length; index < len; index++) {
+        const element = fallArr[index];
+        const movePoints = element.getAllPosition();
+        const checkCollisionParams = {movePoints,fixPoints};
+        const isCollision = that.checkCollision(checkCollisionParams);
+        if (isCollision) {
+          element.isCollision = true;
+        }
+      }
       // console.info('isCollision',isCollision)
+      if (x<=moveMin) {
+        speed = 1;
+      }
+      if (x>=moveMax) {
+        speed = -1;
+      }
+      if (x>=moveMin && x<=moveMax) {
+        moveAttr.x = x + speed;
+      }
+
+      if (!(moveAttr.x%40)) {
+        const newEntity = new Entity(moveAttr.x,moveAttr.y+20);
+        fallArr.push(newEntity)
+      }
+      context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
+      Util.CANVAS.drawRect(fixParams);
+      for (const ele of fallArr) {
+        ele.draw(context);
+      }
+      fallArr = fallArr.filter(ele => (!ele.isCollision));
+      if (true) {
+        window.requestAnimationFrame(engine);
+      }
 
-    // }
+    }
 
-    // try {
-    //   window.requestAnimationFrame(engine);
-    // } catch (error) {
-    //   console.info(error);
-    // }
+    try {
+      window.requestAnimationFrame(engine);
+    } catch (error) {
+      console.info(error);
+    }
 
 
   },
@@ -101,52 +169,22 @@ const page = {
     const len = Math.sqrt(distX*distX + distY*distY);
     return len;
   },
-  // 检测点是否在直线上
-  linePoint:function(params) {
-    const {closestX,closestY,points} = params;
-    const [point1,point2] = points;
-    const buffer = 0.1;
-    const movePoint = [closestX,closestY];
-    const lineLen = this.calculateLen(point1,point2);
-    const d1 = this.calculateLen(movePoint,point1);
-    const d2 = this.calculateLen(movePoint,point2);
+  checkLineLine:function(params) {
+    const {points} = params;
+    const [p1,p2,p3,p4] = points;
+    const [x1,y1] = p1;
+    const [x2,y2] = p2;
+    const [x3,y3] = p3;
+    const [x4,y4] = p4;
+    const t1 = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3))/((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+    const t2 = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
 
-    if (d1+d2 >= lineLen-buffer && d1+d2 <= lineLen+buffer) {
-      return true;
+    if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {
+      return true
     }
     return false;
   },
-  getClosestPoint:function(params){
-    const {moveX,moveY,points} = params;
-    const [point1,point2] = points;
-    const [x1,y1] = point1;
-    const [x2,y2] = point2;
-    const pointVectorX = x1 - x2;
-    const pointVectorY = y1 - y2;
-    const t = (pointVectorX*(moveX - x1) + pointVectorY*(moveY-y1))/(pointVectorX*pointVectorX+pointVectorY*pointVectorY);
-    const closestX = x1 + t*pointVectorX;
-    const closestY = y1 + t*pointVectorY;
-    const isOnLine = this.linePoint({points,closestX,closestY});
-    if(!isOnLine) {
-      return false;
-    }
-    return [closestX,closestY];
-  },
-  // 直线与圆的碰撞
-  checkLineCircle:function(params) {
-    const {moveX,moveY,radius} = params;
-    const movePoint = [moveX,moveY];
-    const closestPoint = this.getClosestPoint(params);
-    if (!closestPoint) {
-      return false;
-    }
-    const distance = this.calculateLen(closestPoint,movePoint);
-
-    if (distance<=radius) {
-      return closestPoint;
-    }
-    return false;
-  },
+  // 碰撞检测
   checkPolygonLine:function(params) {
     const {linePoints,points} = params;
     const pointsLen = points.length;
@@ -163,25 +201,22 @@ const page = {
     return false;
   },
   // 碰撞检测
-  checkPolygonPolygon:function(params) {
-    const {moveX,moveY,radius,points} = params;
-    // const px = moveX, py = moveY;
-    const pointsLen = points.length;
+  checkCollision:function(params) {
+    const {movePoints,fixPoints} = params;
+    // const rx = moveX,ry=moveY;
+    const pointsLen = fixPoints.length;
     for (let index = 0; index < pointsLen; index++) {
-      const currentPoint = points[index];
+      const currentPoint = fixPoints[index];
       const next = index === pointsLen-1 ? 0:index+1;
-      const nextPoint = points[next];
-      const [cx,cy] = currentPoint;
-      const [nx,ny] = nextPoint;
-      const checkParams = {moveX,moveY,radius,points:[[cx,cy],[nx,ny]]}
-      const collision = this.checkLineCircle(checkParams);
+      const nextPoint = fixPoints[next];
+      const collision = this.checkPolygonLine({linePoints:[currentPoint,nextPoint],points:movePoints});
       if (collision) {
-        this.isCollision = true;
-        return true;
+        return collision;
       }
     }
-    this.isCollision = false;
+
     return false;
+
   },
   // 匀速运动
   handleUniform:function(params) {
@@ -199,7 +234,6 @@ const page = {
     };
 
     window.requestAnimationFrame(uniformInterval);
-
 
   },
   /**
@@ -238,11 +272,13 @@ const page = {
       // that.drawDynamic.bind(that)(e);
     }
 
-    document.querySelector('#uniform').onclick = function(e) {
-      that.handleUniform.bind(that)(e);
+    document.querySelector('#left').onclick = function(e) {
+      let {fixAttr} = that;
+      fixAttr.x = fixAttr.x - 2;
     }
-    document.querySelector('#parabola').onclick = function(e) {
-      that.handleParabola.bind(that)(e);
+    document.querySelector('#right').onclick = function(e) {
+      let {fixAttr} = that;
+      fixAttr.x = fixAttr.x + 2;
     }
   }
 }
