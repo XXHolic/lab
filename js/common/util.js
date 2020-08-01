@@ -464,4 +464,16 @@ Util.getRandom = function(min, max) {
   return Math.floor(Math.random() * (maxValue - minValue + 1) ) + minValue;
 }
 
+/**
+ * 数学公式
+ */
+Util.Math = {
+  tan:function(deg) {
+    var rad = deg * Math.PI/180;
+    return Math.tan(rad);
+  }
+}
+
+
+
 

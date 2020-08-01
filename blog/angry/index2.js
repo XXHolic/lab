@@ -7,6 +7,7 @@ const page = {
   angle:0,
   isPause:false,
   isCollision:false,
+  initSpeed:5,
   isHit:false, // 鼠标是否命中圆
   originPoint:[100, 150],
   moveAttr:{x: 100, y: 150, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
@@ -23,72 +24,19 @@ const page = {
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
-    // this.engineLoop();
     this.drawInit();
     document.body.appendChild(canvasObj);
   },
   // 画布初始状态
   drawInit: function() {
-    const {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = this;
+    this.render();
+  },
+  // 渲染
+  render: function() {
+    const {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr,isPause} = this;
     context.clearRect(0,0,canvasWidth,canvasHeight);
-    // let fixParams = { context,...fixAttr };
-    // Util.CANVAS.translate(context,500,280);
-    // Util.CANVAS.drawLine(fixParams);
-    // Util.CANVAS.resetTransform(context);
-
-
-    // const moveNewPoints = this.getPosition(moveAttr);
-    // console.info('rotate-translate',moveNewPoints);
     let moveParams = { context,...moveAttr };
     Util.CANVAS.drawArc(moveParams);
-  },
-  getPosition: function(obj) {
-    const {canvasContext:context} = this;
-    const {points} = obj;
-    const newPoints = points.map(ele => {
-      let [x,y] = ele;
-      return Util.CANVAS.getPosition(context,x,y);
-    })
-    return newPoints;
-  },
-  // 引擎
-  engineLoop: function() {
-    const that = this;
-    const engine = function () {
-      const {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr,isPause} = that;
-
-      // let fixParams = { context,...fixAttr };
-
-
-      context.clearRect(0,0,canvasWidth,canvasHeight);
-      // Util.CANVAS.translate(context,500,280);
-      // Util.CANVAS.drawLine(fixParams);
-      // const fixNewPoints = that.getPosition(fixAttr);
-      // Util.CANVAS.resetTransform(context);
-
-      let moveParams = { context,...moveAttr };
-      // console.info('fixNewPoints',fixNewPoints)
-      // const moveNewPoints = that.getPosition(moveAttr);
-      // const [x,y] = moveNewPoints;
-      // const {points} = fixAttr;
-      const {x,y,radius} = moveAttr;
-      // const checkCollisionParams = {moveX:x,moveY:y,radius:radius,points:fixNewPoints};
-      // that.checkPolygonPolygon(checkCollisionParams);
-      // console.info('isCollision',isCollision)
-      Util.CANVAS.drawArc(moveParams);
-      if (!isPause) {
-        window.requestAnimationFrame(engine);
-      }
-
-    }
-
-    try {
-      window.requestAnimationFrame(engine);
-    } catch (error) {
-      console.info(error);
-    }
-
-
   },
   calculateLen: function(point1,point2) {
     const [x1,y1] = point1;
@@ -199,58 +147,6 @@ const page = {
 
 
   },
-  /**
-   * 抛物线函数 f(x) = a x*x + bx + c
-   *
-   *
-   *
-   */
-  handleParabola:function() {
-    const {canvasContext:context,fixAttr,originPoint,lineK,moveAttr,isCollision} = this;
-    console.info('lineK',lineK)
-    // （20，50） （60，50）
-    // const angle = 45; //  抛射角度
-    // const tanValue = Util.Math.tan(angle);
-    const tanValue = lineK;
-    const point1 = [moveAttr.x,moveAttr.y];
-    const point2 = [moveAttr.x+400,moveAttr.y];
-    const [p,q] = originPoint;
-
-    const [x,y] = point1;
-    const [x1,y2] = point2;
-    const xMinus = (x1-x)/2;
-    // 切线上的坐标 y
-    const lineValueY = tanValue*(xMinus+x-p) + q
-    const middleLen = xMinus*tanValue;
-    // const middleY = lineValueY + middleLen/2;
-    const middleY = middleLen/10;
-    const middleX = xMinus+x;
-    const middlePoint = [middleX,middleY];
-    const [m,n] = middlePoint;
-    const a = (y-n)/(x*x - 2*x*m+m*m);
-    const c = a*m*m+n;
-    const b = -2*m*a;
-    console.info('middlePoint',middlePoint);
-    const inc = 1;
-
-    const uniformInterval = () => {
-      if (moveAttr.y<300-10 && moveAttr.x<600-10) {
-        window.requestAnimationFrame(uniformInterval);
-      }
-      const moveX = moveAttr.x + inc;
-      const moveY = a * moveX*moveX + b*moveX + c;
-      // console.info({moveX,moveY})
-      moveAttr.x = moveX;
-      moveAttr.y = moveY;
-      let moveParams = { context,...moveAttr };
-      Util.CANVAS.drawArc(moveParams);
-      // this.engineLoop();
-    };
-
-    uniformInterval();
-
-    window.requestAnimationFrame(uniformInterval);
-  },
   // 鼠标移动
   handleMouseMove: function(event) {
     let that = this;
@@ -275,13 +171,19 @@ const page = {
     const points = Util.getPointCoordinate(event,canvasEle);
     const [x,y] = originPoint;
     const {xPos,yPos} = points;
+    if (xPos>x) {
+      moveAttr.x = x;
+      moveAttr.y = y;
+      this.render();
+      return;
+    }
     moveAttr.x = xPos;
     moveAttr.y = yPos;
     const k = (y-yPos)/(x-xPos);
     console.info('k',k)
     this.lineK = k;
     //直线方程：y = k(x-m)+n
-    const inc = 0.4;
+    let inc = 0.4;
     // that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout)
     const loop = () => {
       let {canvasContext:context,canvasWidth,canvasHeight,fixAttr} = that;
@@ -292,7 +194,7 @@ const page = {
       context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
       Util.CANVAS.drawLine(lineParams);
-      if (moveAttr.x<=x) {
+      if (moveAttr.x<=x || k>0) {
         window.requestAnimationFrame(loop);
       } else {
         that.handleParabola()
@@ -303,6 +205,39 @@ const page = {
     } catch (error) {
       console.info(error);
     }
+  },
+    /**
+   * 抛物线函数 f(x) = a x*x + bx + c
+   *
+   */
+  handleParabola:function() {
+    // const {canvasContext:context,fixAttr,originPoint,lineK,moveAttr,isCollision} = this;
+    const {canvasContext:context,canvasEle,originPoint,moveAttr,lineK,initSpeed} = this;
+    const [x,y] = originPoint;
+    const k = lineK;
+    //   计时
+    let t = 0;
+    // 水平方向的速度
+    const cal1 = (initSpeed*initSpeed)/(k*k+1);
+    const vx = Math.sqrt(cal1);
+    const vy = Math.abs(vx * k);
+    const g = 9.8;
+    const acc = 0.01;
+
+    const uniformInterval = () => {
+      if (moveAttr.y<300-10 && moveAttr.x<600-10) {
+        window.requestAnimationFrame(uniformInterval);
+      }
+      t = t + acc;
+      moveAttr.x = moveAttr.x + vx*t;
+      const h = vy*t-0.5*g*t*t
+      moveAttr.y = moveAttr.y - h;
+      let moveParams = { context,...moveAttr };
+      Util.CANVAS.drawArc(moveParams);
+    };
+
+
+    window.requestAnimationFrame(uniformInterval);
   },
   // 页面事件
   pageEvent: function() {

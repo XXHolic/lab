@@ -1,75 +1,17 @@
-// 包裹东西的实体
-class Entity {
-  constructor(x=0,y=0,width=8,height=10) {
-    const moneyType = ['￥','$','€','￡','₣'];
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.isCollision = false;
-    const randomIndex = Util.getRandom(0,4);
-    this.text = moneyType[randomIndex]
-    this.type = randomIndex
-  }
 
-
-
-  fallMax = 300
-
-  addContent(type) {
-
-  }
-
-  draw(context,fallSpeed=1) {
-    const {x, y, width, height,text} = this;
-    if (y>=this.fallMax) {
-      this.isCollision = true
-    }
-    if (this.isCollision) {
-      return;
-    }
-    this.y = y + fallSpeed;
-    // strokeStyle:"#ff9600"
-    Util.CANVAS.drawRect({context,x, y:this.y, width, height});
-    context.font = '12px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
-    context.fillStyle = '#333';
-    context.textBaseline = 'top';
-    context.fillText(text,x,this.y);
-  }
-
-  getAllPosition() {
-    const {x, y, width, height} = this;
-    const points = [[x,y],[x+width,y],[x+width,y+width],[x,y+height]];
-    return points;
-  }
-
-}
 
 const page = {
   canvasEle:null,
   canvasContext:null,
-  operateCanvasEle:null,
-  operateCanvasContext:null,
-  imageCanvasEle:null,
-  imageCanvasContext:null,
   canvasWidth: 600,
   canvasHeight: 300,
   drawDynamicTimeout:null,
-  requestAnimationFrameMark:null,
   angle:0,
   isCollision:false,
-  fallArr:[],
-  speed:1,
-  moveMin:20,
-  moveMax:580,
-  randomNum:[30,50,90],
-  collisionData:[],
   moveAttr:{x: 22, y: 50, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
   fixAttr:{x:280,y:280,width:20,height:20,strokeStyle:"#ff9600",fillStyle:"#ff9600"},
   init: function() {
     this.createCanvas();
-    this.createOperateCanvas();
-    this.createImageCanvas();
     this.pageEvent();
   },
   // 创建画布
@@ -80,111 +22,50 @@ const page = {
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
-    // this.drawInit();
-    this.engineLoop();
-    document.querySelector('.canvas-section').appendChild(canvasObj);
-  },
-  // 创建用于用户交互的画布
-  createOperateCanvas: function() {
-    let {canvasWidth,canvasHeight} = this;
-    let canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
-    this.operateCanvasEle = canvasObj;
-    canvasObj.setAttribute('class','canvas-operate-part');
-    canvasObj.setAttribute('id','canvasOperateEle');
-    this.operateCanvasContext = canvasObj.getContext('2d');
-    this.drawOperate();
-    document.querySelector('.canvas-section').appendChild(canvasObj);
-  },
-  // 创建头像的画布
-  createImageCanvas: function() {
-    let {canvasWidth,canvasHeight} = this;
-    let canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
-    this.imageCanvasEle = canvasObj;
-    canvasObj.setAttribute('class','canvas-image-part');
-    canvasObj.setAttribute('id','canvasImageEle');
-    this.imageCanvasContext = canvasObj.getContext('2d');
-    // this.drawImage();
-    document.querySelector('.canvas-section').appendChild(canvasObj);
+    this.drawInit();
+    document.body.appendChild(canvasObj);
   },
   // 画布初始状态
-  drawOperate: function() {
-    const loop = () => {
-      const {operateCanvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = this;
-      let fixParams = { context,...fixAttr };
-      context.clearRect(0,0,canvasWidth,canvasHeight);
-      Util.CANVAS.drawRect(fixParams);
-      if (true) {
-        window.requestAnimationFrame(loop);
-      }
-    }
+  drawInit: function() {
+    const {canvasContext:context,fixAttr,moveAttr} = this;
+    const {x,y} = fixAttr;
 
-    try {
-      window.requestAnimationFrame(loop);
-    } catch (error) {
-      console.info(error);
-    }
-  },
-  drawImage: function() {
-    const img = new Image();
-    img.src = './face.png';
-    const loop2 = () => {
-      const {imageCanvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = this;
-      const {x,y} = moveAttr;
-      context.clearRect(0,0,canvasWidth,canvasHeight)
-      context.drawImage(img,x-22,y-22,44,44);
-      if (true) {
-        window.requestAnimationFrame(loop2);
-      }
-    }
-
-    img.onload = function() {
-      try {
-        window.requestAnimationFrame(loop2);
-      } catch (error) {
-        console.info(error);
-      }
-    }
-
-
+    let fixParams = { context,...fixAttr };
+    // let moveParams = { context,...moveAttr };
+    Util.CANVAS.drawRect(fixParams);
+    context.font = '12px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+    context.fillStyle = '#333';
+    context.textBaseline = 'top';
+    context.fillText('￥',x,y);
   },
   getRectCoordinate: function(obj) {
     const {x,y,width,height} = obj;
     const points = [[x,y],[x+width,y],[x+width,y+height],[x,y+height]]
     return points;
   },
-  //显示结果
-  showResult: function(event) {
-    let {collisionData} = this;
-    if (!collisionData.length) {
-      return;
-    }
-    const result = collisionData.reduce((acc,cur)=>{
-      const indexNum = cur.type;
-      if (acc[indexNum]) {
-        acc[indexNum] = acc[indexNum] + 1;
-      } else {
-        acc[indexNum] = 1;
-      }
-      return acc;
-    },[]);
+  //动态绘制
+  drawDynamic: function(event) {
+    let that = this;
 
-    // console.info(result);
-
-    document.querySelector('#num0').innerHTML = result[0] || 0;
-    document.querySelector('#num1').innerHTML = result[1] || 0;
-    document.querySelector('#num2').innerHTML = result[2] || 0;
-    document.querySelector('#num3').innerHTML = result[3] || 0;
-    document.querySelector('#num4').innerHTML = result[4] || 0;
+    that.drawDynamicTimeout = setInterval(function() {
+      const {canvasContext:context,canvasWidth,canvasHeight,moveAttr,fixAttr} = that;
+      context.clearRect(0,0,canvasWidth,canvasHeight);
+      that.draw(context);
+    }, 10);
   },
   // 引擎
   engineLoop: function() {
+    const moveMin = 20,moveMax=580;
+    const fallMin = 70,fallMax = 300;
+    // const newEntity = new Entity();
+    // console.info({newEntity})
+    let speed = 1;
+    let fallArr = [];
     const that = this;
-
-
     const engine = function () {
-      let {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr,randomNum,moveMin,moveMax,fallArr,collisionData} = that;
+      const {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = that;
 
-      // let fixParams = { context,...fixAttr };
+      let fixParams = { context,...fixAttr };
       let moveParams = { context,...moveAttr };
 
       const {x,y} = moveAttr;
@@ -197,54 +78,41 @@ const page = {
         const isCollision = that.checkCollision(checkCollisionParams);
         if (isCollision) {
           element.isCollision = true;
-          if (!element.isSaved) {
-            collisionData.push(element)
-          }
-          element.isSaved = true;
         }
       }
       // console.info('isCollision',isCollision)
       if (x<=moveMin) {
-        that.speed = 1;
+        speed = 1;
       }
       if (x>=moveMax) {
-        that.speed = -1;
+        speed = -1;
       }
       if (x>=moveMin && x<=moveMax) {
-        moveAttr.x = x + that.speed;
+        moveAttr.x = x + speed;
       }
-      const randomIndex = Util.getRandom(0,2);
-      if (!(moveAttr.x%randomNum[randomIndex])) {
+
+      if (!(moveAttr.x%40)) {
         const newEntity = new Entity(moveAttr.x,moveAttr.y+20);
         fallArr.push(newEntity)
       }
       context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
-
-      // Util.CANVAS.drawRect(fixParams);
+      Util.CANVAS.drawRect(fixParams);
       for (const ele of fallArr) {
         ele.draw(context);
       }
       fallArr = fallArr.filter(ele => (!ele.isCollision));
-      that.showResult();
-      // console.info('collisionData',collisionData)
-
       if (true) {
-        that.requestAnimationFrameMark = window.requestAnimationFrame(engine);
+        window.requestAnimationFrame(engine);
       }
 
     }
 
-
-
-
-      try {
-        that.requestAnimationFrameMark = window.requestAnimationFrame(engine);
-      } catch (error) {
-        console.info(error);
-      }
-
-
+    try {
+      window.requestAnimationFrame(engine);
+    } catch (error) {
+      console.info(error);
+    }
 
 
   },
@@ -358,36 +226,14 @@ const page = {
     this.canvasEle[eventType] = function(e) {
       // that.drawDynamic.bind(that)(e);
     }
-    let leftInterval = null,rightInterval = null;
+
     document.querySelector('#left').onclick = function(e) {
       let {fixAttr} = that;
-      rightInterval && clearInterval(rightInterval)
-      leftInterval = setInterval(() => {
-        if (fixAttr.x>0&&fixAttr.x<=580) {
-          fixAttr.x = fixAttr.x - 1;
-        }
-      },10)
-
+      fixAttr.x = fixAttr.x - 2;
     }
     document.querySelector('#right').onclick = function(e) {
       let {fixAttr} = that;
-      leftInterval && clearInterval(leftInterval)
-      rightInterval = setInterval(() => {
-        if (fixAttr.x>=0&&fixAttr.x<580) {
-          fixAttr.x = fixAttr.x + 1;
-        }
-      },10)
-    }
-    document.querySelector('#pause').onclick = function(e) {
-      leftInterval && clearInterval(leftInterval);
-      rightInterval && clearInterval(rightInterval);
-
-    }
-    document.querySelector('#pauseMoney').onclick = function(e) {
-      window.cancelAnimationFrame(that.requestAnimationFrameMark);
-    }
-    document.querySelector('#start').onclick = function(e) {
-      that.engineLoop();
+      fixAttr.x = fixAttr.x + 2;
     }
   }
 }

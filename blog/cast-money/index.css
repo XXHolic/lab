@@ -1,5 +1,17 @@
+.canvas-section {
+  position: relative;
+  text-align: left;
+}
 .canvas-part {
   border: 1px solid #eee;
+}
+
+.canvas-operate-part,
+.canvas-image-part {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 1px solid rgb(170, 164, 164,0);
 }
 
 .canvas-collision {
