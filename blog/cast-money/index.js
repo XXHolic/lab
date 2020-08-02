@@ -1,15 +1,15 @@
 // 包裹东西的实体
 class Entity {
-  constructor(x=0,y=0,width=8,height=10) {
-    const moneyType = ['￥','$','€','￡','₣'];
+  constructor(x=0,y=0,images,type,width=21,height=46) {
+    const isNormalMode = type === '0';
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.width = isNormalMode?width:25;
+    this.height = isNormalMode?height:33;
     this.isCollision = false;
-    const randomIndex = Util.getRandom(0,4);
-    this.text = moneyType[randomIndex]
-    this.type = randomIndex
+    // const randomIndex = Util.getRandom(0,4);
+    this.image = isNormalMode ? images.money:images.bagMoney;
+    this.type = type;
   }
 
 
@@ -21,7 +21,7 @@ class Entity {
   }
 
   draw(context,fallSpeed=1) {
-    const {x, y, width, height,text} = this;
+    const {x, y, width, height,image} = this;
     if (y>=this.fallMax) {
       this.isCollision = true
     }
@@ -29,17 +29,12 @@ class Entity {
       return;
     }
     this.y = y + fallSpeed;
-    // strokeStyle:"#ff9600"
-    Util.CANVAS.drawRect({context,x, y:this.y, width, height});
-    context.font = '12px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
-    context.fillStyle = '#333';
-    context.textBaseline = 'top';
-    context.fillText(text,x,this.y);
+    context.drawImage(image,x,this.y,width,height);
   }
 
   getAllPosition() {
     const {x, y, width, height} = this;
-    const points = [[x,y],[x+width,y],[x+width,y+width],[x,y+height]];
+    const points = [[x,y],[x+width,y],[x+width,y+height],[x,y+height]];
     return points;
   }
 
@@ -63,14 +58,23 @@ const page = {
   moveMin:20,
   moveMax:580,
   randomNum:[30,50,90],
+  type: '0', // 0 一般模式，1 富有模式
   collisionData:[],
-  moveAttr:{x: 22, y: 50, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
-  fixAttr:{x:280,y:280,width:20,height:20,strokeStyle:"#ff9600",fillStyle:"#ff9600"},
+  images:{}, // 存放图像对象
+  moveAttr:{x: 22, y: 22, radius:20, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  fixAttr:{x:280,y:253,width:41,height:47,strokeStyle:"#ff9600",fillStyle:"#ff9600"},
   init: function() {
-    this.createCanvas();
-    this.createOperateCanvas();
-    this.createImageCanvas();
-    this.pageEvent();
+    const getImg1 = this.getImages('default','./images/default.png');
+    const getImg2 = this.getImages('rich','./images/rich.png');
+    const getImg3 = this.getImages('money','./images/money.png');
+    const getImg4 = this.getImages('bagMoney','./images/bag-money.png');
+    const getImg5 = this.getImages('bag','./images/bag.png');
+    Promise.all([getImg1, getImg2, getImg3,getImg4,getImg5]).then((values) => {
+      this.createCanvas();
+      this.createOperateCanvas();
+      this.pageEvent();
+      this.showWorlds();
+    });
   },
   // 创建画布
   createCanvas: function() {
@@ -80,9 +84,20 @@ const page = {
     canvasObj.setAttribute('class','canvas-part');
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
-    // this.drawInit();
     this.engineLoop();
     document.querySelector('.canvas-section').appendChild(canvasObj);
+
+  },
+  getImages: function(name,path) {
+    let {images} = this;
+    return new Promise((resolve)=>{
+      const img = new Image();
+      img.src = path;
+      img.onload = function() {
+        images[name] = img;
+        resolve();
+      }
+    })
   },
   // 创建用于用户交互的画布
   createOperateCanvas: function() {
@@ -95,27 +110,14 @@ const page = {
     this.drawOperate();
     document.querySelector('.canvas-section').appendChild(canvasObj);
   },
-  // 创建头像的画布
-  createImageCanvas: function() {
-    let {canvasWidth,canvasHeight} = this;
-    let canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
-    this.imageCanvasEle = canvasObj;
-    canvasObj.setAttribute('class','canvas-image-part');
-    canvasObj.setAttribute('id','canvasImageEle');
-    this.imageCanvasContext = canvasObj.getContext('2d');
-    // this.drawImage();
-    document.querySelector('.canvas-section').appendChild(canvasObj);
-  },
   // 画布初始状态
   drawOperate: function() {
     const loop = () => {
-      const {operateCanvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = this;
+      const {operateCanvasContext:context,canvasWidth,canvasHeight,fixAttr,images} = this;
       let fixParams = { context,...fixAttr };
+      const {x,y,width,height} = fixAttr;
       context.clearRect(0,0,canvasWidth,canvasHeight);
-      Util.CANVAS.drawRect(fixParams);
-      if (true) {
-        window.requestAnimationFrame(loop);
-      }
+      context.drawImage(images.bag,x,y,width,height);
     }
 
     try {
@@ -124,65 +126,51 @@ const page = {
       console.info(error);
     }
   },
-  drawImage: function() {
-    const img = new Image();
-    img.src = './face.png';
-    const loop2 = () => {
-      const {imageCanvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr} = this;
-      const {x,y} = moveAttr;
-      context.clearRect(0,0,canvasWidth,canvasHeight)
-      context.drawImage(img,x-22,y-22,44,44);
-      if (true) {
-        window.requestAnimationFrame(loop2);
-      }
-    }
-
-    img.onload = function() {
-      try {
-        window.requestAnimationFrame(loop2);
-      } catch (error) {
-        console.info(error);
-      }
-    }
-
-
-  },
   getRectCoordinate: function(obj) {
     const {x,y,width,height} = obj;
     const points = [[x,y],[x+width,y],[x+width,y+height],[x,y+height]]
     return points;
   },
+  showWorlds: function() {
+    const that = this;
+    const showTextObj = document.querySelector('#worlds');
+    const defaultWords = ['打工是不可能打工的！','快点啊，等的花儿都谢了','幸好大部分的钱在老婆子那里！','真是心疼哦！'];
+    const richWords = ['姐有的是钱！','拿了姐的钱，就是姐的人！','想被包养？私聊，微信 ***','随时撒钱，走起！'];
+    const loop = function () {
+      const randomTextIndex = Util.getRandom(0,3);
+      const text = that.type === '0'?defaultWords[randomTextIndex]:richWords[randomTextIndex];
+      showTextObj.innerText = text;
+    }
+
+    setInterval(() => loop(),3000);
+
+  },
   //显示结果
-  showResult: function(event) {
+  showResult: function() {
     let {collisionData} = this;
     if (!collisionData.length) {
       return;
     }
     const result = collisionData.reduce((acc,cur)=>{
-      const indexNum = cur.type;
-      if (acc[indexNum]) {
-        acc[indexNum] = acc[indexNum] + 1;
+      const type = cur.type;
+      if (type === '0') {
+        acc = acc +1;
       } else {
-        acc[indexNum] = 1;
+        acc = acc +10;
       }
       return acc;
-    },[]);
+    },0);
 
     // console.info(result);
 
-    document.querySelector('#num0').innerHTML = result[0] || 0;
-    document.querySelector('#num1').innerHTML = result[1] || 0;
-    document.querySelector('#num2').innerHTML = result[2] || 0;
-    document.querySelector('#num3').innerHTML = result[3] || 0;
-    document.querySelector('#num4').innerHTML = result[4] || 0;
+    document.querySelector('#num0').innerHTML = result || 0;
   },
   // 引擎
   engineLoop: function() {
     const that = this;
 
-
     const engine = function () {
-      let {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr,randomNum,moveMin,moveMax,fallArr,collisionData} = that;
+      let {canvasContext:context,canvasWidth,canvasHeight,fixAttr,moveAttr,randomNum,moveMin,moveMax,fallArr,collisionData,images} = that;
 
       // let fixParams = { context,...fixAttr };
       let moveParams = { context,...moveAttr };
@@ -215,19 +203,25 @@ const page = {
       }
       const randomIndex = Util.getRandom(0,2);
       if (!(moveAttr.x%randomNum[randomIndex])) {
-        const newEntity = new Entity(moveAttr.x,moveAttr.y+20);
+        const newEntity = new Entity(moveAttr.x,moveAttr.y+20,images,that.type);
         fallArr.push(newEntity)
       }
       context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
+      const imgObj = that.type === '0' ?images.default:images.rich;
+      context.drawImage(imgObj,x-22,y-22,44,44);
+      // context.font = '15px Arial,"Helvetica Neue",Helvetica,"Microsoft Yahei",STHeiTi,sans-serif';
+      // context.fillStyle = '#333';
+      // context.textBaseline = 'top';
+      // const randomTextIndex = Util.getRandom(0,3);
+      // const text = that.type === '0'?defaultWords[randomTextIndex]:richWords[randomTextIndex];
+      // context.fillText(text,0,0);
 
-      // Util.CANVAS.drawRect(fixParams);
       for (const ele of fallArr) {
         ele.draw(context);
       }
       fallArr = fallArr.filter(ele => (!ele.isCollision));
       that.showResult();
-      // console.info('collisionData',collisionData)
 
       if (true) {
         that.requestAnimationFrameMark = window.requestAnimationFrame(engine);
@@ -235,14 +229,11 @@ const page = {
 
     }
 
-
-
-
-      try {
-        that.requestAnimationFrameMark = window.requestAnimationFrame(engine);
-      } catch (error) {
-        console.info(error);
-      }
+    try {
+      that.requestAnimationFrameMark = window.requestAnimationFrame(engine);
+    } catch (error) {
+      console.info(error);
+    }
 
 
 
@@ -353,41 +344,59 @@ const page = {
   // 页面事件
   pageEvent: function() {
     let that = this;
-    let isPc = Util.getDeviceType() === "pc";
-    let eventType = isPc ? 'onmousemove' : 'ontouchmove';
-    this.canvasEle[eventType] = function(e) {
-      // that.drawDynamic.bind(that)(e);
-    }
+    let {canvasWidth,canvasHeight,} = that;
+    // let isPc = Util.getDeviceType() === "pc";
+    // let eventType = isPc ? 'onmousemove' : 'ontouchmove';
+
     let leftInterval = null,rightInterval = null;
     document.querySelector('#left').onclick = function(e) {
+      if (leftInterval) {
+        return; // 本来就在向左运动
+      }
       let {fixAttr} = that;
-      rightInterval && clearInterval(rightInterval)
+      if (rightInterval) {
+        clearInterval(rightInterval);
+        rightInterval = null;
+      }
       leftInterval = setInterval(() => {
-        if (fixAttr.x>0&&fixAttr.x<=580) {
+        if (fixAttr.x>0&&fixAttr.x<=canvasWidth-fixAttr.width) {
           fixAttr.x = fixAttr.x - 1;
+          that.drawOperate();
         }
       },10)
 
     }
     document.querySelector('#right').onclick = function(e) {
       let {fixAttr} = that;
-      leftInterval && clearInterval(leftInterval)
+      if (rightInterval) {
+        return; // 本来就在向右运动
+      }
+      if (leftInterval) {
+        clearInterval(leftInterval);
+        leftInterval = null;
+      }
       rightInterval = setInterval(() => {
-        if (fixAttr.x>=0&&fixAttr.x<580) {
+        if (fixAttr.x>=0&&fixAttr.x<canvasWidth-fixAttr.width) {
           fixAttr.x = fixAttr.x + 1;
+          that.drawOperate();
         }
       },10)
     }
     document.querySelector('#pause').onclick = function(e) {
       leftInterval && clearInterval(leftInterval);
       rightInterval && clearInterval(rightInterval);
-
     }
+
     document.querySelector('#pauseMoney').onclick = function(e) {
       window.cancelAnimationFrame(that.requestAnimationFrameMark);
     }
     document.querySelector('#start').onclick = function(e) {
       that.engineLoop();
+    }
+    document.querySelector('#changeMode').onclick = function(e) {
+      const isNormal = that.type==='0';
+      that.type = isNormal?'1':'0';
+      e.target.innerText = isNormal?'默认模式':'富婆模式';
     }
   }
 }

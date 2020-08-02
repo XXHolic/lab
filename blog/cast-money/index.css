@@ -1,6 +1,7 @@
 .canvas-section {
   position: relative;
   text-align: left;
+  min-height: 300px;
 }
 .canvas-part {
   border: 1px solid #eee;
@@ -17,4 +18,10 @@
 .canvas-collision {
   border: 1px solid #eee;
   background-color: #ff9600;
+}
+
+.show-worlds {
+  width: 600px;
+  height: 20px;
+  line-height: 20px;
 }

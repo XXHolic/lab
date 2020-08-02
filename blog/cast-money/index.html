@@ -15,21 +15,23 @@
   <link rel="stylesheet" href="./index.css?v=202001291648">
 </head>
 
-<body class="pt50 tc">
+<body class="pt50">
   <div class="mb10">
-    <button id="pauseMoney">停止撒钱</button>
-    <button id="start">继续撒钱</button>
-    <div class="canvas-section"></div>
-    <button id="left">左</button>
-    <button id="right">右</button>
-    <button id="pause">停止滑块</button>
+    <div class="mb10">
+      <button id="pauseMoney">停止撒钱</button>
+      <button id="start">继续撒钱</button>
+      <button id="changeMode">富婆模式</button>
+    </div>
+    <div class="show-worlds tc" id='worlds'></div>
+    <div class="canvas-section mb10"></div>
+    <div>
+      <button id="left">左</button>
+      <button id="right">右</button>
+      <button id="pause">停止滑块</button>
+    </div>
     <div>
       <ul>
-        <li>￥ : <span id='num0'>0</span></li>
-        <li>$ : <span id='num1'>0</span></li>
-        <li>€ : <span id='num2'>0</span></li>
-        <li>￡ : <span id='num3'>0</span></li>
-        <li>₣ : <span id='num4'>0</span></li>
+        <li>$: <span id='num0'>0</span></li>
       </ul>
     </div>
   </div>
