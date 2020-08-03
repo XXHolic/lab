@@ -154,16 +154,19 @@ const page = {
     const result = collisionData.reduce((acc,cur)=>{
       const type = cur.type;
       if (type === '0') {
-        acc = acc +1;
-      } else {
-        acc = acc +10;
+        acc[0] = acc[0] +1;
+      }
+
+      if (type === '1') {
+        acc[1] = acc[1] +10;
       }
       return acc;
-    },0);
+    },[0,0]);
 
     // console.info(result);
 
-    document.querySelector('#num0').innerHTML = result || 0;
+    document.querySelector('#num0').innerHTML = result[0] || 0;
+    document.querySelector('#num1').innerHTML = result[1] || 0;
   },
   // 引擎
   engineLoop: function() {

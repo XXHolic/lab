@@ -25,3 +25,19 @@
   height: 20px;
   line-height: 20px;
 }
+
+.statistics {
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+.image-wrap {
+  width: 60px;
+}
+.statistics-icon1 {
+  transform: translateX(18px) rotate(90deg);
+}
+
+.statistics-icon2 {
+  margin: 0 auto;
+}

@@ -38,6 +38,15 @@ html {
 .flex-1 {
   flex: 1;
 }
+
+.flex-ac {
+  -webkit-align-items: center;
+  align-items: center;
+}
+.flex-ac {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
 /*
  *  用于控制方向的css
  */

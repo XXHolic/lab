@@ -7,13 +7,14 @@ const page = {
   angle:0,
   isPause:false,
   isCollision:false,
-  initSpeed:5,
+  initSpeed:30,
   isHit:false, // 鼠标是否命中圆
-  originPoint:[100, 150],
-  moveAttr:{x: 100, y: 150, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
+  originPoint:[100, 240],
+  moveAttr:{x: 100, y: 240, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
   fixAttr:{points:[[-20,-20],[20,-20],[20,20],[-20,20]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
   init: function() {
     this.createCanvas();
+    this.calculateSpeed();
     this.pageEvent();
   },
   // 创建画布
@@ -30,6 +31,22 @@ const page = {
   // 画布初始状态
   drawInit: function() {
     this.render();
+  },
+  // 计算速度
+  calculateSpeed:function() {
+    const {canvasWidth,canvasHeight,originPoint} = this;
+    const g = 9.8;
+    const [x,y] = originPoint;
+    const cal1 = 2*(canvasHeight-y)/g;
+    const vxt = Math.sqrt(cal1);
+    const vx = (canvasWidth-x)/vxt;
+    console.info('水平速度:',vx);
+
+    const cal2 = 2*y/g;
+    const vyt = Math.sqrt(cal2);
+    const vy = g*vyt;
+    console.info('垂直速度:',vy);
+
   },
   // 渲染
   render: function() {
@@ -183,17 +200,20 @@ const page = {
     console.info('k',k)
     this.lineK = k;
     //直线方程：y = k(x-m)+n
-    let inc = 0.4;
+    let inc = 2;
     // that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout)
     const loop = () => {
       let {canvasContext:context,canvasWidth,canvasHeight,fixAttr} = that;
+      if (moveAttr.y>=300-10 || moveAttr.x>600-10) {
+        return;
+      }
       moveAttr.x = moveAttr.x + inc;
       moveAttr.y = k*(moveAttr.x-x) + y
       let moveParams = { context,...moveAttr };
-      let lineParams = {context,points:[[moveAttr.x,moveAttr.y],originPoint],strokeStyle:'#333'}
+      // let lineParams = {context,points:[[moveAttr.x,moveAttr.y],originPoint],strokeStyle:'#333'}
       context.clearRect(0,0,canvasWidth,canvasHeight);
+      // Util.CANVAS.drawLine(lineParams);
       Util.CANVAS.drawArc(moveParams);
-      Util.CANVAS.drawLine(lineParams);
       if (moveAttr.x<=x || k>0) {
         window.requestAnimationFrame(loop);
       } else {
@@ -212,7 +232,7 @@ const page = {
    */
   handleParabola:function() {
     // const {canvasContext:context,fixAttr,originPoint,lineK,moveAttr,isCollision} = this;
-    const {canvasContext:context,canvasEle,originPoint,moveAttr,lineK,initSpeed} = this;
+    const {canvasContext:context,canvasEle,canvasWidth,canvasHeight,originPoint,moveAttr,lineK,initSpeed} = this;
     const [x,y] = originPoint;
     const k = lineK;
     //   计时
@@ -221,10 +241,13 @@ const page = {
     const cal1 = (initSpeed*initSpeed)/(k*k+1);
     const vx = Math.sqrt(cal1);
     const vy = Math.abs(vx * k);
+    // const vx = 5;
+    // const vy = 0;
     const g = 9.8;
     const acc = 0.01;
 
     const uniformInterval = () => {
+      // console.info('DOMHighResTimeStamp',DOMHighResTimeStamp)
       if (moveAttr.y<300-10 && moveAttr.x<600-10) {
         window.requestAnimationFrame(uniformInterval);
       }
@@ -233,6 +256,7 @@ const page = {
       const h = vy*t-0.5*g*t*t
       moveAttr.y = moveAttr.y - h;
       let moveParams = { context,...moveAttr };
+      context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
     };
 
