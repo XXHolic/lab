@@ -6,3 +6,14 @@
   border: 1px solid #eee;
   background-color: #ff9600;
 }
+
+.canvas-section {
+  position: relative;
+  min-height: 300px;
+}
+
+.canvas-path-part {
+  position: absolute;
+  left: 0;
+  top: 0;
+}

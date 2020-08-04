@@ -1,20 +1,26 @@
 const page = {
   canvasEle:null,
   canvasContext:null,
+  pathCanvasEle:null,
+  pathCanvasContext:null,
   canvasWidth: 600,
   canvasHeight: 300,
   drawDynamicTimeout:null,
   angle:0,
+  accelerate:0.5, // 模拟加速度
   isPause:false,
   isCollision:false,
-  initSpeed:30,
+  initSpeed:10,
+  freshTime:0, // 刷新时间统一控制，这里单位是毫秒
   isHit:false, // 鼠标是否命中圆
   originPoint:[100, 240],
   moveAttr:{x: 100, y: 240, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
   fixAttr:{points:[[-20,-20],[20,-20],[20,20],[-20,20]],isClose:true,strokeStyle:"#0094ff",fillStyle:"#0094ff"},
+  tipAttr:{x: 100, y: 240, radius:10,startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"},
   init: function() {
     this.createCanvas();
-    this.calculateSpeed();
+    this.createPathCanvas();
+
     this.pageEvent();
   },
   // 创建画布
@@ -26,27 +32,109 @@ const page = {
     canvasObj.setAttribute('id','canvasEle');
     this.canvasContext = canvasObj.getContext('2d');
     this.drawInit();
-    document.body.appendChild(canvasObj);
+    document.querySelector('.canvas-section').appendChild(canvasObj);
   },
   // 画布初始状态
   drawInit: function() {
     this.render();
+    // this.testParabola();
   },
-  // 计算速度
-  calculateSpeed:function() {
-    const {canvasWidth,canvasHeight,originPoint} = this;
+  // 创建显示路径的画布
+  createPathCanvas: function() {
+    let {canvasWidth,canvasHeight} = this;
+    let canvasObj = Util.CANVAS.createElement(canvasWidth,canvasHeight);
+    this.pathCanvasEle = canvasObj;
+    canvasObj.setAttribute('class','canvas-path-part');
+    canvasObj.setAttribute('id','canvasPathEle');
+    this.pathCanvasContext = canvasObj.getContext('2d');
+    this.drawPath(60,1);
+    document.querySelector('.canvas-section').appendChild(canvasObj);
+  },
+  // 路径初始状态
+  drawPath: function(speed,slope) {
+    const {pathCanvasContext:context,canvasWidth,canvasHeight,tipAttr,freshTime,originPoint} = this;
+    const moveAttr = tipAttr;
+    const [originX,originY] = originPoint;
+    const initSpeed = speed;
+    const k = slope;
+    //   计时
+    let t = 0;
+    // 水平方向的速度
+    const cal1 = (initSpeed*initSpeed)/(k*k+1);
+    const vx = Math.sqrt(cal1);
+    const vy = Math.abs(vx * k);
+
     const g = 9.8;
-    const [x,y] = originPoint;
-    const cal1 = 2*(canvasHeight-y)/g;
-    const vxt = Math.sqrt(cal1);
-    const vx = (canvasWidth-x)/vxt;
-    console.info('水平速度:',vx);
+    const acc = 0.03;
 
-    const cal2 = 2*y/g;
-    const vyt = Math.sqrt(cal2);
-    const vy = g*vyt;
-    console.info('垂直速度:',vy);
+    // 选取 10 个坐标
+    let pathPoints = [];
 
+    for (let index = 1; moveAttr.x < 400; index++) {
+      const gapTime = index*0.1
+      moveAttr.x = originX + vx*gapTime;
+      const h = vy*gapTime-0.5*g*gapTime*gapTime;
+      moveAttr.y = originY - h;
+      const newPoints = [moveAttr.x,moveAttr.y];
+      const pointIndex = pathPoints.length-1;
+      const calculatePoint = pointIndex>-1? pathPoints[pointIndex]:originPoint;
+      const dist = this.calculateLen(calculatePoint,newPoints);
+      if (dist > (moveAttr.radius*2+3)) {
+        pathPoints.push(newPoints)
+      }
+    }
+    const pointsNum = pathPoints.length;
+    const radiusDesc = tipAttr.radius/pointsNum;
+
+    console.info('pathPoints',pathPoints)
+    // const firstEle = pathPoints[0];
+    // const firstEle = pathPoints[0];
+
+    let index = 0;
+
+    const uniformInterval = () => {
+      // if (true) {
+        // window.requestAnimationFrame(uniformInterval);
+      // }
+
+
+      // t = t + acc;
+      // console.info('t',t)
+      // moveAttr.x = originX + vx*t;
+      // const h = vy*t-0.5*g*t*t
+      // moveAttr.y = originY - h;
+      context.clearRect(0,0,canvasWidth,canvasHeight);
+      // const {x,y,...others} = moveAttr;
+
+      // if (true) {
+      //   let moveParams = { context,...moveAttr };
+      //   Util.CANVAS.drawArc(moveParams);
+      // }
+        if (index >= pointsNum-1) {
+          index = 0;
+        }
+
+        const {x,y,radius,...others} = moveAttr;
+        const [x1,y1] = pathPoints[index];
+        const showRadius = radius-(radiusDesc*(index+1));
+        let moveParams = { context,x:x1,y:y1,radius:showRadius,...others };
+        index = index +1;
+        Util.CANVAS.drawArc(moveParams);
+    };
+
+
+    // window.requestAnimationFrame(uniformInterval);
+    // setInterval(() => uniformInterval(),500)
+    // setInterval(() => uniformInterval(),1000)
+  },
+  testParabola:function() {
+    // y = -0.1*x*x + x + 1.5
+    // this.paintParabola(10,1);
+    // this.paintParabola(10,0.5);
+    // this.paintParabola(10,0.3);
+    this.paintParabola(10,1);
+    this.paintParabola(8,1);
+    this.paintParabola(5,1);
   },
   // 渲染
   render: function() {
@@ -196,29 +284,40 @@ const page = {
     }
     moveAttr.x = xPos;
     moveAttr.y = yPos;
+
     const k = (y-yPos)/(x-xPos);
     console.info('k',k)
     this.lineK = k;
     //直线方程：y = k(x-m)+n
-    let inc = 2;
-    // that.drawDynamicTimeout && clearTimeout(that.drawDynamicTimeout)
+    let inc = 1;
+    // 记录每次绘制开始时间和结束时间
+    let startTime = 0;
+    let endTime = 0
+
     const loop = () => {
-      let {canvasContext:context,canvasWidth,canvasHeight,fixAttr} = that;
+      let {canvasContext:context,canvasWidth,canvasHeight,freshTime,fixAttr} = that;
       if (moveAttr.y>=300-10 || moveAttr.x>600-10) {
         return;
       }
+      that.paintParabola(10,k)
+      startTime = window.performance.now();
+      // if (moveAttr.x<=x || k>0) {
+        // window.requestAnimationFrame(loop);
+      // } else {
+      // }
+      // const gapTime = startTime - endTime;
+      // // 没有达到间隔时间要求，就不刷新屏幕
+      // if ( gapTime < freshTime && endTime!==0) {
+      //   return;
+      // }
       moveAttr.x = moveAttr.x + inc;
       moveAttr.y = k*(moveAttr.x-x) + y
       let moveParams = { context,...moveAttr };
       // let lineParams = {context,points:[[moveAttr.x,moveAttr.y],originPoint],strokeStyle:'#333'}
-      context.clearRect(0,0,canvasWidth,canvasHeight);
+      // context.clearRect(0,0,canvasWidth,canvasHeight);
       // Util.CANVAS.drawLine(lineParams);
-      Util.CANVAS.drawArc(moveParams);
-      if (moveAttr.x<=x || k>0) {
-        window.requestAnimationFrame(loop);
-      } else {
-        that.handleParabola()
-      }
+      // Util.CANVAS.drawArc(moveParams);
+      endTime = window.performance.now();
     };
     try {
       window.requestAnimationFrame(loop);
@@ -230,11 +329,14 @@ const page = {
    * 抛物线函数 f(x) = a x*x + bx + c
    *
    */
-  handleParabola:function() {
-    // const {canvasContext:context,fixAttr,originPoint,lineK,moveAttr,isCollision} = this;
-    const {canvasContext:context,canvasEle,canvasWidth,canvasHeight,originPoint,moveAttr,lineK,initSpeed} = this;
-    const [x,y] = originPoint;
-    const k = lineK;
+  paintParabola:function(speed,slope) {
+    // const {canvasContext:context,fixAttr,originPoint,lineK,moveAttr,isCollision,initSpeed} = this;
+    const {canvasContext:context,canvasEle,canvasWidth,canvasHeight,originPoint,moveAttr:originMoveAttr,freshTime} = this;
+    // const [x,y] = originPoint;
+    // const moveAttr = {...originMoveAttr};
+    const moveAttr = originMoveAttr;
+    const initSpeed = speed;
+    const k = slope;
     //   计时
     let t = 0;
     // 水平方向的速度
@@ -246,11 +348,21 @@ const page = {
     const g = 9.8;
     const acc = 0.01;
 
+    // 记录每次绘制开始时间和结束时间
+    let startTime = 0;
+    let endTime = 0
+
     const uniformInterval = () => {
       // console.info('DOMHighResTimeStamp',DOMHighResTimeStamp)
+      startTime = window.performance.now();
       if (moveAttr.y<300-10 && moveAttr.x<600-10) {
         window.requestAnimationFrame(uniformInterval);
       }
+      // const gapTime = startTime - endTime;
+      // // 没有达到间隔时间要求，就不刷新屏幕
+      // if ( gapTime < freshTime && endTime!==0) {
+      //   return;
+      // }
       t = t + acc;
       moveAttr.x = moveAttr.x + vx*t;
       const h = vy*t-0.5*g*t*t
@@ -258,6 +370,7 @@ const page = {
       let moveParams = { context,...moveAttr };
       context.clearRect(0,0,canvasWidth,canvasHeight);
       Util.CANVAS.drawArc(moveParams);
+      endTime = window.performance.now();
     };
 
 
@@ -288,12 +401,9 @@ const page = {
       that.handleMouseUp.bind(that)(e);;
     }
 
-    document.querySelector('#uniform').onclick = function(e) {
-      that.handleUniform.bind(that)(e);
-    }
-    document.querySelector('#parabola').onclick = function(e) {
-      that.handleParabola.bind(that)(e);
-    }
+    // document.querySelector('#uniform').onclick = function(e) {
+    //   that.handleUniform.bind(that)(e);
+    // }
   }
 }
 
