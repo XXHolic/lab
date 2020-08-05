@@ -52,6 +52,7 @@ const page = {
   },
   // 路径初始状态
   drawPath: function(speed,slope) {
+    const that = this;
     const {pathCanvasContext:context,canvasWidth,canvasHeight,tipAttr,freshTime,originPoint} = this;
     const moveAttr = tipAttr;
     const [originX,originY] = originPoint;
@@ -69,61 +70,65 @@ const page = {
 
     // 选取 10 个坐标
     let pathPoints = [];
-
-    for (let index = 1; moveAttr.x < 400; index++) {
-      const gapTime = index*0.1
-      moveAttr.x = originX + vx*gapTime;
-      const h = vy*gapTime-0.5*g*gapTime*gapTime;
-      moveAttr.y = originY - h;
-      const newPoints = [moveAttr.x,moveAttr.y];
+    let calcPoints = {x:0,y:0};
+    // const loopJudge = calcPoints.x < 400 && calcPoints.y<300;
+    while (calcPoints.x < 400 && calcPoints.y<300) {
+      t = t + acc;
+      calcPoints.x = originX + vx*t;
+      const h = vy*t-0.5*g*t*t;
+      calcPoints.y = originY - h;
+      const newPoints = [calcPoints.x,calcPoints.y];
       const pointIndex = pathPoints.length-1;
       const calculatePoint = pointIndex>-1? pathPoints[pointIndex]:originPoint;
       const dist = this.calculateLen(calculatePoint,newPoints);
-      if (dist > (moveAttr.radius*2+3)) {
+      if (dist > (moveAttr.radius*2)) {
         pathPoints.push(newPoints)
       }
     }
-    const pointsNum = pathPoints.length;
-    const radiusDesc = tipAttr.radius/pointsNum;
-
     console.info('pathPoints',pathPoints)
+    // const pointsNum = pathPoints.length;
+    // const radiusDesc = tipAttr.radius/pointsNum;
+
+    // console.info('pathPoints',pathPoints)
     // const firstEle = pathPoints[0];
     // const firstEle = pathPoints[0];
 
-    let index = 0;
+    // let index = 0;
 
     const uniformInterval = () => {
-      // if (true) {
+      // if (loopJudge) {
         // window.requestAnimationFrame(uniformInterval);
       // }
 
 
       // t = t + acc;
-      // console.info('t',t)
-      // moveAttr.x = originX + vx*t;
-      // const h = vy*t-0.5*g*t*t
-      // moveAttr.y = originY - h;
-      context.clearRect(0,0,canvasWidth,canvasHeight);
-      // const {x,y,...others} = moveAttr;
+      // const moveX = originX + vx*t;
+      // const h = vy*t-0.5*g*t*t;
+      // const moveY = originY - h;
+      // context.clearRect(0,0,canvasWidth,canvasHeight);
+      // const newPoints = [moveX,moveY];
+      // const pointIndex = pathPoints.length-1;
+      // const calculatePoint = pointIndex>-1 ? pathPoints[pointIndex]:originPoint;
+      // const dist = this.calculateLen(calculatePoint,newPoints);
 
-      // if (true) {
-      //   let moveParams = { context,...moveAttr };
-      //   Util.CANVAS.drawArc(moveParams);
+      // const boundaryJudge = moveX < 400 && moveY<300;
+      // if (dist > (moveAttr.radius*2) && boundaryJudge) {
+      //   pathPoints.push(newPoints);
+
       // }
-        if (index >= pointsNum-1) {
-          index = 0;
-        }
 
-        const {x,y,radius,...others} = moveAttr;
-        const [x1,y1] = pathPoints[index];
-        const showRadius = radius-(radiusDesc*(index+1));
-        let moveParams = { context,x:x1,y:y1,radius:showRadius,...others };
-        index = index +1;
+      const {x,y,radius,...others} = moveAttr;
+
+      pathPoints.map(ele => {
+        const [x,y] = ele;
+        let moveParams = { context,x,y,radius:5,...others };
         Util.CANVAS.drawArc(moveParams);
+      })
+
     };
 
 
-    // window.requestAnimationFrame(uniformInterval);
+    window.requestAnimationFrame(uniformInterval);
     // setInterval(() => uniformInterval(),500)
     // setInterval(() => uniformInterval(),1000)
   },
