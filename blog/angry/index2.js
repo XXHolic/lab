@@ -71,6 +71,7 @@ const page = {
     // 选取 10 个坐标
     let pathPoints = [];
     let calcPoints = {x:0,y:0};
+    const gapDist = moveAttr.radius*2;
     // const loopJudge = calcPoints.x < 400 && calcPoints.y<300;
     while (calcPoints.x < 400 && calcPoints.y<300) {
       t = t + acc;
@@ -81,7 +82,7 @@ const page = {
       const pointIndex = pathPoints.length-1;
       const calculatePoint = pointIndex>-1? pathPoints[pointIndex]:originPoint;
       const dist = this.calculateLen(calculatePoint,newPoints);
-      if (dist > (moveAttr.radius*2)) {
+      if (dist > gapDist) {
         pathPoints.push(newPoints)
       }
     }
@@ -94,7 +95,7 @@ const page = {
     // const firstEle = pathPoints[0];
 
     // let index = 0;
-
+    const firstEle = pathPoints[0];
     const uniformInterval = () => {
       // if (loopJudge) {
         // window.requestAnimationFrame(uniformInterval);
@@ -119,8 +120,11 @@ const page = {
 
       const {x,y,radius,...others} = moveAttr;
 
-      pathPoints.map(ele => {
-        const [x,y] = ele;
+      pathPoints.map((ele,index) => {
+        // const [x,y] = ele;
+        // if (gapDist) {
+
+        // }
         let moveParams = { context,x,y,radius:5,...others };
         Util.CANVAS.drawArc(moveParams);
       })
@@ -406,9 +410,9 @@ const page = {
       that.handleMouseUp.bind(that)(e);;
     }
 
-    // document.querySelector('#uniform').onclick = function(e) {
-    //   that.handleUniform.bind(that)(e);
-    // }
+    document.querySelector('#causeError').onclick = function(e) {
+      test();
+    }
   }
 }
 
