@@ -45,12 +45,8 @@ window.onload = function() {
     let obj = {name:'Tom',1:'1'};
     const mark = Symbol('age');
     obj[mark] = 19;
-    for (const key in obj) {
-      console.log(key);
-    }
-
     for (const ele of Object.keys(obj)) {
-        console.log(ele);
+      console.log(ele);
     }
 
   }
@@ -80,12 +76,12 @@ window.onload = function() {
       [{other:'play'},'basketball'],
     ]);
     console.log(m);
+    console.log(m.size);
   }
 
   function testMapAdd() {
     const m = new Map();
-    m.set(1,'1');
-    m.set('name','Tom');
+    m.set(1,'1').set('name','Tom');
     const mark = Symbol('age');
     m.set(mark,19);
     const obj = {other:'play'};
