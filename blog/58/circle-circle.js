@@ -75,7 +75,7 @@ const page = {
 
 
 window.onload = function() {
-  // Util.insertLink({title:'Collision Detection ：Point',linkIndex: 59, type: 'blog'});
+  Util.insertLink({title:'Collision Detection ：Point',linkIndex: 59, type: 'blog'});
   Util.loading.show();
   page.init();
   Util.loading.hide();
