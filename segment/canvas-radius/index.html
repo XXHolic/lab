@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="canvas,width,height,blur,css,images">
+  <meta content="canvas 放图片默认是模糊的，需要处理">
+  <meta name="format-detection" content="telephone=no">
+  <title>canvas 处理模糊示例</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .canvas-px {
+      width: 300px;
+      height: 90px;
+    }
+  </style>
+</head>
+
+<body class="pt50 tc">
+  <!-- <h2 class="fix-header">对应文：<a href="https://github.com/XXHolic/segment/issues/20" target="_blank">canvas 显示模糊问题</a></h2> -->
+  <div class="dib tl pt30" id="mainContent">
+    <!-- 移动端查看差异更明显
+    <h3>未处理模糊</h3>
+    <canvas id="canvas" width="300" height="90"></canvas>
+    <h3>已处理模糊</h3> -->
+    <canvas id="canvas2"></canvas>
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <script>
+
+    // var canvas = document.getElementById("canvas");
+    // var canvasHTMLContext = canvas.getContext('2d');
+    // var img1 = new Image();
+    // img1.src = '../../images/html5-rocks.png';
+    // img1.onload = function() {
+    //   canvasHTMLContext.drawImage(img1,0,0,300,90);
+    // }
+
+    // var canvasHD = Util.CANVAS.createElement(300,90);
+
+    const canvasWidth = 300,canvasHeight=300;
+    var ratio = window.devicePixelRatio || 1;
+    var canvasHD = document.getElementById("canvas2");
+    canvasHD.width = canvasWidth * ratio; // 实际渲染像素
+    canvasHD.height = canvasHeight * ratio; // 实际渲染像素
+    canvasHD.style.width = `${canvasWidth}px`; // 控制显示大小
+    canvasHD.style.height = `${canvasHeight}px`; // 控制显示大小
+    const canvasHDContext = canvasHD.getContext('2d');
+    canvasHDContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    const averageAngle = Math.PI *2 /4;
+    const radius = 20*ratio;
+    const num = 4;
+    let startAngle=- Math.PI/2,endAngle = averageAngle- Math.PI/2;
+    const x = 50,y=50;
+    for (let index = 0; index < 1; index++) {
+      // const element = array[index];
+      const startDegree = startAngle+averageAngle*index;
+      const endDegree = endAngle+averageAngle*index;
+      console.log({startDegree,endDegree})
+      canvasHDContext.beginPath();
+      canvasHDContext.moveTo(x, y)
+      canvasHDContext.arc(x, y, radius,startDegree,endDegree)
+      canvasHDContext.fill();
+      // canvasHDContext.fill();
+      canvasHDContext.closePath();
+
+    }
+
+    // var img2 = new Image();
+    // img2.src = '../../images/html5-rocks.png';
+    // img2.onload = function() {
+    //   canvasHDContext.drawImage(img2,0,0,300,90);
+    // }
+
+
+  </script>
+</body>
+
+</html>
