@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .marquee,.marquee-copy {
+      width: 300px; /* the plugin works for responsive layouts so width is not necessary */
+      overflow: hidden;
+      border:1px solid #ccc;
+    }
+    .marquee-container {
+      width: 100000px;
+      transform: translateX(0px);
+      /* animation: marqueeAnima1 8.14s linear 0s infinite normal none running; */
+      animation: marqueeAnima2 4.14s linear 0s infinite normal none running;
+    }
+    @keyframes marqueeAnima1 {
+      100% {
+        transform: translateX(-205px)
+      }
+    }
+    @keyframes marqueeAnima2 {
+      100% {
+        transform: translateX(-225.469px)
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class='marquee'>
+    <span>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+  </div>
+
+  <div class="marquee-copy">
+    <div class='marquee-container'>
+
+      <div style='float: left;margin-right: 20px;'>Lorem ipsum dolor sit amet</div>
+      <div style='float: left;margin-right: 20px;'>Lorem ipsum dolor sit amet</div>
+      <!-- <div style='float: left;margin-right: 20px;'>copy copycopy copy copy copy </div> -->
+    </div>
+  </div>
+  <script src="../../js/common/jquery.min.js"></script>
+  <script src="../../js/common/marquee.js"></script>
+  <script>
+$('.marquee').marquee({
+	//duration in milliseconds of the marquee
+	// duration: 15000,
+	//gap in pixels between the tickers
+	// gap: 50,
+	//time in milliseconds before the marquee will start animating
+	delayBeforeStart: 0,
+	//'left' or 'right'
+	direction: 'left',
+	//true or false - should the marquee be duplicated to show an effect of continues flow
+  duplicated: true,
+  startVisible: true
+});
+  </script>
+</body>
+</html>

@@ -54,20 +54,50 @@
 
     const averageAngle = Math.PI *2 /4;
     const radius = 20*ratio;
-    const num = 4;
+    const data = [{text:'奖品 1',fillStyle:'#ffecd0',imgSrc:'./img.png'},{text:'谢谢参与',fillStyle:'#fdccac'}];
+    const len = data.length;
     let startAngle=- Math.PI/2,endAngle = averageAngle- Math.PI/2;
     const x = 50,y=50;
-    for (let index = 0; index < 1; index++) {
-      // const element = array[index];
+    for (let index = 0; index < len; index++) {
+      const element = data[index];
+      const {fillStyle,text,imgSrc} = element;
       const startDegree = startAngle+averageAngle*index;
       const endDegree = endAngle+averageAngle*index;
-      console.log({startDegree,endDegree})
+      // console.log({startDegree,endDegree})
       canvasHDContext.beginPath();
       canvasHDContext.moveTo(x, y)
       canvasHDContext.arc(x, y, radius,startDegree,endDegree)
+      canvasHDContext.fillStyle = fillStyle
       canvasHDContext.fill();
       // canvasHDContext.fill();
       canvasHDContext.closePath();
+      canvasHDContext.save()
+      const rotateTextDeg = startDegree + averageAngle/2;
+      // const originFix = _startRadian + RadianGap / 2
+      const originPx = x + Math.cos(rotateTextDeg) * y // canvas原点的位置x
+      const originPy = x + Math.sin(rotateTextDeg) * y // canvas原点的位置y
+      console.log('rotateTextDeg',rotateTextDeg)
+      canvasHDContext.fillStyle = '#6c1212' // 设置文字颜色
+      canvasHDContext.font = '10px Helvetica' // 设置文字样式
+      canvasHDContext.translate(originPx, originPy) // 改变canvas原点的位置,简单来说,translate到哪个坐标点,那么那个坐标点就将变为坐标(0, 0)
+      canvasHDContext.rotate(rotateTextDeg+Math.PI / 2) // 旋转角度,这个旋转是相对于原点进行旋转的.
+
+      // 这里就是根据获取的各行的文字进行绘制,maxLineWidth取140,相当与一行最多展示10个文字
+      canvasHDContext.fillText(text, -canvasHDContext.measureText(text).width / 2, 20) // 绘制文字的方法,三个参数分别带:要绘制的文字,开始绘制的x坐标,开始绘制的y坐标
+
+      canvasHDContext.restore()
+      canvasHDContext.save()
+      if (imgSrc) {
+        const img = new Image()
+        img.onload = () => {
+          canvasHDContext.translate(originPx, originPy)
+          canvasHDContext.rotate(rotateTextDeg+Math.PI / 2)
+          canvasHDContext.drawImage(img, startDegree-10, endDegree+20, 20, 20)
+        }
+        img.src = imgSrc
+
+      }
+      canvasHDContext.restore()
 
     }
 
