@@ -32,5 +32,16 @@ var b = fun(1).fun(2); // undefined
 var c = fun(1).fun(2); // undefined
 console.info(c); // undefined
     </script>
+    <script>
+      var a = {
+        valueOf:() => {
+          return 123
+        },
+        toString:() => {
+          return '23'
+        }
+      }
+      console.info(a == '123')
+    </script>
   </body>
 </html>

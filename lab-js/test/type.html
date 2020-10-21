@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>隐式类型转换</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <script>
+      /*
+      * 对象转原始类型
+       1 如果有Symbol.toPrimitive()方法，优先调用再返回
+       2 调用valueOf()，如果转换为原始类型，则返回
+       3 调用toString()，如果转换为原始类型，则返回
+       4 如果都没有返回原始类型，会报错
+      *
+      */
+      let obj = {
+        // value:1,
+        valueOf() {
+          return 4
+        },
+        // toString() {
+        //   return 5
+        // },
+        // [Symbol.toPrimitive](hit){
+        //   console.info('hit',hit)
+        //   // return 6
+        //   return 6
+        // }
+      }
+
+      console.info(String(obj))
+      console.info(+obj)
+      console.info(obj+'5')
+
+
+// var a = {
+//   value: 0,
+//   valueOf: function() {
+//     this.value++;
+//     return this.value;
+//   }
+// };
+// console.log(a == 1 && a == 2);
+
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive
+
+// https://developers.google.com/web/tools/puppeteer/articles/ssr?hl=zh-cn
+    </script>
+  </body>
+</html>
