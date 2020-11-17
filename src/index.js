@@ -1,0 +1,1 @@
+console.info('6688 js')

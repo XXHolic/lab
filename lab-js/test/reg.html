@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>正则</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <script>
+      var reg = /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,2})?$/;
+      // console.info('m',reg.test('m'))
+      // console.info('1',reg.test('1'))
+      // console.info('666',reg.test('666'))
+      // console.info('8',reg.test('8'))
+      // console.info('11',reg.test('11'))
+      // console.info('1.',reg.test('1.'))
+      // console.info('11.',reg.test('11.'))
+      // console.info('10.22',reg.test('10.22'))
+      // console.info('.',reg.test('.'))
+      // console.info('0.1',reg.test('0.1'))
+      // console.info('0.11',reg.test('0.11'))
+      // console.info('0.111',reg.test('0.111'))
+      // console.info('0.0',reg.test('0.0'))
+      console.info('--------------------------')
+      var num = 2;
+      var reg2 = new RegExp('^\\d+(?:\\.\\d{0,'+0+'})?');
+      // var reg2= /^\d+(?:\.\d{0,2})?/
+      console.info(Number('0'.match(reg2)))
+      console.info(Number('0.'.match(reg2)))
+      console.info('2'.match(reg2))
+      console.info(parseFloat('2.'.match(reg2)))
+      console.info('22.'.match(reg2))
+      console.info('222.'.match(reg2))
+      console.info(Number('222.1'.match(reg2)))
+      console.info('222.11'.match(reg2))
+      console.info('222.111'.match(reg2))
+
+      // var reg3 = /^[1-9]\d{0,3}$/
+      // console.info('',reg3.test(''))
+      // console.info('m',reg3.test('n'))
+      // console.info('0',reg3.test('0'))
+      // console.info('0.',reg3.test('0.'))
+      // console.info('.',reg3.test('.'))
+      // console.info('11.1',reg3.test('11.1'))
+      // console.info('11',reg3.test('11'))
+      // console.info('111',reg3.test('111'))
+      // console.info('1111',reg3.test('1111'))
+      // console.info('9999',reg3.test('9999'))
+
+      // console.info('-ew333e33e'.replace(/[^0-9]/ig,""))
+
+
+    </script>
+  </body>
+</html>

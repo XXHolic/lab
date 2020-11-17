@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>defineProperty</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <script>
+      const obj = {
+        showName: function(name) {
+          console.info('showName',name)
+        }
+      }
+      const obj2 = {...obj}
+
+      const originalFun = obj.showName;
+      Object.defineProperty(obj,'showName',{
+        writable:true,
+        configurable: true,
+        enumerable: true,
+        value: function(args) {
+          console.info('defineProperty',args)
+          if (args.indexOf('t')>-1) {
+            return originalFun(args);
+          }
+          obj2.showName('ddd')
+          return;
+          // return originalFun.apply(this,args)
+          // debugger
+          // return args
+        }
+      })
+
+      obj.showName('om')
+
+
+
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+    </script>
+  </body>
+</html>
