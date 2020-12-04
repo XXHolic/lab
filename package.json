@@ -2,7 +2,6 @@
   "name": "lab",
   "version": "1.0.0",
   "description": "This is for fun and test!",
-  "main": "index.js",
   "repository": "https://github.com/XXHolic/lab.git",
   "author": "thy",
   "license": "MIT",
@@ -35,7 +34,7 @@
     "babel": "babel",
     "local-babel": "babel ./lab-js/20/src -d ./lab-js/20/lib",
     "start": "webpack-dev-server --open --config ./script/webpack.dev.js",
-    "build": "webpack --config ./script/webpack.prob.js",
+    "build": "webpack --config ./script/webpack.js",
     "version": "webpack --version"
   },
   "browserslist": "> 0.25%, not dead"

@@ -8,13 +8,6 @@ function getRandomNum(len) {
   }
 }
 
-// 插入文本
-function appendText(ele, text) {
-  var newELe = document.createElement('p');
-  newELe.innerText = (text || '')+Util.getRandomNum(5);
-  ele && ele.appendChild(newELe);
-}
-
 // 加载中提示
 const Loading = {
   create: function() {
@@ -33,6 +26,9 @@ const Loading = {
 }
 
 window.onload = function() {
+  getRandomNum(3)
+  Loading.show()
+  Loading.hide()
   var testObj = document.querySelector('#test');
   if (testObj) {
     testObj.addEventListener('click',function(){

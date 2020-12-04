@@ -1,0 +1,2 @@
+!function(){const e={create:function(){var e=document.createElement("div"),t=document.createTextNode("loading ~ ~ ~");e.appendChild(t),this.loadingEle=e},show:function(){this.create.bind(this)(),document.querySelector("body").appendChild(this.loadingEle)},hide:function(){document.querySelector("body").removeChild(this.loadingEle)}};window.onload=function(){String(Math.random()).substring(0,3),e.show(),e.hide();var t=document.querySelector("#test");t&&t.addEventListener("click",(function(){throw new Error("test")}))}}();
+//# sourceMappingURL=index.js.map
