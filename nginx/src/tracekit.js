@@ -317,7 +317,7 @@ TraceKit.report = (function reportModuleWrapper() {
      * @throws An exception if an incomplete stack trace is detected (old IE browsers).
      */
     function report(ex) {
-        debugger
+        // debugger
         if (lastExceptionStack) {
             if (lastException === ex) {
                 return; // already caught by an inner catch block, ignore
@@ -1193,6 +1193,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
      * @memberof TraceKit.computeStackTrace
      */
     function computeStackTrace(ex, depth) {
+        // entry
         var stack = null;
         depth = (depth == null ? 0 : +depth);
 

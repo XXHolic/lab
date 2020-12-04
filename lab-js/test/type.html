@@ -62,20 +62,22 @@
 // `${a}` === '123' 且 a * 1 === 321
 
 var obj2 = {
+  [Symbol.toPrimitive](hit){
+          console.info('hit',hit)
+          // return 6
+          // return 6
+        },
   valueOf() {
+    console.info('valueOf')
     return 321
   },
   toString() {
+    console.info('toString')
     return '123'
   },
 }
-// console.log(`${obj2}` === '123')
-// console.log(obj2 * 1 === 321)
-  try {
-    new eval()
-  } catch (error) {
-    console.info(error)
-  }
+console.log(`${obj2}` === '123')
+console.log(obj2 * 1 === 321)
     </script>
   </body>
 </html>

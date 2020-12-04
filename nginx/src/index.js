@@ -2,10 +2,21 @@ function tryCatchWrap(fn) {
   try {
     fn()
   } catch (e) {
-    console.info('exception type',Object.prototype.toString.call(e))
-    console.info('exception isInstanceOf Error',isInstanceOf(e, Error))
+    // console.info('exception type',Object.prototype.toString.call(e))
+    // console.info('exception isInstanceOf Error',isInstanceOf(e, Error))
+    TraceKit.report(e);
+    // setTimeout(() => {
+      // TraceKit.report(e);
+    // },0)
+
+//     const err1 = {
+//   message: 'Invalid array length',
+//   stack: "RangeError: Invalid array lengthat http://localhost:6677/index.js:94:15at tryCatchWrap (http://localhost:6677/index.js:3:5)at http://localhost:6677/index.js:93:1"
+// }
+
+//     TraceKit.report(err1);
     // throw e;
-    // console.log('e：',e);
+    console.log({e});
     // console.log('message：',e.message);              //
     // console.log('name：',e.name);                 //
     // console.log('fileName：',e.fileName);             //
@@ -27,22 +38,22 @@ function getType(value) {
   return Object.prototype.toString.call(value);
 }
 
-window.onerror = function(msg, url, lineNo, columnNo, error) {
-  console.info('-----msg：',msg)
-  console.info('-----url：',url)
-  console.info('--lineNo：',lineNo)
-  console.info('columnNo：',columnNo)
-  console.info('---error：',error)
-  console.info('exception type',Object.prototype.toString.call(error))
-  console.info('exception isInstanceOf Error',isInstanceOf(error, Error))
-  console.info('')
-  console.info('-----error.message：',error.message)
-  console.info('--------error.name：',error.name)
-  console.info('----error.fileName：',error.fileName);
-  console.info('--error.lineNumber：',error.lineNumber);
-  console.info('error.columnNumber：',error.columnNumber);
-  console.info('-------error.stack：',error.stack);
-}
+// window.onerror = function(msg, url, lineNo, columnNo, error) {
+//   console.info('-----msg：',msg)
+//   console.info('-----url：',url)
+//   console.info('--lineNo：',lineNo)
+//   console.info('columnNo：',columnNo)
+//   console.info('---error：',error)
+//   // console.info('exception type',Object.prototype.toString.call(error))
+//   // console.info('exception isInstanceOf Error',isInstanceOf(error, Error))
+//   console.info('')
+//   console.info('-----error.message：',error.message)
+//   console.info('--------error.name：',error.name)
+//   console.info('----error.fileName：',error.fileName);
+//   console.info('--error.lineNumber：',error.lineNumber);
+//   console.info('error.columnNumber：',error.columnNumber);
+//   console.info('-------error.stack：',error.stack);
+// }
 
 // window.onunhandledrejection = function(error) {
 //   console.info('error',error)
@@ -58,13 +69,16 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
 //   }
 // },true)
 
-// TraceKit.report.subscribe(function yourLogger(errorReport) {
-//   console.info('errorReport',errorReport)
-// });
+TraceKit.report.subscribe(function yourLogger(errorReport) {
+  console.info('errorReport',errorReport)
+});
 
 // Sentry.init({
 //   dsn: "https://1ea46c0309124094908fa0eb69e21afb@o366923.ingest.sentry.io/5169726",
 // });
+
+
+
 
 // EvalError
 // tryCatchWrap(
@@ -90,6 +104,9 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
 tryCatchWrap(function() {
   const arr = new Array(-10)
 })
+
+// console.info('ddddd')
+
 
 // ReferenceError
 // tryCatchWrap(function() {
@@ -121,3 +138,32 @@ tryCatchWrap(function() {
 // });
 
 
+// DOMException
+// var node = document.querySelector('#demo');
+// var refnode = node.nextSibling;
+// var newnode = document.createTextNode('这就是为何你挂了！');
+// node.insertBefore(newnode, refnode);
+
+
+// ErrorEvent
+// const err = new ErrorEvent('ErrorEvent')
+// throw err
+
+// DOMError
+// const err = new DOMError('DOMError');
+// throw err;
+
+
+
+// 模仿异常
+// const err1 = {
+//   message: 'Invalid array length',
+//   stack: "RangeError: Invalid array lengthat http://localhost:6677/index.js:94:15at tryCatchWrap (http://localhost:6677/index.js:3:5)at http://localhost:6677/index.js:93:1"
+// }
+// const err2 = {
+//   message: 'undefinedVariable is not defined',
+//   stack: "ReferenceError: undefinedVariable is not defined at http://localhost:6677/index.js:102:11 at tryCatchWrap (http://localhost:6677/index.js:3:5)at http://localhost:6677/index.js:101:1"
+// }
+// TraceKit.report(err1)
+
+// TraceKit.report(err2)

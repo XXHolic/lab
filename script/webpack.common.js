@@ -1,15 +1,15 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const basePath = path.dirname(__dirname);
 
 module.exports = {
   entry: path.resolve(basePath, "src/index.js"),
   plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(basePath, "public/index.html")
-    }),
+    // new CleanWebpackPlugin(),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(basePath, "public/index.html")
+    // }),
   ],
   optimization: {
     runtimeChunk: "single",

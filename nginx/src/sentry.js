@@ -2001,6 +2001,7 @@ var Sentry = (function (exports) {
   function instrumentUnhandledRejection() {
       _oldOnUnhandledRejectionHandler = global$2.onunhandledrejection;
       global$2.onunhandledrejection = function (e) {
+          console.info('onunhandledrejection',e)
           triggerHandlers('unhandledrejection', e);
           if (_oldOnUnhandledRejectionHandler) {
               // eslint-disable-next-line prefer-rest-params

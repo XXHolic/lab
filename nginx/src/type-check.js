@@ -14,9 +14,9 @@ function tryCatchWrap(fn) {
   try {
     fn()
   } catch (e) {
-    throw e;
+    // throw e;
     // console.info(e)
-    // console.info('exception type',Object.prototype.toString.call(e))
+    console.info('exception type',Object.prototype.toString.call(e))
     // console.info('exception isInstanceOf Error',isInstanceOf(e, Error))
   }
 }
@@ -27,9 +27,11 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
   console.info('exception isInstanceOf Error',isInstanceOf(error, Error))
 }
 
-// window.onunhandledrejection = function(error) {
-//   console.info('error',error)
-// }
+window.onunhandledrejection = function(error) {
+  // console.info(error)
+  console.info('exception type',Object.prototype.toString.call(error))
+  // console.info('exception isInstanceOf Error',isInstanceOf(error, Error))
+}
 
 // EvalError
 // tryCatchWrap(
@@ -51,21 +53,15 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
 // }
 
 
-// RangeError
+// RangeError - [object Error]
 // tryCatchWrap(function() {
 //   const arr = new Array(-10)
 // })
 
-// try {
-//   const arr = new Array(-10)
-// } catch (e) {
-//   throw e;
-// }
-
-// ReferenceError
-tryCatchWrap(function() {
-  let a = undefinedVariable
-})
+// ReferenceError - [object Error]
+// tryCatchWrap(function() {
+//   let a = undefinedVariable
+// })
 
 // SyntaxError
 // tryCatchWrap(function() {
@@ -74,8 +70,8 @@ tryCatchWrap(function() {
 
 // TypeError
 // tryCatchWrap(function() {
-  // const a = 'hell';
-  // a.fun();
+//   const a = 'hell';
+//   a.fun();
 // })
 
 // URIError
@@ -84,11 +80,12 @@ tryCatchWrap(function() {
 // })
 
 // AggregateError
-// Promise.any([
-//   Promise.reject(new Error("some error")),
-// ]).catch(e => {
-//   // console.info({e})
-//   throw e;
-// });
+Promise.any([
+  Promise.reject(new Error("some error")),
+]).catch(e => {
+  console.info('exception type',Object.prototype.toString.call(e))
+  // console.info({e})
+  throw e;
+});
 
 

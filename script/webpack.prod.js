@@ -5,30 +5,30 @@ const outPath = filterArgv('--outPath') || 'dist';
 const filename = filterArgv('--filename') || 'index';
 
 module.exports =  {
-  entry: path.resolve(basePath, "packages/browser/src/index.ts"),
+  entry: path.resolve(basePath, "blog/70/entry.js"),
   mode: 'production',
   devtool: 'source-map',
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
+      // {
+      //   test: /\.tsx?$/,
+      //   use: 'ts-loader',
+      //   exclude: /node_modules/,
+      // },
     ]
   },
   resolve:{
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: ['.js' ],
   },
   optimization:{
-    minimize: false,
+    // minimize: true,
   },
   plugins:[],
   output: {
     filename: `${filename}.js`,
     path: path.resolve(basePath, outPath),
-    libraryTarget: 'umd',
-    library: 'Argos',
+    // libraryTarget: 'umd',
+    // library: 'Argos',
   },
 
 };
