@@ -21,42 +21,42 @@
 </head>
 <body class="pt50 tc">
   <div class="tl">
-    <p>打开控制台，点击下面的按钮，可以看到解析的结果</p>
-    <button id="test">consume source map</button>
+    <p>打开控制台，可以看到解析的结果</p>
+
+    <pre>
+async function init () {
+  const mapData = await fetch('./index.js.map').then((res) => {
+    return res.json();
+  });
+  const consumer = await new sourceMap.SourceMapConsumer(mapData);
+  const result = consumer.originalPositionFor({
+    line: 1,
+    column: 26
+  })
+  console.info('result',result)
+  consumer.destroy();
+}
+    </pre>
   </div>
-  <!-- <script src="./index.js"></script> -->
   <script src="../../js/common/util.js"></script>
   <script src="./index.js"></script>
   <script>
     async function init () {
-      const mapData = await fetch('./index.js.map');
-      console.info('data',mapData)
-      console.info('consumer',JSON.parse(mapData))
+      const mapData = await fetch('./index.js.map').then((res) => {
+        return res.json();
+      });
+      const consumer = await new sourceMap.SourceMapConsumer(mapData);
+      const result = consumer.originalPositionFor({
+        line: 1,
+        column: 26
+      })
+      console.info('result',result)
+      consumer.destroy();
     }
-    // const consumer = new sourceMap.SourceMapConsumer(data);
-    // console.info('consumer',consumer)
-      // consumer.originalPositionFor({
-      //   line: 1,
-      //   column: 28
-      // })
-      // consumer.destroy();
-    // const xSquared = SourceMapConsumer.with('./index.js.map', null, async function(consumer) {
-    //   // Use `consumer` inside here and don't worry about remembering
-    //   // to call `destroy`.
-    //   consumer.originalPositionFor({
-    //     line: 1,
-    //     column: 28
-    //   })
-    //   // const x = await whatever(consumer);
-    //   // return x * x;
-    // });
     init()
-    window.onerror = function(msg, url, line, column, error) {
-
-    }
   </script>
   <script>
-    // Util.insertLink({title:'Collision Detection ：Separating Axis Theorem',linkIndex: 65, type: 'blog'});
+    Util.insertLink({title:'前端异常解析：Source Map',linkIndex: 71, type: 'blog'});
   </script>
 </body>
 
