@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="css,SourceMap,javascript">
+  <meta content="source map test">
+  <meta name="format-detection" content="telephone=no">
+  <title>source map</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <script src="./source-map.js"></script>
+  <script>
+    sourceMap.SourceMapConsumer.initialize({
+      "lib/mappings.wasm": "./mappings.wasm"
+    });
+  </script>
+</head>
+<body class="pt50 tc">
+  <div class="tl">
+    <p>打开控制台，点击下面的按钮，可以看到解析的结果</p>
+    <button id="test">consume source map</button>
+  </div>
+  <!-- <script src="./index.js"></script> -->
+  <script src="../../js/common/util.js"></script>
+  <script src="./index.js"></script>
+  <script>
+    async function init () {
+      const mapData = await fetch('./index.js.map');
+      console.info('data',mapData)
+      console.info('consumer',JSON.parse(mapData))
+    }
+    // const consumer = new sourceMap.SourceMapConsumer(data);
+    // console.info('consumer',consumer)
+      // consumer.originalPositionFor({
+      //   line: 1,
+      //   column: 28
+      // })
+      // consumer.destroy();
+    // const xSquared = SourceMapConsumer.with('./index.js.map', null, async function(consumer) {
+    //   // Use `consumer` inside here and don't worry about remembering
+    //   // to call `destroy`.
+    //   consumer.originalPositionFor({
+    //     line: 1,
+    //     column: 28
+    //   })
+    //   // const x = await whatever(consumer);
+    //   // return x * x;
+    // });
+    init()
+    window.onerror = function(msg, url, line, column, error) {
+
+    }
+  </script>
+  <script>
+    // Util.insertLink({title:'Collision Detection ：Separating Axis Theorem',linkIndex: 65, type: 'blog'});
+  </script>
+</body>
+
+</html>
