@@ -25,7 +25,31 @@
   </div>
   <!-- <script src="./index.js"></script> -->
   <!-- <script src="./base-arithmetic.js"></script> -->
-  <script src="./fun.js"></script>
+  <!-- <script src="./fun.js"></script>
+   -->
+
+   <script>
+  const result = [1,2,3,4,5,2,3,4,6].reduce((acc, cur, index) => {
+    const salePriceNum = Number(cur)
+    // 第一次
+    if (index === 0) {
+      acc.min = salePriceNum
+      acc.max = salePriceNum
+    }
+    if (index !== 0 && acc.min > salePriceNum) {
+      acc.min = salePriceNum
+    }
+    if (index !== 0 && acc.max < salePriceNum) {
+      acc.max = salePriceNum
+    }
+    return acc
+  }, { min: 0, max: 0 })
+  // console.info('result',result)
+  let a = []
+  const b = [...a]
+  console.log('b',b)
+
+   </script>
 </body>
 
 </html>

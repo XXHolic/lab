@@ -65,3 +65,31 @@ window.onload = function() {
     return false;
   };
 };
+
+
+/** 两个数组的交集
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function (nums1, nums2) {
+  var ret = []
+  var map = new Map()
+  for (var i = 0; i < nums1.length; i++) {
+    var num = nums1[i]
+    if (map.has(num)) {
+      map.set(num, map.get(num) + 1)
+    } else {
+      map.set(num, 1)
+    }
+  }
+
+  for (var j = 0; j < nums2.length; j++) {
+    var num = nums2[j]
+    if (map.has(num) && map.get(num) > 0) {
+      map.set(num, map.get(num) - 1)
+      ret.push(num)
+    }
+  }
+  return ret
+};
