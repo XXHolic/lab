@@ -9,8 +9,8 @@
     img{height: auto; border:0;}p{margin:0;}* {-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}*::-webkit-scrollbar{width: 0px;}html{font-size: 14px;font-family: "Microsoft Yahei",Helvetica,Arial,sans-serif;color: #24292e;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;}body{-webkit-overflow-scrolling: touch; overflow-scrolling:touch;text-rendering: optimizelegibility;padding: 0;margin: 0;}table {border-collapse: collapse!important;}table tr th, table tr td {border:1px solid #000; }
   </style>
   <style type="text/css">
-    .df {display: flex;}
-    .flex1 {flex: 1;}
+    .df {display: -webkit-flex;display: flex;}
+    .flex1 {-webkit-flex: 1;flex: 1;}
     .tc {text-align: center;}.tl {text-align: left;}
     .title {font-size:24px;line-height: 60px;}
     .border {border: 1px solid #eee;}.br1 {border-right: 1px solid #eee;}.border2 {border: 1px solid #000;}
@@ -32,7 +32,7 @@
     .part3-th5 {width: 400px;}
     .part3-th6 {width: 60px;}
     .part3-th7 {width: 200px;overflow: hidden;}
-    .part3-img {width: 30%;display:inline-block;vertical-align: middle;}
+    .part3-img {width: 65px!important;display:inline-block!important;vertical-align: middle;}
     .part4-title {background-color: #bac4e9; }
   </style>
 </head>
@@ -76,7 +76,7 @@
     </section>
 
     <section class="part2">
-      <table border="1" class="part2-table">
+      <table class="part2-table">
         <tr>
             <th class="part2-th1">稽核检查表</th>
             <th>扣分</th>
@@ -100,7 +100,7 @@
     <section class="part3">
       <div class="bg-color1 tc">扣分项目明细</div>
       <div class="bg-color2">测试2</div>
-      <table border="1" class="part3-table">
+      <table class="part3-table">
         <tr>
             <th class="part3-th1">稽核项</th>
             <th class="part3-th2">类别扣分</th>
