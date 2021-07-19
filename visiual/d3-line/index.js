@@ -136,6 +136,7 @@ window.onload = function() {
   const defaultData = [
     { date: "2021-07-15", value: 286 },
     { date: "2021-07-16", value: 285 },
+    { date: "2021-07-19", value: 284 },
   ];
   const data = formatData(defaultData);
   const widthData = defaultConfig.width;
