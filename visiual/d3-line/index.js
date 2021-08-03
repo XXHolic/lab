@@ -137,6 +137,13 @@ window.onload = function() {
     { date: "2021-07-15", value: 286 },
     { date: "2021-07-16", value: 285 },
     { date: "2021-07-19", value: 284 },
+    { date: "2021-07-20", value: 287 },
+    { date: "2021-07-24", value: 295 },
+    { date: "2021-07-26", value: 296 },
+    { date: "2021-07-27", value: 296 },
+    { date: "2021-07-29", value: 295 },
+    { date: "2021-08-02", value: 295 },
+    { date: "2021-08-03", value: 296 },
   ];
   const data = formatData(defaultData);
   const widthData = defaultConfig.width;
