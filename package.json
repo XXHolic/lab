@@ -37,5 +37,8 @@
     "build": "webpack --config ./script/webpack.js",
     "version": "webpack --version"
   },
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": "> 0.25%, not dead",
+  "dependencies": {
+    "htl": "^0.3.0"
+  }
 }

@@ -146,6 +146,8 @@ window.onload = function() {
     { date: "2021-08-03", value: 296 },
     { date: "2021-08-04", value: 294 },
     { date: "2021-08-05", value: 294 },
+    { date: "2021-08-09", value: 293 },
+    { date: "2021-08-16", value: 296 },
   ];
   const data = formatData(defaultData);
   const widthData = defaultConfig.width;
