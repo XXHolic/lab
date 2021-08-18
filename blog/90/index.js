@@ -11,9 +11,7 @@ window.onload = function () {
     xAxis,
     yAxis,
   }) {
-    // console.info("data", data);
     const pathD = line(data);
-    console.info("pathD", pathD);
     const result = html`<svg viewBox="0 0 ${width} ${height}">
       <path
         d="${pathD}"
@@ -94,8 +92,18 @@ window.onload = function () {
       .then((response) => response.json())
       .then((res) => {
         console.info(res);
-        res.columns = ["date", "close", "lower", "middle", "upper"];
-        initChart(res);
+        const format = res.map((ele) => {
+          const { date, close, lower, middle, upper } = ele;
+          return {
+            date: new Date(date),
+            close,
+            lower,
+            middle,
+            upper,
+          };
+        });
+        format.columns = ["date", "close", "lower", "middle", "upper"];
+        initChart(format);
       });
   }
 
