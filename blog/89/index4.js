@@ -125,4 +125,4 @@ window.onload = function () {
   Util.loading.show();
   getData();
   Util.loading.hide();
-};;
+};

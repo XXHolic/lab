@@ -3,9 +3,9 @@ window.onload = function () {
   function createChart({ d3, html, svg, data, width, height, margin, x, y }) {
     const result = html`<svg
       viewBox="0 0 ${width} ${height}"
-      style="max-width: ${width}px; font: 10px sans-serif;"
+      style="max-width: ${width}px; font: 10px sans-serif; overflow: visible"
     >
-      <g fill="steelblue">
+      <g fill="#eee">
         ${data.map(
           (d) =>
             svg`<rect y="${y(d.name)}" x="${x(0)}" width="${
@@ -13,16 +13,15 @@ window.onload = function () {
             }" height="${y.bandwidth()}"></rect>`
         )}
       </g>
-      <g
-        fill="white"
-        text-anchor="end"
-        transform="translate(-6,${y.bandwidth() / 2})"
-      >
+      <g fill="#fff" text-anchor="end" transform="translate(-6,15)">
+        ${data.map(
+          (d) => svg`<text y="${y(d.name)}" x="${x(d.count)}">${d.count}</text>`
+        )}
+      </g>
+      <g>
         ${data.map(
           (d) =>
-            svg`<text y="${y(d.name)}" x="${x(d.count)}" dy="0.35em">${
-              d.count
-            }</text>`
+            svg`<circle cy="${y(d.name)}" cx="${x(d.count)}" r="2.5"></circle>`
         )}
       </g>
       ${d3
@@ -125,4 +124,4 @@ window.onload = function () {
   Util.loading.show();
   getData();
   Util.loading.hide();
-};;
+};
