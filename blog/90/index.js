@@ -91,17 +91,18 @@ window.onload = function () {
     fetch("./data.json")
       .then((response) => response.json())
       .then((res) => {
-        console.info(res);
+
         const format = res.map((ele) => {
           const { date, close, lower, middle, upper } = ele;
           return {
             date: new Date(date),
-            close,
-            lower,
-            middle,
-            upper,
+            close: Number(close),
+            lower: Number(lower),
+            middle: Number(middle),
+            upper: Number(upper),
           };
         });
+        console.info(format);
         format.columns = ["date", "close", "lower", "middle", "upper"];
         initChart(format);
       });
