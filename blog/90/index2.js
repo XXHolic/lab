@@ -87,115 +87,24 @@ window.onload = function () {
   }
 
   function getData() {
-    // fetch("./data.json")
-    //   .then((response) => response.json())
-    //   .then((res) => {
-    //     const format = res.map((ele) => {
-    //       const { date, close, lower, middle, upper } = ele;
-    //       return {
-    //         date: new Date(date),
-    //         close: Number(close),
-    //         lower: Number(lower),
-    //         middle: Number(middle),
-    //         upper: Number(upper),
-    //       };
-    //     });
-    //     console.info(format);
-    //     format.columns = ["date", "close", "lower", "middle", "upper"];
-    //     initChart(format);
-    //   });
-    const testData = [
-      {
-        date: "2007-05-20",
-        close: 111.98,
-        lower: 93.21,
-        middle: 103.79,
-        upper: 114.38,
-      },
-      {
-        date: "2007-05-21",
-        close: 113.54,
-        lower: 94.59,
-        middle: 104.81,
-        upper: 115.02,
-      },
-      {
-        date: "2007-05-22",
-        close: 112.89,
-        lower: 95.89,
-        middle: 105.68,
-        upper: 115.48,
-      },
-      {
-        date: "2007-05-23",
-        close: 110.69,
-        lower: 96.79,
-        middle: 106.28,
-        upper: 115.76,
-      },
-      {
-        date: "2007-05-24",
-        close: 113.62,
-        lower: 97.43,
-        middle: 106.96,
-        upper: 116.49,
-      },
-      {
-        date: "2007-05-28",
-        close: 114.35,
-        lower: 98.24,
-        middle: 107.69,
-        upper: 117.14,
-      },
-      {
-        date: "2007-05-29",
-        close: 118.77,
-        lower: 98.81,
-        middle: 108.65,
-        upper: 118.5,
-      },
-      {
-        date: "2007-05-30",
-        close: 121.19,
-        lower: 99.15,
-        middle: 109.69,
-        upper: 120.23,
-      },
-      {
-        date: "2007-06-01",
-        close: 118.4,
-        lower: 100.32,
-        middle: 110.59,
-        upper: 120.86,
-      },
-      {
-        date: "2007-06-04",
-        close: 121.33,
-        lower: 101.36,
-        middle: 111.62,
-        upper: 121.88,
-      },
-      {
-        date: "2007-06-05",
-        close: 122.67,
-        lower: 101.85,
-        middle: 112.56,
-        upper: 123.27,
-      },
-    ];
-    let format = testData.map((ele) => {
-      const { date, close, lower, middle, upper } = ele;
-      return {
-        date: new Date(date),
-        close: Number(close),
-        lower: Number(lower),
-        middle: Number(middle),
-        upper: Number(upper),
-      };
-    });
-    format.columns = ["date", "close", "lower", "middle", "upper"];
-    globalData = format;
-    initChart(format);
+    fetch("https://xxholic.github.io/lab/blog/90/data.json")
+      .then((response) => response.json())
+      .then((res) => {
+        const format = res.map((ele) => {
+          const { date, close, lower, middle, upper } = ele;
+          return {
+            date: new Date(date),
+            close: Number(close),
+            lower: Number(lower),
+            middle: Number(middle),
+            upper: Number(upper),
+          };
+        });
+        // console.info(format);
+        format.columns = ["date", "close", "lower", "middle", "upper"];
+        globalData = format;
+        initChart(format);
+      });
   }
 
   function initChart(data) {
@@ -223,7 +132,9 @@ window.onload = function () {
       xAxis,
       yAxis,
     });
-    document.body.appendChild(ele);
+    const chartContainer = document.querySelector("#chart");
+    chartContainer.innerHTML = "";
+    chartContainer.appendChild(ele);
   }
   // Util.insertLink({
   //   title: "Learn D3: Scales",
@@ -232,6 +143,7 @@ window.onload = function () {
   // });
   Util.loading.show();
   getData();
+  Util.loading.hide();
   let timeoutHandler = null;
   window.onresize = function () {
     if (timeoutHandler) {
@@ -239,7 +151,6 @@ window.onload = function () {
     }
     timeoutHandler = setTimeout(() => {
       initChart(globalData);
-    }, 1000);
+    }, 500);
   };
-  Util.loading.hide();
 };

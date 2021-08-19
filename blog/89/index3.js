@@ -1,4 +1,5 @@
 window.onload = function () {
+  let globalData = [];
   // 创建图表
   function createChart({ d3, html, svg, data, width, height, margin, x, y }) {
     const result = html`<svg
@@ -63,6 +64,10 @@ window.onload = function () {
       .interpolator(d3.interpolateBlues);
   }
 
+  function getWidth() {
+    return window.innerWidth - 20;
+  }
+
   function getHeight() {
     return 200;
   }
@@ -88,6 +93,7 @@ window.onload = function () {
       { name: "🍎", count: 1 },
       { name: "🍉", count: 1 },
     ];
+    globalData = testData;
     initChart(testData);
   }
 
@@ -97,7 +103,7 @@ window.onload = function () {
     const globalSvg = window.htl.svg;
     const useData = data;
     const margin = getMargin();
-    const width = 1000;
+    const width = getWidth();
     const height = getHeight();
     const color = getColor({ d3: globalD3, data: useData });
     const x = getX({ d3: globalD3, data: useData, margin, width });
@@ -114,14 +120,20 @@ window.onload = function () {
       y,
       margin,
     });
-    document.body.appendChild(ele);
+    const chartContainer = document.querySelector("#chart");
+    chartContainer.innerHTML = "";
+    chartContainer.appendChild(ele);
   }
-  // Util.insertLink({
-  //   title: "Learn D3: Scales",
-  //   linkIndex: 92,
-  //   type: "blog",
-  // });
   Util.loading.show();
   getData();
   Util.loading.hide();
+  let timeoutHandler = null;
+  window.onresize = function () {
+    if (timeoutHandler) {
+      clearTimeout(timeoutHandler);
+    }
+    timeoutHandler = setTimeout(() => {
+      initChart(globalData);
+    }, 500);
+  };
 };

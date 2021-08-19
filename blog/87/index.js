@@ -1,4 +1,5 @@
 window.onload = function () {
+  let globalData = [];
   // 创建图表
   function createChart({ d3, width, height, color, bins, x, y, xAxis, yAxis }) {
     const svg = d3.create("svg").attr("viewBox", [0, 0, width, height]);
@@ -82,7 +83,9 @@ window.onload = function () {
   function getColor() {
     return "steelblue";
   }
-
+  function getWidth() {
+    return window.innerWidth - 20;
+  }
   function getHeight() {
     return 500;
   }
@@ -92,10 +95,11 @@ window.onload = function () {
   }
 
   function getData() {
-    fetch("./data.json")
+    fetch("https://xxholic.github.io/lab/blog/87/data.json")
       .then((response) => response.json())
       .then((res) => {
-        console.info(res);
+        // console.info(res);
+        globalData = res;
         initChart(res);
       });
   }
@@ -104,7 +108,7 @@ window.onload = function () {
     const globalD3 = d3;
     const useData = data;
     const margin = getMargin();
-    const width = 1000;
+    const width = getWidth();
     const height = getHeight();
     const color = getColor();
     const bins = getBins(globalD3, useData);
@@ -130,7 +134,9 @@ window.onload = function () {
       xAxis,
       yAxis,
     });
-    document.body.appendChild(ele);
+    const chartContainer = document.querySelector("#chart");
+    chartContainer.innerHTML = "";
+    chartContainer.appendChild(ele);
   }
   Util.insertLink({
     title: "Learn D3: By Example",
@@ -140,4 +146,13 @@ window.onload = function () {
   Util.loading.show();
   getData();
   Util.loading.hide();
+  let timeoutHandler = null;
+  window.onresize = function () {
+    if (timeoutHandler) {
+      clearTimeout(timeoutHandler);
+    }
+    timeoutHandler = setTimeout(() => {
+      initChart(globalData);
+    }, 500);
+  };
 };

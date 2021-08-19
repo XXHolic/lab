@@ -1,4 +1,5 @@
 window.onload = function () {
+  let globalData = [];
   // 创建图表
   function createChart({
     d3,
@@ -79,6 +80,10 @@ window.onload = function () {
       .interpolator(d3.interpolateBlues);
   }
 
+  function getWidth() {
+    return window.innerWidth - 20;
+  }
+
   function getHeight() {
     return 240;
   }
@@ -88,10 +93,9 @@ window.onload = function () {
   }
 
   function getData() {
-    fetch("./data.json")
+    fetch("https://xxholic.github.io/lab/blog/90/data.json")
       .then((response) => response.json())
       .then((res) => {
-
         const format = res.map((ele) => {
           const { date, close, lower, middle, upper } = ele;
           return {
@@ -102,8 +106,9 @@ window.onload = function () {
             upper: Number(upper),
           };
         });
-        console.info(format);
+        // console.info(format);
         format.columns = ["date", "close", "lower", "middle", "upper"];
+        globalData = format;
         initChart(format);
       });
   }
@@ -114,7 +119,7 @@ window.onload = function () {
     const globalSvg = window.htl.svg;
     const useData = data;
     const margin = getMargin();
-    const width = 1000;
+    const width = getWidth();
     const height = getHeight();
     // const color = getColor({ d3: globalD3, data: useData });
     const x = getX({ d3: globalD3, data: useData, margin, width });
@@ -133,14 +138,20 @@ window.onload = function () {
       xAxis,
       yAxis,
     });
-    document.body.appendChild(ele);
+    const chartContainer = document.querySelector("#chart");
+    chartContainer.innerHTML = "";
+    chartContainer.appendChild(ele);
   }
-  // Util.insertLink({
-  //   title: "Learn D3: Scales",
-  //   linkIndex: 92,
-  //   type: "blog",
-  // });
   Util.loading.show();
   getData();
   Util.loading.hide();
+  let timeoutHandler = null;
+  window.onresize = function () {
+    if (timeoutHandler) {
+      clearTimeout(timeoutHandler);
+    }
+    timeoutHandler = setTimeout(() => {
+      initChart(globalData);
+    }, 500);
+  };
 };
