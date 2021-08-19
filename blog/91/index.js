@@ -105,7 +105,7 @@ window.onload = function () {
   }
 
   function getData() {
-    fetch("https://xxholic.github.io/lab/blog/90/data.json")
+    fetch("https://xxholic.github.io/lab/blog/91/data.json")
       .then((response) => response.json())
       .then((res) => {
         const format = res.map((ele) => {
