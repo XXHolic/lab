@@ -1,20 +1,26 @@
 window.onload = function () {
-  let globalData = null;
+  let globalData = [];
   // 创建图表
   function createChart({
     d3,
     html,
     svg,
-    shape,
+    line,
     data,
+    reveal,
     width,
     height,
     xAxis,
     yAxis,
   }) {
-    const pathD = shape(data);
+    const pathD = line(data);
     const result = html`<svg viewBox="0 0 ${width} ${height}">
-      <path fill="steelblue" d="${pathD}"></path>
+      ${d3
+        .select(
+          svg`<path d="${pathD}" fill="none" stroke="steelblue" stroke-width="1.5" stroke-miterlimit="1" stroke-dasharray="0,1"></path>`
+        )
+        .call(reveal)
+        .node()}
       ${d3
         .select(svg`<g>`)
         .call(xAxis)
@@ -28,12 +34,23 @@ window.onload = function () {
     return result;
   }
 
-  function area({ d3, x, y }) {
+  function line({ d3, x, y }) {
     return d3
-      .area()
+      .line()
       .x((d) => x(d.date))
-      .y0(y(0))
-      .y1((d) => y(d.close));
+      .y((d) => y(d.close));
+  }
+
+  function reveal({ d3 }) {
+    return (path) =>
+      path
+        .transition()
+        .duration(5000)
+        .ease(d3.easeLinear)
+        .attrTween("stroke-dasharray", function () {
+          const length = this.getTotalLength();
+          return d3.interpolate(`0,${length}`, `${length},${length}`);
+        });
   }
 
   function getX({ d3, data, margin, width }) {
@@ -51,20 +68,20 @@ window.onload = function () {
   }
 
   function getxAxis({ height, margin, d3, x, width }) {
-    return (g) =>
+    return (g, scale = x) =>
       g.attr("transform", `translate(0,${height - margin.bottom})`).call(
         d3
-          .axisBottom(x)
+          .axisBottom(scale)
           .ticks(width / 80)
           .tickSizeOuter(0)
       );
   }
 
   function getyAxis({ margin, d3, y, height }) {
-    return (g) =>
+    return (g, scale = y) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(y).ticks(height / 40))
+        .call(d3.axisLeft(scale).ticks(height / 40))
         .call((g) => g.select(".domain").remove());
   }
 
@@ -78,6 +95,7 @@ window.onload = function () {
   function getWidth() {
     return window.innerWidth - 20;
   }
+
   function getHeight() {
     return 240;
   }
@@ -103,8 +121,20 @@ window.onload = function () {
         // console.info(format);
         format.columns = ["date", "close", "lower", "middle", "upper"];
         globalData = format;
+        creteButton();
         initChart(format);
       });
+  }
+
+  function creteButton() {
+    const ele = window.htl.html`<button>Replay</button>`;
+    ele.onclick = () => {
+      // console.info("clicked");
+      initChart(globalData);
+    };
+    const container = document.querySelector("#btn");
+    container.innerHTML = "";
+    container.appendChild(ele);
   }
 
   function initChart(data) {
@@ -120,7 +150,8 @@ window.onload = function () {
     const y = getY({ d3: globalD3, data: useData, height, margin });
     const xAxis = getxAxis({ d3: globalD3, x, margin, width, height });
     const yAxis = getyAxis({ d3: globalD3, y, margin, height });
-    const shapeObj = area({ d3: globalD3, x, y });
+    const lineObj = line({ d3: globalD3, x, y });
+    const revealObj = reveal({ d3: globalD3 });
     const ele = createChart({
       d3: globalD3,
       html: globalHtml,
@@ -128,7 +159,8 @@ window.onload = function () {
       data: useData,
       width,
       height,
-      shape: shapeObj,
+      line: lineObj,
+      reveal: revealObj,
       xAxis,
       yAxis,
     });

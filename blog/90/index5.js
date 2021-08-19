@@ -14,7 +14,11 @@ window.onload = function () {
   }) {
     const pathD = shape(data);
     const result = html`<svg viewBox="0 0 ${width} ${height}">
-      <path fill="steelblue" d="${pathD}"></path>
+      <path d="${pathD}" fill="#ddd"></path>
+      <g fill="none" stroke-width="1.5" stroke-miterlimit="1">
+        <path d="${shape.lineY0()(data)}" stroke="#00f"></path>
+        <path d="${shape.lineY1()(data)}" stroke="#f00"></path>
+      </g>
       ${d3
         .select(svg`<g>`)
         .call(xAxis)
@@ -28,12 +32,12 @@ window.onload = function () {
     return result;
   }
 
-  function area({ d3, x, y }) {
+  function areaBand({ d3, x, y }) {
     return d3
       .area()
       .x((d) => x(d.date))
-      .y0(y(0))
-      .y1((d) => y(d.close));
+      .y0((d) => y(d.lower))
+      .y1((d) => y(d.upper));
   }
 
   function getX({ d3, data, margin, width }) {
@@ -120,7 +124,7 @@ window.onload = function () {
     const y = getY({ d3: globalD3, data: useData, height, margin });
     const xAxis = getxAxis({ d3: globalD3, x, margin, width, height });
     const yAxis = getyAxis({ d3: globalD3, y, margin, height });
-    const shapeObj = area({ d3: globalD3, x, y });
+    const shapeObj = areaBand({ d3: globalD3, x, y });
     const ele = createChart({
       d3: globalD3,
       html: globalHtml,
