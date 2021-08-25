@@ -49,20 +49,18 @@ window.onload = function () {
     return svg`<path d="${line(data)}">`.getTotalLength();
   }
 
-  function disposal(MutationObserver) {
-    return (element) => {
-      return new Promise((resolve) => {
-        requestAnimationFrame(() => {
-          const target = element.closest(".observablehq");
-          if (!target) return resolve();
-          const observer = new MutationObserver((mutations) => {
-            if (target.contains(element)) return;
-            observer.disconnect(), resolve();
-          });
-          observer.observe(target, { childList: true });
+  function disposal(element) {
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        const target = element.closest(".observablehq");
+        if (!target) return resolve();
+        const observer = new MutationObserver(() => {
+          if (target.contains(element)) return;
+          observer.disconnect(), resolve();
         });
+        observer.observe(target, { childList: true });
       });
-    };
+    });
   }
 
   function Scrubber(html, disposal) {
@@ -160,8 +158,7 @@ window.onload = function () {
       form.i.oninput();
       if (autoplay) start();
       else stop();
-      let localDisposal = disposal(form);
-      localDisposal().then(stop);
+      disposal(form).then(stop);
       return form;
     };
   }
