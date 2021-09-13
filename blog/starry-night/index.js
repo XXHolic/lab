@@ -10,16 +10,27 @@ window.onload = function () {
     svg
       .append("path")
       .attr("d", line(data))
+      .attr("stroke-dasharray", 314)
+      .attr("stroke-dashoffset", 314)
+      .attr("fill", "transparent")
       .attr("stroke", "red")
-      .attr("stroke-width", "10");
+      .attr("stroke-width", "2")
+      .transition()
+      .duration(1000)
+      .ease(d3.easeLinear)
+      .attr("stroke-dashoffset", 0);
     // const g = svg.append("g").attr("stroke-width", "0").attr("stroke", "green");
     // const rect = g.append("rect").attr("width", "200").attr("height", "200");
+
+      // .duration(1000)
+      // .attr("stroke-dashoffset", 0);
 
     return svg.node();
   }
 
   function line({ d3 }) {
-    return d3.lineRadial();
+    // return d3.lineRadial();
+    return () => "M10 50 Q 77.5 10, 145 50 T 280 50";
   }
 
   function getColor({ d3, data }) {
@@ -81,13 +92,13 @@ window.onload = function () {
   Util.loading.show();
   getData();
   Util.loading.hide();
-  let timeoutHandler = null;
-  window.onresize = function () {
-    if (timeoutHandler) {
-      clearTimeout(timeoutHandler);
-    }
-    timeoutHandler = setTimeout(() => {
-      initChart(globalData);
-    }, 500);
-  };
-};
+  // let timeoutHandler = null;
+  // window.onresize = function () {
+  //   if (timeoutHandler) {
+  //     clearTimeout(timeoutHandler);
+  //   }
+  //   timeoutHandler = setTimeout(() => {
+  //     initChart(globalData);
+  //   }, 500);
+  // };
+};;
