@@ -1,36 +1,63 @@
 window.onload = function () {
+
   let globalData = [];
   // 创建图表
-  function createChart({ d3, line, data, width, height }) {
-    const svg = d3
-      .create("svg")
-      // .attr("viewBox", "0 0 100 100")
-      .attr("width", "500")
-      .attr("height", "300");
-    svg
-      .append("path")
-      .attr("d", line(data))
-      .attr("stroke-dasharray", 314)
-      .attr("stroke-dashoffset", 314)
-      .attr("fill", "transparent")
-      .attr("stroke", "red")
-      .attr("stroke-width", "2")
-      .transition()
-      .duration(1000)
-      .ease(d3.easeLinear)
-      .attr("stroke-dashoffset", 0);
-    // const g = svg.append("g").attr("stroke-width", "0").attr("stroke", "green");
-    // const rect = g.append("rect").attr("width", "200").attr("height", "200");
+  function createChart({ d3, line, width, height }) {
+    const svg = d3.create("svg").attr("width", "500").attr("height", "600");
+    const shapeData = line();
+    for (let index = 0, len = shapeData.length; index < len; index++) {
+      const ele = shapeData[index];
+      switch (ele.type) {
+        case "circle":
+          {
+            svg
+              .append("circle")
+              .attr("cx", ele.cx)
+              .attr("cy", ele.cy)
+              .attr("r", ele.r)
+              .attr("fill", "transparent")
+              .attr("stroke", "red")
+              .attr("stroke-width", "1");
+          }
+          break;
+      }
 
+      // .transition()
       // .duration(1000)
-      // .attr("stroke-dashoffset", 0);
+      // .attr("transform", transform({ scaleX: 2, scaleY: 2 }));
+    }
+
+    // svg
+    //   .append("path")
+    //   .attr("d", line(data))
+    //   .attr("fill", "transparent")
+    //   .attr("stroke", "red")
+    //   .attr("stroke-width", "2");
+    // .attr("stroke-dasharray", 40)
+    // .attr("stroke-dashoffset", 314)
+    // .transition()
+    // .duration(1000)
+    // .ease(d3.easeLinear)
+    // .attr("stroke-dashoffset", 0);
 
     return svg.node();
   }
 
+  function transform({
+    translateX = 0,
+    translateY = 0,
+    scaleX = 1,
+    scaleY = 1,
+  }) {
+    return `
+      translate(${translateX}, ${translateY})
+      scale(${scaleX}, ${scaleY})
+    `;
+  }
+
   function line({ d3 }) {
     // return d3.lineRadial();
-    return () => "M10 50 Q 77.5 10, 145 50 T 280 50";
+    return () => [{ type: "circle", cx: 50, cy: 50, r: 10 }];
   }
 
   function getColor({ d3, data }) {
