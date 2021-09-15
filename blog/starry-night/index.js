@@ -1,6 +1,6 @@
 window.onload = function () {
-
   let globalData = [];
+  // const d3.scaleSequential().domain([200, 100]);
   // 创建图表
   function createChart({ d3, line, width, height }) {
     const svg = d3.create("svg").attr("width", "500").attr("height", "600");
@@ -10,21 +10,36 @@ window.onload = function () {
       switch (ele.type) {
         case "circle":
           {
+            const radialGradientEle = paintRadialGradient({ data: ele });
+            svg.append(() => radialGradientEle);
             svg
               .append("circle")
+              .attr("fill", () => {
+                const value = ele.radialGradientId
+                  ? `url(#${ele.radialGradientId})`
+                  : "transparent";
+                return value;
+              })
               .attr("cx", ele.cx)
               .attr("cy", ele.cy)
               .attr("r", ele.r)
-              .attr("fill", "transparent")
-              .attr("stroke", "red")
-              .attr("stroke-width", "1");
+              .attr("transform-origin", `${ele.cx} ${ele.cy}`)
+              // .transition()
+              // .duration(750)
+              .style(
+                "animation",
+                "circleZoom 2s ease-in-out alternate infinite"
+              );
+            // .attrTween("transform", () => {
+            //   return (t) => {
+            //     const scaleValue = d3.scaleSequential(t).domain([1, 1.5]);
+            //     console.info("scaleValue", scaleValue);
+            //     return `scale(${scaleValue}, ${scaleValue})`;
+            //   };
+            // });
           }
           break;
       }
-
-      // .transition()
-      // .duration(1000)
-      // .attr("transform", transform({ scaleX: 2, scaleY: 2 }));
     }
 
     // svg
@@ -43,21 +58,23 @@ window.onload = function () {
     return svg.node();
   }
 
-  function transform({
-    translateX = 0,
-    translateY = 0,
-    scaleX = 1,
-    scaleY = 1,
-  }) {
-    return `
-      translate(${translateX}, ${translateY})
-      scale(${scaleX}, ${scaleY})
-    `;
-  }
-
   function line({ d3 }) {
     // return d3.lineRadial();
-    return () => [{ type: "circle", cx: 50, cy: 50, r: 10 }];
+    return () => [
+      {
+        type: "circle",
+        cx: 50,
+        cy: 50,
+        r: 15,
+        radialGradientId: "circle1",
+        stopEle: [
+          { offset: "20%", "stop-color": "#d49100" },
+          { offset: "21%", "stop-color": "#d5cd55" },
+          { offset: "79%", "stop-color": "#d5cd55" },
+          { offset: "80%", "stop-color": "#abb511" },
+        ],
+      },
+    ];
   }
 
   function getColor({ d3, data }) {
@@ -128,4 +145,4 @@ window.onload = function () {
   //     initChart(globalData);
   //   }, 500);
   // };
-};;
+};

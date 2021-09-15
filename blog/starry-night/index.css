@@ -1,0 +1,8 @@
+  @keyframes circleZoom {
+    from {
+      transform: scale(1,1);
+    }
+    to {
+      transform: scale(1.3,1.3);
+    }
+  }
