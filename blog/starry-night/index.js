@@ -10,33 +10,14 @@ window.onload = function () {
       switch (ele.type) {
         case "circle":
           {
-            const radialGradientEle = paintRadialGradient({ data: ele });
-            svg.append(() => radialGradientEle);
-            svg
-              .append("circle")
-              .attr("fill", () => {
-                const value = ele.radialGradientId
-                  ? `url(#${ele.radialGradientId})`
-                  : "transparent";
-                return value;
-              })
-              .attr("cx", ele.cx)
-              .attr("cy", ele.cy)
-              .attr("r", ele.r)
-              .attr("transform-origin", `${ele.cx} ${ele.cy}`)
-              // .transition()
-              // .duration(750)
-              .style(
-                "animation",
-                "circleZoom 2s ease-in-out alternate infinite"
-              );
-            // .attrTween("transform", () => {
-            //   return (t) => {
-            //     const scaleValue = d3.scaleSequential(t).domain([1, 1.5]);
-            //     console.info("scaleValue", scaleValue);
-            //     return `scale(${scaleValue}, ${scaleValue})`;
-            //   };
-            // });
+            svg.append(() => paintGradient({ data: ele.gradient })); // 径向渐变
+            svg.append(() => createCircle({ data: ele }));
+          }
+          break;
+        case "circleGap":
+          {
+            svg.append(() => paintGradient({ data: ele.gradient })); // 线性渐变
+            svg.append(() => createCircleGap({ data: ele }));
           }
           break;
       }
@@ -54,6 +35,12 @@ window.onload = function () {
     // .duration(1000)
     // .ease(d3.easeLinear)
     // .attr("stroke-dashoffset", 0);
+    // .transition()
+    // .duration(750)
+    // .style(
+    //   "animation",
+    //   "circleZoom 2s ease-in-out alternate infinite"
+    // );
 
     return svg.node();
   }
@@ -63,15 +50,52 @@ window.onload = function () {
     return () => [
       {
         type: "circle",
-        cx: 50,
-        cy: 50,
-        r: 15,
-        radialGradientId: "circle1",
-        stopEle: [
-          { offset: "20%", "stop-color": "#d49100" },
-          { offset: "21%", "stop-color": "#d5cd55" },
-          { offset: "79%", "stop-color": "#d5cd55" },
-          { offset: "80%", "stop-color": "#abb511" },
+        attributes: {
+          cx: 50,
+          cy: 50,
+          r: 15,
+          fill: "url(#circle1)",
+        },
+        gradient: {
+          type: "radialGradient",
+          id: "circle1",
+          stopEle: [
+            { offset: "20%", "stop-color": "#d49100" },
+            { offset: "21%", "stop-color": "#d5cd55" },
+            { offset: "79%", "stop-color": "#d5cd55" },
+            { offset: "80%", "stop-color": "#abb511" },
+          ],
+        },
+      },
+      {
+        type: "circleGap",
+        attributes: {
+          cx: 50,
+          cy: 50,
+          r: 15,
+          fill: "transparent",
+        },
+        gradient: {
+          type: "linearGradient",
+          id: "circleGap1",
+          stopEle: [
+            { offset: "10%", "stop-color": "#ff75c3" },
+            { offset: "100%", "stop-color": "#ffa647" },
+          ],
+        },
+        config: [
+          {
+            gap: 5,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "2",
+            "stroke-dasharray": 3,
+          },
+          {
+            gap: 10,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "2",
+            "stroke-dasharray": 4,
+          },
         ],
       },
     ];

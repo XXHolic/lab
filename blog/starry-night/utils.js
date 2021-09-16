@@ -20,14 +20,15 @@ function appendEle(parent, children) {
   });
 }
 
-function paintRadialGradient({ data }) {
-  const { radialGradientId = "", stopEle = [] } = data;
+function paintGradient({ data }) {
+  console.info("data", data);
+  const { type, id = "", stopEle = [] } = data;
   const defsEle = createEle({ namesapce: svgNamespace, tag: "defs" });
   const radialGradientEle = createEle({
     namesapce: svgNamespace,
-    tag: "radialGradient",
+    tag: type,
     attributes: {
-      id: radialGradientId,
+      id: id,
     },
   });
 
