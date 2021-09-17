@@ -3,7 +3,7 @@ window.onload = function () {
   // const d3.scaleSequential().domain([200, 100]);
   // 创建图表
   function createChart({ d3, line, width, height }) {
-    const svg = d3.create("svg").attr("width", "500").attr("height", "600");
+    const svg = d3.create("svg").attr("width", "800").attr("height", "642");
     const shapeData = line();
     for (let index = 0, len = shapeData.length; index < len; index++) {
       const ele = shapeData[index];
@@ -85,16 +85,28 @@ window.onload = function () {
         },
         config: [
           {
-            gap: 5,
+            gap: 3,
             stroke: "url(#circleGap1)",
             "stroke-width": "2",
-            "stroke-dasharray": 3,
+            "stroke-dasharray": 5,
           },
           {
-            gap: 10,
+            gap: 8,
             stroke: "url(#circleGap1)",
             "stroke-width": "2",
-            "stroke-dasharray": 4,
+            "stroke-dasharray": 6,
+          },
+          {
+            gap: 15,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "2",
+            "stroke-dasharray": 10,
+          },
+          {
+            gap: 23,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "2",
+            "stroke-dasharray": 17,
           },
         ],
       },
