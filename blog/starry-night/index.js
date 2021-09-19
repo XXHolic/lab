@@ -3,7 +3,7 @@ window.onload = function () {
   // const d3.scaleSequential().domain([200, 100]);
   // 创建图表
   function createChart({ d3, line, width, height }) {
-    const svg = d3.create("svg").attr("width", "1300").attr("height", "1042");
+    const svg = d3.create("svg").attr("width", "1300").attr("height", "1042").attr("fill", "#000000");
     const shapeData = line();
     for (let index = 0, len = shapeData.length; index < len; index++) {
       const ele = shapeData[index];
@@ -20,7 +20,12 @@ window.onload = function () {
             svg.append(() => createCircleGap({ data: ele }));
           }
           break;
-        case "bg":
+        case "bgColor":
+          {
+            svg.append('svg:rect').attr("width", "1300").attr("height", "1042").attr("fill","#000"); // 背景图
+          }
+          break;
+        case "bgImage":
           {
             svg.append(() => createBg({ data: ele })); // 背景图
           }

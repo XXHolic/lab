@@ -1,5 +1,8 @@
 var shapeConfig = [
   {
+    type: "bgColor", // 绘制背景色
+  },
+  {
     type: "circle",
     attributes: {
       cx: 78,
@@ -93,7 +96,7 @@ var shapeConfig = [
     },
   },
   {
-    type: "bg", // 绘制背景图像
+    type: "bgImage", // 绘制背景图像
     attributes: {
       href: './images/bg1-24.png',
       x:0,
@@ -101,5 +104,5 @@ var shapeConfig = [
       width: '1300px',
       height: '1000px',
     },
-  }
+  },
 ]
