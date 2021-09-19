@@ -3,7 +3,7 @@ window.onload = function () {
   // const d3.scaleSequential().domain([200, 100]);
   // 创建图表
   function createChart({ d3, line, width, height }) {
-    const svg = d3.create("svg").attr("width", "800").attr("height", "642");
+    const svg = d3.create("svg").attr("width", "1300").attr("height", "1042");
     const shapeData = line();
     for (let index = 0, len = shapeData.length; index < len; index++) {
       const ele = shapeData[index];
@@ -51,9 +51,9 @@ window.onload = function () {
       {
         type: "circle",
         attributes: {
-          cx: 50,
-          cy: 50,
-          r: 15,
+          cx: 78,
+          cy: 29,
+          r: 12,
           fill: "url(#circle1)",
         },
         gradient: {
@@ -70,9 +70,9 @@ window.onload = function () {
       {
         type: "circleGap",
         attributes: {
-          cx: 50,
-          cy: 50,
-          r: 15,
+          cx: 78,
+          cy: 29,
+          r: 12,
           fill: "transparent",
         },
         gradient: {
@@ -85,30 +85,61 @@ window.onload = function () {
         },
         config: [
           {
-            gap: 3,
+            gap: 4,
             stroke: "url(#circleGap1)",
-            "stroke-width": "2",
-            "stroke-dasharray": 5,
+            "stroke-width": "1",
+            // "stroke-dasharray": 5,
           },
           {
             gap: 8,
             stroke: "url(#circleGap1)",
-            "stroke-width": "2",
-            "stroke-dasharray": 6,
+            "stroke-width": "1",
+            // "stroke-dasharray": 6,
           },
           {
-            gap: 15,
+            gap: 12,
             stroke: "url(#circleGap1)",
-            "stroke-width": "2",
-            "stroke-dasharray": 10,
+            "stroke-width": "1",
+            // "stroke-dasharray": 10,
           },
           {
-            gap: 23,
+            gap: 16,
             stroke: "url(#circleGap1)",
-            "stroke-width": "2",
-            "stroke-dasharray": 17,
+            "stroke-width": "1",
+            // "stroke-dasharray": 10,
+          },
+          {
+            gap: 20,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "1",
+            // "stroke-dasharray": 10,
+          },
+          {
+            gap: 24,
+            stroke: "url(#circleGap1)",
+            "stroke-width": "1",
+            // "stroke-dasharray": 17,
           },
         ],
+      },
+      {
+        type: "circle",
+        attributes: {
+          cx: 179,
+          cy: 20,
+          r: 5,
+          fill: "url(#circle1)",
+        },
+        gradient: {
+          type: "radialGradient",
+          id: "circle1",
+          stopEle: [
+            { offset: "20%", "stop-color": "#d49100" },
+            { offset: "21%", "stop-color": "#d5cd55" },
+            { offset: "79%", "stop-color": "#d5cd55" },
+            { offset: "80%", "stop-color": "#abb511" },
+          ],
+        },
       },
     ];
   }

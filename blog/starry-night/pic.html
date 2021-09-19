@@ -13,19 +13,54 @@
   <!-- <link rel="stylesheet" href="../../css/newreset.css"> -->
   <link rel="stylesheet" href="../../css/common.css">
   <style>
+    .parent {
+      position: relative;
+    }
     .demo-img {
-      width: 800px;
-      height: 642px;
-      /* background-image: url("./starry-night.jpg"); */
+      width: 1300px;
+      height: 1042px;
+      background-image: url("./starry-night.jpg");
       background-size: 100% auto;
     }
   </style>
 </head>
 
 <body class="pt50">
-  <div>
-    <div class="demo-img"></div>
+  <div class="parent">
+    <div class="demo-img" id="pic"></div>
   </div>
-  <!-- <img class="demo-img" src="./starry-night.jpg" /> -->
+  <div id="pointResult"></div>
+  <script>
+    function mark(x,y,text) {
+      var ele = document.createElement('div')
+      var styleText = `position:absolute;left:${x}px;top:${y}px;color:#000`
+      ele.setAttribute('style',styleText)
+      ele.textContent = text;
+      showEle.appendChild(ele)
+    }
+
+    function showPoint() {
+      var resultEle = document.querySelector('#pointResult')
+      var result = pointArr.map((ele,index) => {
+        const pointNum = index +1;
+        return `<p>${pointNum}位置 (${ele})</p>`
+      })
+      // result.join("")
+      // console.info(result)
+      resultEle.innerHTML = result.join("");
+    }
+
+    var pointArr = []
+    var showEle = document.querySelector('#pic')
+    showEle.onclick = (e) => {
+      var pointX = e.offsetX
+      var pointY = e.offsetY
+      pointArr.push(`x: ${pointX} , y: ${pointY}`);
+      mark(pointX,pointY,pointArr.length)
+      showPoint()
+    }
+
+
+  </script>
 </body>
 </html>
