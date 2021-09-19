@@ -21,7 +21,7 @@ function appendEle(parent, children) {
 }
 
 function paintGradient({ data }) {
-  console.info("data", data);
+  // console.info("data", data);
   const { type, id = "", stopEle = [] } = data;
   const defsEle = createEle({ namesapce: svgNamespace, tag: "defs" });
   const radialGradientEle = createEle({

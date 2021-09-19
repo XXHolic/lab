@@ -10,13 +10,17 @@ window.onload = function () {
       switch (ele.type) {
         case "circle":
           {
-            svg.append(() => paintGradient({ data: ele.gradient })); // 径向渐变
+            if (ele.gradient) {
+              svg.append(() => paintGradient({ data: ele.gradient })); // 径向渐变
+            }
             svg.append(() => createCircle({ data: ele }));
           }
           break;
         case "circleGap":
           {
-            svg.append(() => paintGradient({ data: ele.gradient })); // 线性渐变
+            if (ele.gradient) {
+              svg.append(() => paintGradient({ data: ele.gradient })); // 线性渐变
+            }
             svg.append(() => createCircleGap({ data: ele }));
           }
           break;
