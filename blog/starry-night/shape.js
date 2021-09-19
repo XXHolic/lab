@@ -1,10 +1,10 @@
-// 用 d3 创建元素
+// 原生绘制特定图形
 function createCircle({ data }) {
   const { type, attributes } = data;
   return createEle({ namesapce: svgNamespace, tag: type, attributes });
 }
 
-// 用 d3 创建元素，特定逻辑通用
+// 原生绘制特定图形
 function createCircleGap({ data }) {
   const { type, attributes, config } = data;
   const g = createEle({ namesapce: svgNamespace, tag: "g" });
@@ -21,4 +21,11 @@ function createCircleGap({ data }) {
   }
   appendEle(g, circleEle);
   return g;
+}
+
+// 原生绘制特定图形
+function createBg({ data }) {
+  const { type, attributes } = data;
+  const bg = createEle({ namesapce: svgNamespace, tag: "image",attributes });
+  return bg
 }

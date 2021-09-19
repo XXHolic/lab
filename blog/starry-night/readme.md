@@ -1,0 +1,23 @@
+## 记录图片相关信息
+- 图片尺寸：1300 * 1042
+
+## 在 mark 图片中标记对应属性
+- 序号代表图中标记
+- 从里到外圆的大概直径及其主要色调，括号内的色调表示从圆内边界到外边界取色多个
+
+- 1 : 9(ca9c24/b27905/c1840f) - 34(d9d04d/d6d271/d5cd7a) - 46(a9af17/b7b723/95a423) - 124(a7ba82/83a79d/d4d4de/b9cb65/a3c4e3/bac3ca)
+- 2 : 20(c68e15/9f6406) - 38(79a7bf/577376) - 64(adc6c3)
+- 3 : 18(b59b13/9d900e) - 90(a0b678/bfccd4/afbc6c/cbceef)
+- 4 : 56(96531e/ceb60e/a59971/b8b9b3/8d9772)
+- 5 : 126(c0ac39/bcc4af/8f8b2a/9cac9f/c1ce72/a2b269/c9dc8b/7ea0ce/9ebbf7)
+- 6 : 138(cacb8f/ccd499/e3c71e/b79f09) - 220(e1eba6/cdd29c/e0dea3) - 290(cbdcd2/dde5aa/c5d3b9/c7e2c3)
+- 7 : 6(b87908) - 36(d3cb44) - 92(c2cca9/c7b71c/978c19/f7ffff)
+- 8 : 22(e1c943/f7eab5) - 106(a0b1b9/8c9961/cdd9d5)
+- 9 : 4(963e10) - 16(bfb867) - 30(d2d2d0) - 62(aac5c0/96bbb3/bebc96)
+- 10 : 4(b26f20) - 60(cde0f1/b9cc95/cbd2da/c9ca90/d0d6d4)
+- 11 : 6(d7c235) - 14(e2e6d8) - 76(c2c53a/c8dcab/c6d39b/bcc538)
+- 12 : 16(c8ba35/) - 184(dcd773/c9dcbe/c0cdb9/c0bfa1/e1e2dd)
+
+## bg 图片说明
+- bg-8 是 PS 导出配置 png-8 导出的图片
+- bg-24 是 PS 导出配置 png-24 导出的图片
