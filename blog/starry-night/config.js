@@ -95,11 +95,11 @@ var shapeConfig = [
   {
     type: "bg", // 绘制背景图像
     attributes: {
-      href: './bg-24.png',
+      href: './images/bg1-24.png',
       x:0,
-      y:522,
+      y:42,
       width: '1300px',
-      height: '520px',
+      height: '1000px',
     },
   }
 ]

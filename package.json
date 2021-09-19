@@ -35,10 +35,12 @@
     "local-babel": "babel ./lab-js/20/src -d ./lab-js/20/lib",
     "start": "webpack-dev-server --open --config ./script/webpack.dev.js",
     "build": "webpack --config ./script/webpack.js",
-    "version": "webpack --version"
+    "version": "webpack --version",
+    "img": "node script/img.js"
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {
-    "htl": "^0.3.0"
+    "htl": "^0.3.0",
+    "tinify": "^1.6.0-beta.2"
   }
 }
