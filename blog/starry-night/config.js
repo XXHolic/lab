@@ -319,7 +319,6 @@ var shapeConfig = [
       cy: 182,
       r: 69,
       fill: "#cacb8f",
-      class: "circle-moon",
     },
     moon: {
       x: 1113,
@@ -374,6 +373,327 @@ var shapeConfig = [
           gap: 86,
           stroke: "#c7e2c3",
           "stroke-width": "1",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 7",
+    },
+    attributes: {
+      cx: 300,
+      cy: 185,
+      r: 18,
+      fill: "url(#circle7)",
+    },
+    gradient: {
+      type: "radialGradient",
+      id: "circle7",
+      stopEle: [
+        { offset: "10%", "stop-color": "#b87908" },
+        { offset: "11%", "stop-color": "#d3cb44" },
+      ],
+    },
+    concentric: {
+      attributes: {
+        cx: 300,
+        cy: 185,
+        r: 18,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 7,
+          stroke: "#c2cca9",
+          "stroke-width": "1",
+        },
+        {
+          gap: 14,
+          stroke: "#c7b71c",
+          "stroke-width": "1",
+        },
+        {
+          gap: 21,
+          stroke: "#978c19",
+          "stroke-width": "1",
+        },
+        {
+          gap: 28,
+          stroke: "#f7ffff",
+          "stroke-width": "1",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 8",
+    },
+    attributes: {
+      cx: 923,
+      cy: 244,
+      r: 11,
+      fill: "url(#circle8)",
+    },
+    gradient: {
+      type: "radialGradient",
+      id: "circle8",
+      stopEle: [
+        { offset: "50%", "stop-color": "#e1c943" },
+        { offset: "51%", "stop-color": "#f7eab5" },
+      ],
+    },
+    concentric: {
+      attributes: {
+        cx: 923,
+        cy: 244,
+        r: 11,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 7,
+          stroke: "#a0b1b9",
+          "stroke-width": "1",
+        },
+        {
+          gap: 14,
+          stroke: "#8c9961",
+          "stroke-width": "1",
+        },
+        {
+          gap: 21,
+          stroke: "#cdd9d5",
+          "stroke-width": "1",
+        },
+        {
+          gap: 28,
+          stroke: "#a0b1b9",
+          "stroke-width": "1",
+        },
+        {
+          gap: 35,
+          stroke: "#8c9961",
+          "stroke-width": "1",
+        },
+        {
+          gap: 42,
+          stroke: "#cdd9d5",
+          "stroke-width": "1",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 9",
+    },
+    attributes: {
+      cx: 418,
+      cy: 342,
+      r: 15,
+      fill: "url(#circle9)",
+    },
+    gradient: {
+      type: "radialGradient",
+      id: "circle9",
+      stopEle: [
+        { offset: "5%", "stop-color": "#963e10" },
+        { offset: "6%", "stop-color": "#bfb867" },
+        { offset: "50%", "stop-color": "#bfb867" },
+        { offset: "51%", "stop-color": "#d2d2d0" },
+      ],
+    },
+    concentric: {
+      attributes: {
+        cx: 418,
+        cy: 342,
+        r: 15,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 10,
+          stroke: "#aac5c0",
+          "stroke-width": "1",
+        },
+        {
+          gap: 21,
+          stroke: "#96bbb3",
+          "stroke-width": "1",
+        },
+        {
+          gap: 31,
+          stroke: "#bebc96",
+          "stroke-width": "1",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 10",
+    },
+    attributes: {
+      cx: 45,
+      cy: 476,
+      r: 2,
+      fill: "#b26f20",
+    },
+    concentric: {
+      attributes: {
+        cx: 45,
+        cy: 476,
+        r: 2,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 7,
+          stroke: "#cde0f1",
+          "stroke-width": "2",
+        },
+        {
+          gap: 14,
+          stroke: "#b9cc95",
+          "stroke-width": "1",
+        },
+        {
+          gap: 21,
+          stroke: "#c9ca90",
+          "stroke-width": "2",
+        },
+        {
+          gap: 28,
+          stroke: "#d0d6d4",
+          "stroke-width": "3",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 11",
+    },
+    attributes: {
+      cx: 161,
+      cy: 503,
+      r: 7,
+      fill: "url(#circle11)",
+    },
+    gradient: {
+      type: "radialGradient",
+      id: "circle11",
+      stopEle: [
+        { offset: "50%", "stop-color": "#d7c235" },
+        { offset: "51%", "stop-color": "#e2e6d8" },
+      ],
+    },
+    concentric: {
+      attributes: {
+        cx: 161,
+        cy: 503,
+        r: 7,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 8,
+          stroke: "#c2c53a",
+          "stroke-width": "2",
+        },
+        {
+          gap: 16,
+          stroke: "#c8dcab",
+          "stroke-width": "2",
+        },
+        {
+          gap: 24,
+          stroke: "#c6d39b",
+          "stroke-width": "2",
+        },
+        {
+          gap: 31,
+          stroke: "#bcc538",
+          "stroke-width": "2",
+        },
+      ],
+    },
+  },
+  {
+    type: "circle",
+    groupAttributes: {
+      "role-explain": "circle 12",
+    },
+    attributes: {
+      cx: 456,
+      cy: 555,
+      r: 8,
+      fill: "#c8ba35",
+    },
+    concentric: {
+      attributes: {
+        cx: 456,
+        cy: 555,
+        r: 8,
+        fill: "transparent",
+      },
+      config: [
+        {
+          gap: 8,
+          stroke: "#dcd773",
+          "stroke-width": "2",
+        },
+        {
+          gap: 16,
+          stroke: "#c9dcbe",
+          "stroke-width": "2",
+        },
+        {
+          gap: 24,
+          stroke: "#c0cdb9",
+          "stroke-width": "2",
+        },
+        {
+          gap: 32,
+          stroke: "#c0bfa1",
+          "stroke-width": "2",
+        },
+        {
+          gap: 40,
+          stroke: "#e1e2dd",
+          "stroke-width": "2",
+        },
+        {
+          gap: 48,
+          stroke: "#dcd773",
+          "stroke-width": "1",
+        },
+        {
+          gap: 56,
+          stroke: "#c0cdb9",
+          "stroke-width": "2",
+        },
+        {
+          gap: 64,
+          stroke: "#c0bfa1",
+          "stroke-width": "1",
+        },
+        {
+          gap: 72,
+          stroke: "#c9dcbe",
+          "stroke-width": "2",
+        },
+        {
+          gap: 80,
+          stroke: "#e1e2dd",
+          "stroke-width": "2",
         },
       ],
     },

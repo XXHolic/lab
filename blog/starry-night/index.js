@@ -14,11 +14,7 @@ window.onload = function () {
       switch (ele.type) {
         case "bgColor":
           {
-            svg
-              .append("svg:rect")
-              .attr("width", "1300")
-              .attr("height", "1042")
-              .attr("fill", "#000"); // 背景图
+            svg.append(() => createBgColor());
           }
           break;
         case "base":
@@ -28,9 +24,6 @@ window.onload = function () {
           break;
         case "circle":
           {
-            if (ele.gradient) {
-              svg.append(() => paintGradient({ data: ele.gradient })); // 径向渐变
-            }
             svg.append(() => createCircle({ data: ele }));
           }
           break;
