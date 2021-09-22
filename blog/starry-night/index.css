@@ -6,3 +6,16 @@
       transform: scale(1.3,1.3);
     }
   }
+
+.dot-move {
+  transform: scale(0.5);
+  offset-path: path('M.34,2c103.92,97,262,96.28,353.5-1.69');
+  offset-distance: 0%;
+  animation: red-ball 5s linear infinite;
+}
+.dot-pure {
+  transform: scale(0.5);
+  offset-path: path('M.34,2c103.92,97,262,96.28,353.5-1.69');
+  offset-distance: 0%;
+}
+@keyframes red-ball { from { offset-distance: 0%; } to { offset-distance: 100%; } }

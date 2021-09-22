@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="d3,css,html,js,JavaScript">
+  <meta content="d3,JavaScript">
+  <meta name="format-detection" content="telephone=no">
+  <title>starry night</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="./index.css">
+  <script src="../../js/common/d3.v7.0.0.min.js"></script>
+</head>
+
+<body class="pt50">
+  <div id="chart">
+  </div>
+  <script src="../../js/common/util.js"></script>
+  <!-- <script src="./link.js"></script> -->
+  <script>
+        const svg = d3
+      .create("svg")
+      .attr("width", "1300")
+      .attr("height", "1042")
+      .attr("fill", "#000000")
+      svg.append('path').attr('d','M1,8.21c9.17-6.69,18.33-9.53,23-6.5.39.25,3.86,2.49,3.8,5.66-.05,2.31-2,4-2.46,4.4C19.28,17,1.92,8.67,1,8.21Z').attr('class','dot-pure')
+
+
+      document.querySelector('#chart').append(svg.node())
+      // console.info('path',d3.select('path'))
+      var t = d3.transition()
+    .duration(750)
+      d3.select('.dot-pure').transition().duration(750).attrTween('offset-distance',function() {
+        const value = d3.interpolate(0, 100)
+        return value
+        // return function() {return `${value}%`}
+      });
+  </script>
+</body>
+</html>
