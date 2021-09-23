@@ -17,26 +17,82 @@
 <body class="pt50">
   <div id="chart">
   </div>
+  <div>
+    <svg>
+      <path id="amintionPath" d="M.34,2c103.92,97,262,96.28,353.5-1.69"></path>
+      <path id="fairy" class="dot-pure" d="M1,8.21c9.17-6.69,18.33-9.53,23-6.5.39.25,3.86,2.49,3.8,5.66-.05,2.31-2,4-2.46,4.4C19.28,17,1.92,8.67,1,8.21Z"></path>
+    </svg>
+  </div>
   <script src="../../js/common/util.js"></script>
   <!-- <script src="./link.js"></script> -->
   <script>
-        const svg = d3
+    const min = 0, max = 100, fairyWidth = 13.4; // 移动元素的宽度
+    const gap = 10 ; // 动态元素之间的间隔
+    const moveLen = document.querySelector('#amintionPath').getTotalLength();  // 动画移动的长度
+    const fairyNum = (moveLen/(gap+fairyWidth)).toFixed(0) // 按照一定的间隔能铺满多少个元素
+    // console.info('fairyNum',fairyNum)
+    const judgePoint = (max/fairyNum).toFixed(2)// 按照移动的百分比计算先出现的时间点
+    // console.info('fairyNum',fairyNum)
+    // console.info('judgePoint',judgePoint)
+    const time = 4000; // 整个时间长度
+    const delayTime = (time/fairyNum).toFixed(2)
+    let count = 1;
+
+    const svg = d3
       .create("svg")
       .attr("width", "1300")
       .attr("height", "1042")
-      .attr("fill", "#000000")
-      svg.append('path').attr('d','M1,8.21c9.17-6.69,18.33-9.53,23-6.5.39.25,3.86,2.49,3.8,5.66-.05,2.31-2,4-2.46,4.4C19.28,17,1.92,8.67,1,8.21Z').attr('class','dot-pure')
+      .attr("fill", "#000000");
+    // 先计算需要的元素数量，再考虑重复动效的逻辑
+    for (let index = 1; index <= fairyNum; index++) {
+      const id = index
+      const percent = judgePoint*index + '%'
+      svg.append('use').attr('id',`use${id}`).attr('x','-10').attr('y','-10').attr('href','#fairy')
+      // svg.append('use').attr('id',`use${id}`).attr('x','-10').attr('y','-10').attr('href','#fairy').style('offset-distance',percent)
+    }
 
+    // svg.append('use').attr('id',`use1`).attr('x','20').attr('y','20').attr('href','#fairy')
+      // svg.append('use').attr('id',`use1`).attr('x','-10').attr('y','-10').attr('href','#fairy').transition().duration(time).ease(d3.easeLinear).styleTween('offset-distance',function() {
+      //   return function(t) {
+      //     const value = min * (1 - t) + max * t;
+      //     return `${value}%`
+      //   }
+      // }).on('end', (d,i,nodes) => {
+      //   const ele = nodes[0]
+      //   console.info(ele)
+      //   loopSingle({id:ele.id})
+      // });
 
-      document.querySelector('#chart').append(svg.node())
-      // console.info('path',d3.select('path'))
-      var t = d3.transition()
-    .duration(750)
-      d3.select('.dot-pure').transition().duration(750).attrTween('offset-distance',function() {
-        const value = d3.interpolate(0, 100)
-        return value
-        // return function() {return `${value}%`}
+      // 这样单个循环是没有一定的时间间隔，导致运行时间长了之后就会出现重叠的情况
+    function loopSingle({id,delayTime}) {
+      d3.select(`#${id}`).transition().duration(time).ease(d3.easeLinear).delay(delayTime).styleTween('offset-distance',function() {
+        return function(t) {
+          const value = min * (1 - t) + max * t;
+          return `${value}%`
+        }
+      }).on('end', (d,i,nodes) => {
+        loopSingle({id,delayTime})
       });
+    }
+
+
+    function loopAnimation({total, time,min,max,delayTime}) {
+      svg.selectAll('use').transition().duration(time).ease(d3.easeLinear)
+          .delay(function(d, i) { return i * delayTime; })
+          .styleTween('offset-distance',function() {
+            return function(t) {
+              const value = min * (1 - t) + max * t;
+              return `${value}%`
+            }
+          }).on('end',(d,i,nodes) => { // d-数据 i-数据索引 nodes-数据集
+            const ele = nodes[i]
+            loopSingle({id: ele.id})
+          })
+    }
+
+    document.querySelector('#chart').append(svg.node())
+    // loopAnimation({time,min,max,delayTime,total: fairyNum})
+
   </script>
 </body>
 </html>

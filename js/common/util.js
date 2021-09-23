@@ -473,6 +473,22 @@ Util.Math = {
     return Math.tan(rad);
   }
 }
+// 获取小数位并四舍五入
+Util.getNumberPrecision = (num,precision=0) => {
+  if (typeof precision !== 'number' || precision < 0 || precision > 20) {
+    console.error("Invalid Precision");
+    return;
+  }
+  const numStr = String(num)
+  if (numStr.indexOf('.') === -1) {
+    return Number(num)
+  }
+
+  const numStrSplit = numStr.split('.')
+  const pointBefore = numStrSplit[0];
+  const pointAfter = numStrSplit[1];
+
+};
 
 
 
