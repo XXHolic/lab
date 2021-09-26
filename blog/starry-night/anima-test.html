@@ -36,6 +36,7 @@
     // console.info('judgePoint',judgePoint)
     const time = 4000; // 整个时间长度
     const delayTime = (time/fairyNum).toFixed(2)
+    console.info('delayTime',delayTime)
     let count = 1;
 
     const svg = d3
@@ -44,12 +45,12 @@
       .attr("height", "1042")
       .attr("fill", "#000000");
     // 先计算需要的元素数量，再考虑重复动效的逻辑
-    for (let index = 1; index <= fairyNum; index++) {
-      const id = index
-      const percent = judgePoint*index + '%'
-      svg.append('use').attr('id',`use${id}`).attr('x','-10').attr('y','-10').attr('href','#fairy')
+    // for (let index = 1; index <= fairyNum; index++) {
+    //   const id = index
+    //   const percent = judgePoint*index + '%'
+    //   svg.append('use').attr('id',`use${id}`).attr('x','-10').attr('y','-10').attr('href','#fairy')
       // svg.append('use').attr('id',`use${id}`).attr('x','-10').attr('y','-10').attr('href','#fairy').style('offset-distance',percent)
-    }
+    // }
 
     // svg.append('use').attr('id',`use1`).attr('x','20').attr('y','20').attr('href','#fairy')
       // svg.append('use').attr('id',`use1`).attr('x','-10').attr('y','-10').attr('href','#fairy').transition().duration(time).ease(d3.easeLinear).styleTween('offset-distance',function() {
@@ -63,15 +64,14 @@
       //   loopSingle({id:ele.id})
       // });
 
-      // 这样单个循环是没有一定的时间间隔，导致运行时间长了之后就会出现重叠的情况
-    function loopSingle({id,delayTime}) {
-      d3.select(`#${id}`).transition().duration(time).ease(d3.easeLinear).delay(delayTime).styleTween('offset-distance',function() {
+    function loopSingle({svg}) {
+      svg.append('use').attr('x','-10').attr('y','-10').attr('href','#fairy').transition().duration(time).ease(d3.easeLinear).styleTween('offset-distance',function() {
         return function(t) {
           const value = min * (1 - t) + max * t;
           return `${value}%`
         }
       }).on('end', (d,i,nodes) => {
-        loopSingle({id,delayTime})
+        d3.select(nodes[0]).remove()
       });
     }
 
@@ -86,12 +86,17 @@
             }
           }).on('end',(d,i,nodes) => { // d-数据 i-数据索引 nodes-数据集
             const ele = nodes[i]
-            loopSingle({id: ele.id})
           })
     }
 
     document.querySelector('#chart').append(svg.node())
     // loopAnimation({time,min,max,delayTime,total: fairyNum})
+
+    // const t = d3.interval((elapsed) => {
+      // console.log(elapsed);
+      // loopSingle({svg})
+      // if (elapsed > 10000) t.stop();
+    // }, 200);
 
   </script>
 </body>
