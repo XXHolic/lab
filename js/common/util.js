@@ -490,6 +490,20 @@ Util.getNumberPrecision = (num,precision=0) => {
 
 };
 
+/**
+ * n 是 start1 到 stop1 之间的值，映射到 start2 和 stop2 之间的值
+ * 相当于缩放了 n 的值
+ * @param {*} n
+ * @param {*} start1
+ * @param {*} stop1
+ * @param {*} start2
+ * @param {*} stop2
+ * @returns
+ */
+Util.map = (n, start1, stop1, start2, stop2) => {
+  return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+};
+
 
 
 

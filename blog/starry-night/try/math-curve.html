@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数学曲线运动</title>
+  <script src="../../../js/common/d3.v7.0.0.min.js"></script>
+  <script src="../../../js/vector/index.js"></script>
+  <script src="../../../js/common/util.js"></script>
+
+  <style>
+    .demo {
+      width: 300px;
+      height: 200px;
+      border: 1px solid blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    const width = 300, height = 200;
+    const amplitude = 50; // 曲线振幅
+    const period = 100; // 周期
+    const circleAttrs = {x: 0, y: 0, radius:10, startAngle:0,endAngle: Math.PI*2,strokeStyle:"#333",fillStyle:"#333"}
+    const lineAttrs = {points:[],lineWidth:2,lineCap:'round',strokeStyle:"rgba(0,148,255,.5)",fillStyle:"rgba(0,148,255,.5)"}
+    let sinPoints = [] // 正弦曲线的坐标点
+    let count = 0 // 计数
+    var canvas = d3.select('#chart').append('canvas').attr('width', width*2).attr('height', height*2).attr('class','demo')
+    const context = canvas.node().getContext('2d');
+    const ratio = window.devicePixelRatio || 1;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0)
+
+
+    DrawWave()
+    DrawWaveCircle()
+
+    function DrawWave() {
+      let angle = 0;
+      let angleVel = 0.1;
+
+      for (let x = 0; x <= width; x += 5) {
+        let y = Util.map(Math.sin(angle), -1, 1, 0, height);
+        sinPoints.push([x, y])
+        angle += angleVel;
+      }
+      Util.CANVAS.drawLine({...lineAttrs,points:sinPoints,context})
+    }
+
+
+    function DrawWaveCircle() {
+      const ele = sinPoints[count]
+      count ++
+      if (count >= sinPoints.length) {
+        console.info('stop')
+        return;
+      }
+      context.clearRect(0,0,width,height);
+      Util.CANVAS.drawLine({...lineAttrs,points:sinPoints,context})
+      Util.CANVAS.drawArc({...circleAttrs,x:ele[0],y:ele[1],context})
+      requestAnimationFrame(DrawWaveCircle)
+    }
+
+
+  </script>
+</body>
+</html>
