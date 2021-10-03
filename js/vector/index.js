@@ -1,146 +1,13 @@
+const _PI = Math.PI;
+
+const constants = {
+  RADIANS: "radians",
+  DEG_TO_RAD: _PI / 180.0,
+  RAD_TO_DEG: 180.0 / _PI,
+  DEGREES: "degrees",
+};
+
 class Vector {
-  /**
-   * 两个向量相加，会返回一个新的向量，不影响原向量
-   * @param {*} v1
-   * @param {*} v2
-   */
-  static add(v1, v2) {
-    if (v1 instanceof Vector && v2 instanceof Vector) {
-      const x = v1.x + v2.x;
-      const y = v1.y + v2.y;
-      const z = v1.z + v2.z;
-      return new Vector(x, y, z);
-    }
-    console.warn("invalid params");
-  }
-
-  // 两个向量减法
-  static sub(v1, v2) {
-    if (v1 instanceof Vector && v2 instanceof Vector) {
-      const x = v1.x - v2.x;
-      const y = v1.y - v2.y;
-      const z = v1.z - v2.z;
-      return new Vector(x, y, z);
-    }
-    console.warn("invalid params");
-  }
-  // 两个向量乘法
-  static mult(v1, v2) {
-    let x = 0,
-      y = 0,
-      z = 0;
-    if (v1 instanceof Vector && v2 instanceof Vector) {
-      x = v1.x * v2.x;
-      y = v1.y * v2.y;
-      z = v1.z * v2.z;
-      return new Vector(x, y, z);
-    }
-
-    if (v1 instanceof Vector && v2 instanceof Array) {
-      const [x2, y2, z2] = v2;
-      if (v2.length === 1) {
-        x = v1.x * x2;
-        y = v1.y * x2;
-        z = v1.z * x2;
-      }
-      if (v2.length === 2) {
-        x = v1.x * x2;
-        y = v1.y * y2;
-      }
-      if (v2.length === 3) {
-        x = v1.x * x2;
-        y = v1.y * y2;
-        z = v1.z * z2;
-      }
-      return new Vector(x, y, z);
-    }
-
-    if (v1 instanceof Array && v2 instanceof Vector) {
-      const [x1, y1, z1] = v1;
-      if (v2.length === 1) {
-        x = v2.x * x1;
-        y = v2.y * x1;
-        z = v2.z * x1;
-      }
-      if (v2.length === 2) {
-        x = v2.x * x1;
-        y = v2.y * y1;
-      }
-      if (v2.length === 3) {
-        x = v2.x * x1;
-        y = v2.y * y1;
-        z = v2.z * z1;
-      }
-      return new Vector(x, y, z);
-    }
-
-    console.warn("invalid params");
-  }
-  // 两个向量除法
-  static div(v1, v2) {
-    let x = 0,
-      y = 0,
-      z = 0;
-    if (v1 instanceof Vector && v2 instanceof Vector) {
-      if (v2.x === 0 || v2.y === 0 || v2.z === 0) {
-        console.warn("Vector.prototype.div:", "divide by 0");
-        return;
-      }
-      x = v1.x / v2.x;
-      y = v1.y / v2.y;
-      z = v1.z / v2.z;
-      return new Vector(x, y, z);
-    }
-
-    if (v1 instanceof Vector && v2 instanceof Array) {
-      if (v2.includes(0)) {
-        console.warn("Vector.prototype.div:", "divide by 0");
-        return;
-      }
-      const [x2, y2, z2] = v2;
-      if (v2.length === 1) {
-        x = v1.x / x2;
-        y = v1.y / x2;
-        z = v1.z / x2;
-      }
-      if (v2.length === 2) {
-        x = v1.x / x2;
-        y = v1.y / y2;
-      }
-      if (v2.length === 3) {
-        x = v1.x / x2;
-        y = v1.y / y2;
-        z = v1.z / z2;
-      }
-      return new Vector(x, y, z);
-    }
-
-    if (v1 instanceof Array && v2 instanceof Vector) {
-      if (v1.includes(0)) {
-        console.warn("Vector.prototype.div:", "divide by 0");
-        return;
-      }
-      const [x1, y1, z1] = v1;
-      if (v2.length === 1) {
-        x = v2.x / x1;
-        y = v2.y / x1;
-        z = v2.z / x1;
-      }
-      if (v2.length === 2) {
-        x = v2.x / x1;
-        y = v2.y / y1;
-      }
-      if (v2.length === 3) {
-        x = v2.x / x1;
-        y = v2.y / y1;
-        z = v2.z / z1;
-      }
-      return new Vector(x, y, z);
-    }
-
-    console.warn("invalid params");
-  }
-
   /**
    * 向量初始化
    * @param {*} x
@@ -151,6 +18,7 @@ class Vector {
     this.x = x;
     this.y = y;
     this.z = z;
+    this._angleMode = constants.RADIANS;
   }
 
   set(x, y, z) {
@@ -200,6 +68,28 @@ class Vector {
     const y = this.y;
     const z = this.z;
     return x * x + y * y + z * z;
+  }
+
+  // 限制向量长度的最大值
+  limit(max) {
+    const mSq = this.magSq();
+    if (mSq > max * max) {
+      this.div(Math.sqrt(mSq)) //normalize it
+        .mult(max);
+    }
+    return this;
+  }
+
+  _fromRadians(angle) {
+    if (this._angleMode === constants.DEGREES) {
+      return angle * constants.DEG_TO_RAD;
+    }
+    return angle;
+  }
+  // 获取向量水平方向的夹角
+  heading() {
+    const h = Math.atan2(this.y, this.x);
+    return this._fromRadians(h);
   }
 
   /**
@@ -434,3 +324,78 @@ class Vector {
     return this;
   }
 }
+
+/**
+ * 两个向量相加，会返回一个新的向量，不影响原向量
+ * @param {*} v1
+ * @param {*} v2
+ */
+Vector.add = function add(...rest) {
+  let [v1, v2, target] = rest;
+  if (!target) {
+    target = v1.copy();
+    if (rest.length === 3) {
+      console.warn(
+        "The target parameter is undefined, it should be of type Vector",
+        "Vector.add"
+      );
+    }
+  } else {
+    target.set(v1);
+  }
+  target.add(v2);
+  return target;
+};
+
+// 两个向量减法
+Vector.sub = function sub(...rest) {
+  let [v1, v2, target] = rest;
+  if (!target) {
+    target = v1.copy();
+    if (rest.length === 3) {
+      console.warn(
+        "The target parameter is undefined, it should be of type Vector",
+        "Vector.sub"
+      );
+    }
+  } else {
+    target.set(v1);
+  }
+  target.sub(v2);
+  return target;
+};
+// 两个向量乘法
+Vector.mult = function mult(...rest) {
+  let [v, n, target] = rest;
+  if (!target) {
+    target = v.copy();
+    if (rest.length === 3) {
+      console.warn(
+        "The target parameter is undefined, it should be of type Vector",
+        "Vector.mult"
+      );
+    }
+  } else {
+    target.set(v);
+  }
+  target.mult(n);
+  return target;
+};
+// 两个向量除法
+Vector.div = function div(...rest) {
+  let [v, n, target] = rest;
+  if (!target) {
+    target = v.copy();
+
+    if (rest.length === 3) {
+      console.warn(
+        "The target parameter is undefined, it should be of type Vector",
+        "Vector.div"
+      );
+    }
+  } else {
+    target.set(v);
+  }
+  target.div(n);
+  return target;
+};
