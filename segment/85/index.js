@@ -5,18 +5,17 @@ window.onload = function () {
       points: [],
       lineWidth: 1,
       lineCap: "round",
-      strokeStyle: "rgba(0,148,255,.5)",
-      fillStyle: "rgba(0,148,255,.5)",
+      strokeStyle: "rgba(0,148,255,1)",
+      fillStyle: "rgba(0,148,255,1)",
     },
     init: function () {
-      const canvasObj = new Canvas(800, 500);
+      const canvasObj = new Canvas(400, 300);
       document.querySelector("#archimedeanSpiral").appendChild(canvasObj.node);
       this.canvasObj = canvasObj;
       this.draw();
-      // this.pageEvent();
     },
     /**
-     * 阿基米德螺旋线的极坐标方程式为 ： r = a + b*θ
+     * 阿基米德螺线的极坐标方程式为 ： r = a + b*θ
      *
      * 参数含义：
      *   r - 旋转半径。
@@ -48,14 +47,19 @@ window.onload = function () {
       let points = [],
         x = 0,
         y = 0;
+      const acceleration = 0.1,
+        circleNum = 2;
       const { lineAttrs, canvasObj } = this;
       let { width, height, translate, line } = canvasObj;
-      // 注意这里是角度的递增，所以用 2 * Math.PI 来比较控制画了多少圈
-      while (angle <= 2 * 2 * Math.PI) {
+      // 注意这里角度的递增，以 2 * Math.PI 为基准进行比较，控制画多少圈
+      while (angle <= circleNum * 2 * Math.PI) {
+        // while (y <= height) {
+        // 调用函数的时候转换成弧度 这样绘制出来不对
+        // const angleRadius = (angle * Math.PI) / 180;
         x = (a + b * angle) * Math.cos(angle);
         y = (a + b * angle) * Math.sin(angle);
         points.push([x, y]);
-        angle = MathLab.plus(angle, 0.1); // 注意这里是角度的递增,如果要换成弧度，记得递增的也要换成弧度
+        angle = MathLab.plus(angle, acceleration); // 注意这里是角度的递增,如果要换成弧度，记得递增的也要换成弧度
       }
       console.info("points", points);
       translate(width / 2, height / 2);
@@ -63,9 +67,9 @@ window.onload = function () {
         ...lineAttrs,
         points: points,
       });
-      const loop = () => {};
     },
   };
 
   page.init();
+  insertLink({ title: "JavaScript 数学曲线—阿基米德螺线", linkIndex: 102 });
 };
