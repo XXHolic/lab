@@ -15,18 +15,52 @@ class FlowField {
       arr[i] = new Array(this.cols).fill("");
     }
     this.fields = arr;
-    this.init();
+    // this.init();
   }
 
-  init = () => {
-    let { rows, cols, fields } = this;
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        fields[i][j] = new Vector(1, 0); //每行有10列
-      }
+  // 初始化类型
+  init = (type = "horizontal") => {
+    let { rows, cols, fields, resolution } = this;
+    switch (type) {
+      case "horizontal": // 水平流场
+        {
+          for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+              fields[i][j] = new Vector(1, 0); //每行有10列
+            }
+          }
+        }
+        break;
+      case "sin": // 正弦流场
+        {
+          // 划分的单元格跨越曲线的角度范围
+          let angleGap = (2 * Math.PI) / cols;
+          for (let i = 0; i < rows; i++) {
+            let angle = 0; // 角度的递增跟 x 轴映射
+            for (let j = 0; j < cols; j++) {
+              // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
+              const xStart = resolution * j;
+              const rangeHeight = height;
+              const yStart = Tool.map(Math.sin(angle), -1, 1, 0, rangeHeight);
+              const xEnd = xStart + resolution;
+              const yEnd = Tool.map(
+                Math.sin(angle + angleGap),
+                -1,
+                1,
+                0,
+                rangeHeight
+              );
+              const vX = xEnd - xStart,
+                vY = yEnd - yStart;
+              angle = angle + angleGap;
+              fields[i][j] = new Vector(vX, vY);
+            }
+          }
+        }
+        break;
     }
 
-    // console.info("fields", fields);
+    console.info("fields", fields);
   };
 
   display = (canvas) => {
@@ -41,23 +75,27 @@ class FlowField {
     }
   };
 
-  drawVector = ({ canvas, x, y, vector, scale = 8 }) => {
+  drawVector = ({ canvas, x, y, vector, scale = 1 }) => {
     const { translate, rotate, line, triangle, resetTransform } = canvas;
     translate(x, y);
     rotate(vector.heading());
     let len = vector.mag() * scale;
     triangle({
       points: [
-        [5, 7],
-        [5, 13],
-        [15, 10],
+        [0, 0],
+        [len, 0],
+        // [5, 7], 三角形
+        // [5, 13],
+        // [15, 10],
       ],
-      strokeStyle: "#900",
-      fillStyle: "#900",
+      strokeStyle: "#fff",
+      fillStyle: "#fff",
     });
     resetTransform();
   };
 }
 
 const flow = new FlowField(20);
+// flow.init();
+flow.init("sin");
 flow.display(canvasObj);
