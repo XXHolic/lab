@@ -3,7 +3,7 @@ class Canvas {
     const ratio = window.devicePixelRatio || 1;
     this.width = w;
     this.height = h;
-    this.radio = ratio;
+    this.ratio = ratio;
     if (mode === "set") {
       this.node = target;
       this.context = target.getContext("2d");
@@ -20,6 +20,14 @@ class Canvas {
     canvas.style.height = `${h}px`; // 控制显示大小
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
   }
+
+  // 设置属性
+  attrs = (attributes = {}) => {
+    const target = this.node;
+    for (const key in attributes) {
+      target.setAttribute(key, attributes[key]);
+    }
+  };
 
   /**
    * 画线
@@ -141,7 +149,7 @@ class Canvas {
   };
 
   // 生成有圆角的矩形
-  drawRoundedRect = (x, y, width, height, radius) => {
+  roundedRect = (x, y, width, height, radius) => {
     const { context } = this;
     context.beginPath();
     context.arc(x + radius, y + radius, radius, Math.PI, (Math.PI * 3) / 2);
