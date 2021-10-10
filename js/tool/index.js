@@ -149,3 +149,14 @@ Tool.getRandom = function (min, max) {
 Tool.map = (n, start1, stop1, start2, stop2) => {
   return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
 };
+
+/**
+ * 将值限制在最小值和最大值之间
+ * @param {*} n
+ * @param {*} low
+ * @param {*} high
+ * @returns
+ */
+Tool.constrain = (n, low, high) => {
+  return Math.max(Math.min(n, high), low);
+};

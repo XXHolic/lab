@@ -31,13 +31,13 @@ class FlowField {
 
   // 初始化类型
   init = (type = "horizontal") => {
-    let { rows, cols, fields, resolution } = this;
+    let { rows, cols, fields, resolution, defaultVector } = this;
     switch (type) {
       case "horizontal": // 水平流场
         {
           for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-              fields[i][j] = new Vector(1, 0); //每行有10列
+              fields[i][j] = [defaultVector]; //每行有10列
             }
           }
         }
@@ -51,110 +51,89 @@ class FlowField {
           }
         }
         break;
-      case "sins": // 有限区域的正弦流场
+      case "sin": // 有限区域的正弦流场
         {
-          // 划分的单元格跨越曲线的角度范围
-          let angleGap = (2 * Math.PI) / cols;
-          const rangeHeight = height / 2;
+          /**
+           * 1 先确定想要的一条曲线基准，获取这一条曲线的左右坐标
+           * 2 然后使用平移的特性，只需要 y 坐标上下加减值，得到一个区间
+           * 3 最后再次用第 1 步的方式计算得到流场的向量，但 y 的值要在第 2 步中获取的区间里面
+           * 注意第 1 步和第 3 步曲线的振幅/间隔/周期要一致
+           */
+          // 获取想要的曲线单个坐标点集合
+          let basePoints = [];
+          const amplitude = height / 3; // 振幅
+          const angleVel = (2 * Math.PI) / cols; // 每次角度的递增
+          let angle = 0;
+          for (let x = 0; x <= width; x += resolution) {
+            let y = Tool.map(Math.sin(angle), -1, 1, 0, amplitude);
+            basePoints.push([x, y]);
+            angle += angleVel;
+          }
+          // 获取 Y 区间范围坐标，注意这里是单个坐标点，但流程是以单元格为基本单位，要匹配
+          const yStartOff = 70,
+            yEndOff = 90; // 决定的范围
+          const rangeY = basePoints.map((ele, index) => {
+            const [x, y] = ele;
+            const nexEle = basePoints[index + 1];
+            if (!nexEle) {
+              return "";
+            }
+            const [xN, yN] = nexEle;
+            const yStart1 = y + yStartOff,
+              yEnd1 = y + yEndOff;
+            const yNStart1 = yN + yStartOff,
+              yNEnd1 = yN + yEndOff;
+            const arr = [yStart1, yEnd1, yNStart1, yNEnd1];
+            const min = Math.min(...arr),
+              max = Math.max(...arr);
+            return [min, max];
+          });
+          // 初始化目标区间
           for (let i = 0; i < rows; i++) {
             let angle = 0; // 角度的递增跟 x 轴映射
+            const cellStartY = i * resolution;
+            const cellEndY = (i + 1) * resolution;
             for (let j = 0; j < cols; j++) {
+              const targetCell = fields[i][j];
+              if (!targetCell) {
+                console.info("error", i, j);
+              }
+              // 判断是否在区间
+              const [startY, endY] = rangeY[j];
+              const isValidCell =
+                (cellStartY > startY && cellStartY < endY) ||
+                (cellEndY > startY && cellEndY < endY);
+              if (!isValidCell) {
+                angle = angle + angleVel;
+                targetCell.push(defaultVector); // 默认水平方向
+                continue;
+              }
               // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
               const xStart = resolution * j;
-              const yStart = Tool.map(Math.sin(angle), -1, 1, 0, rangeHeight);
+              const yStart = Tool.map(Math.sin(angle), -1, 1, 0, height);
               const xEnd = xStart + resolution;
-              const yEnd = Tool.map(
-                Math.sin(angle + angleGap),
-                -1,
-                1,
-                0,
-                rangeHeight
-              );
+              const endAngle = angle + angleVel;
+              angle = endAngle;
+              const yEnd = Tool.map(Math.sin(endAngle), -1, 1, 0, height);
               const vX = xEnd - xStart,
                 vY = yEnd - yStart;
-              angle = angle + angleGap;
-              fields[i][j] = new Vector(vX, vY);
+              targetCell.push({
+                v: new Vector(vX, vY),
+                type: "sin",
+                weight: 2,
+              });
             }
           }
         }
         break;
     }
 
-    // console.info("fields", fields);
+    console.info("fields", fields);
   };
 
   display = (canvas) => {
-    let { rows, cols, fields, resolution, defaultVector } = this;
-    const { translate, rotate, line, triangle, resetTransform } = canvas;
-
-    /**
-     * 1 先确定想要的一条曲线基准，获取这一条曲线的左右坐标
-     * 2 然后使用平移的特性，只需要 y 坐标上下加减值，得到一个区间
-     * 3 最后再次用第 1 步的方式计算得到流场的向量，但 y 的值要在第 2 步中获取的区间里面
-     * 注意第 1 步和第 3 步曲线的振幅/间隔/周期要一致
-     */
-
-    // 获取想要的曲线单个坐标点集合
-    let basePoints = [];
-    const amplitude = height / 3; // 振幅
-    const angleVel = (2 * Math.PI) / cols; // 每次角度的递增
-    let angle = 0;
-    for (let x = 0; x <= width; x += resolution) {
-      let y = Tool.map(Math.sin(angle), -1, 1, 0, amplitude);
-      basePoints.push([x, y]);
-      angle += angleVel;
-    }
-    // 获取 Y 区间范围坐标，注意这里是单个坐标点，但流程是以单元格为基本单位，要匹配
-    const yStartOff = 70,
-      yEndOff = 90; // 决定的范围
-    const rangeY = basePoints.map((ele, index) => {
-      const [x, y] = ele;
-      const nexEle = basePoints[index + 1];
-      if (!nexEle) {
-        return "";
-      }
-      const [xN, yN] = nexEle;
-      const yStart1 = y + yStartOff,
-        yEnd1 = y + yEndOff;
-      const yNStart1 = yN + yStartOff,
-        yNEnd1 = yN + yEndOff;
-      const arr = [yStart1, yEnd1, yNStart1, yNEnd1];
-      const min = Math.min(...arr),
-        max = Math.max(...arr);
-      return [min, max];
-    });
-
-    for (let i = 0; i < rows; i++) {
-      let angle = 0; // 角度的递增跟 x 轴映射
-      const cellStartY = i * resolution;
-      const cellEndY = (i + 1) * resolution;
-      for (let j = 0; j < cols; j++) {
-        const targetCell = fields[i][j];
-        if (!targetCell) {
-          console.info("error", i, j);
-        }
-        // 判断是否在区间
-        const [startY, endY] = rangeY[j];
-        const isValidCell =
-          (cellStartY > startY && cellStartY < endY) ||
-          (cellEndY > startY && cellEndY < endY);
-        if (!isValidCell) {
-          angle = angle + angleVel;
-          targetCell.push(defaultVector); // 默认水平方向
-          continue;
-        }
-        // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
-        const xStart = resolution * j;
-        const yStart = Tool.map(Math.sin(angle), -1, 1, 0, height);
-        const xEnd = xStart + resolution;
-        const endAngle = angle + angleVel;
-        angle = endAngle;
-        const yEnd = Tool.map(Math.sin(endAngle), -1, 1, 0, height);
-        const vX = xEnd - xStart,
-          vY = yEnd - yStart;
-        targetCell.push({ v: new Vector(vX, vY), type: "sin", weight: 2 });
-      }
-    }
+    let { rows, cols, fields, resolution } = this;
+    // const { translate, rotate, line, triangle, resetTransform } = canvas;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         const cell = fields[i][j];
@@ -175,8 +154,8 @@ class FlowField {
     let len = vector.mag() * scale;
     line({
       points: [
-        [0, resolution / 2],
-        [len, resolution / 2],
+        [0, 0],
+        [len, 0],
       ],
       strokeStyle: "#fff",
       fillStyle: "#fff",
