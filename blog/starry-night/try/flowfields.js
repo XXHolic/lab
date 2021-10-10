@@ -131,6 +131,18 @@ class FlowField {
     console.info("fields", fields);
   };
 
+  // 找到目标在流程中所处的位置
+  lookup = (lookup) => {
+    const { resolution, cols, rows, fields } = this;
+    let column = Math.floor(Tool.constrain(lookup.x / resolution, 0, cols - 1));
+    let row = Math.floor(Tool.constrain(lookup.y / resolution, 0, rows - 1));
+    // console.info()
+    const cell = fields[row][column];
+    const last = cell[cell.length - 1];
+    //println(lookup.x);
+    return last.v.copy();
+  };
+
   display = (canvas) => {
     let { rows, cols, fields, resolution } = this;
     // const { translate, rotate, line, triangle, resetTransform } = canvas;
@@ -147,7 +159,8 @@ class FlowField {
   drawVector = ({ canvas, x, y, cell, scale = 1 }) => {
     const { resolution } = this;
     const { translate, rotate, line, triangle, resetTransform } = canvas;
-    const validData = cell[0];
+    // 暂定为最最后一个为有效的矢量绘制
+    const validData = cell[cell.length - 1];
     const vector = validData.v;
     translate(x, y);
     rotate(vector.heading());
@@ -168,3 +181,25 @@ const flow = new FlowField(20);
 // flow.init();
 flow.init("sin");
 flow.display(canvasObj);
+
+const move1 = new Mover(
+  Tool.random(width),
+  Tool.random(height),
+  Tool.random(2, 5),
+  Tool.random(0.1, 0.5)
+);
+let loop = 1;
+function draw() {
+  if (loop > 1000) {
+    console.info("stop");
+    return;
+  }
+  loop++;
+  move1.follow(flow);
+  move1.run(canvasObj);
+  requestAnimationFrame(draw);
+}
+
+// draw();
+
+

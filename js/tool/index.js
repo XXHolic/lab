@@ -160,3 +160,25 @@ Tool.map = (n, start1, stop1, start2, stop2) => {
 Tool.constrain = (n, low, high) => {
   return Math.max(Math.min(n, high), low);
 };
+
+Tool.random = function (min, max) {
+  let rand = Math.random();
+
+  if (typeof min === "undefined") {
+    return rand;
+  } else if (typeof max === "undefined") {
+    if (min instanceof Array) {
+      return min[Math.floor(rand * min.length)];
+    } else {
+      return rand * min;
+    }
+  } else {
+    if (min > max) {
+      const tmp = min;
+      min = max;
+      max = tmp;
+    }
+
+    return rand * (max - min) + min;
+  }
+};
