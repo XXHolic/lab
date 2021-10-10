@@ -31,16 +31,25 @@ class FlowField {
           }
         }
         break;
+      case "archimedean": // 阿基米德螺线-未完成
+        {
+          for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+              fields[i][j] = new Vector(1, 0); //每行有10列
+            }
+          }
+        }
+        break;
       case "sin": // 正弦流场
         {
           // 划分的单元格跨越曲线的角度范围
           let angleGap = (2 * Math.PI) / cols;
+          const rangeHeight = height;
           for (let i = 0; i < rows; i++) {
             let angle = 0; // 角度的递增跟 x 轴映射
             for (let j = 0; j < cols; j++) {
               // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
               const xStart = resolution * j;
-              const rangeHeight = height;
               const yStart = Tool.map(Math.sin(angle), -1, 1, 0, rangeHeight);
               const xEnd = xStart + resolution;
               const yEnd = Tool.map(
@@ -60,7 +69,7 @@ class FlowField {
         break;
     }
 
-    console.info("fields", fields);
+    // console.info("fields", fields);
   };
 
   display = (canvas) => {
@@ -70,20 +79,21 @@ class FlowField {
         const vector = fields[i][j];
         const x = resolution * j; // x 轴坐标对应列的计算
         const y = resolution * i; // y 轴坐标对应行的计算
-        this.drawVector({ canvas, vector, x, y });
+        vector && this.drawVector({ canvas, vector, x, y });
       }
     }
   };
 
   drawVector = ({ canvas, x, y, vector, scale = 1 }) => {
+    const { resolution } = this;
     const { translate, rotate, line, triangle, resetTransform } = canvas;
     translate(x, y);
     rotate(vector.heading());
     let len = vector.mag() * scale;
-    triangle({
+    line({
       points: [
-        [0, 0],
-        [len, 0],
+        [0, resolution / 2],
+        [len, resolution / 2],
         // [5, 7], 三角形
         // [5, 13],
         // [15, 10],
