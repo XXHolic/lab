@@ -1,0 +1,18 @@
+.math-attr {
+  text-align: right;
+  padding-right: 20px;
+  width: 90px;
+}
+
+.math-attr::after {
+  content: ':';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.btn-submit {
+  width: 134px;
+  text-align: right;
+}

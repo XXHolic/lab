@@ -8,10 +8,34 @@
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="pt50">
   <div id="archimedeanSpiral" class="tc"></div>
+  <div>
+    <div class="mb10">极坐标公式 ： r = a + b*θ</div>
+    <form action="" name="mathAttr">
+      <div class="df mb10">
+        <div class="math-attr pr">a</div><input name="attrA" type="number" value="0" step="1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">b</div><input name="attrB"  type="number" value="10" step="1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">初始角度</div><input name="initAngle" value="0"  type="number" step="1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">递增角度</div><input name="accelerationAngle" value="0.1"  type="number" step="0.1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">圈数</div><input name="circleNum" value="2"  type="number" step="1">
+      </div>
+    </form>
+    <div class="btn-submit">
+        <button id="apply">应用</button>
+    </div>
 
+  </div>
   <script src="../../js/canvas/index.js"></script>
   <script src="../../js/math-lab/index.js"></script>
   <script src="../../js/common/insertLink.js"></script>

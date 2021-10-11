@@ -377,8 +377,12 @@ class Canvas {
    * @param {number} width 画布高度
    * @param {number} height 画布宽度
    */
-  clear = (width = 0, height = 0) => {
-    const context = this.context;
+  clear = (isAnimation = false) => {
+    const { width, height, context } = this
+    if (!isAnimation) {
+      context.clearRect(0,0,width,height);
+      return;
+    }
     var centerX = width / 2;
     var centerY = height / 2;
     var maxRadius = Math.sqrt(Math.pow(centerX, 2) + Math.pow(centerY, 2)) + 1;
