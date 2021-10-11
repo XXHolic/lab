@@ -70,8 +70,8 @@ class FlowField {
             angle += angleVel;
           }
           // 获取 Y 区间范围坐标，注意这里是单个坐标点，但流程是以单元格为基本单位，要匹配
-          const yStartOff = 70,
-            yEndOff = 90; // 决定的范围
+          const yStartOff = 50,
+            yEndOff = 150; // 决定的范围
           const rangeY = basePoints.map((ele, index) => {
             const [x, y] = ele;
             const nexEle = basePoints[index + 1];
@@ -177,20 +177,23 @@ class FlowField {
   };
 }
 
-const flow = new FlowField(20);
+const flow = new FlowField(10);
 // flow.init();
 flow.init("sin");
 flow.display(canvasObj);
 
+// 粒子太少，可根本无法按曲线运动，也跟曲线边界的判定/加速度有联系
 const move1 = new Mover(
-  Tool.random(width),
-  Tool.random(height),
+  // Tool.random(width),
+  // Tool.random(height),
+  80,
+  180,
   Tool.random(2, 5),
-  Tool.random(0.1, 0.5)
+  Tool.random(1, 5)
 );
 let loop = 1;
 function draw() {
-  if (loop > 1000) {
+  if (loop > 500) {
     console.info("stop");
     return;
   }
@@ -200,6 +203,6 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-// draw();
+draw();
 
 
