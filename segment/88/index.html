@@ -4,34 +4,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="JavaScript 绘制 阿基米德螺线(archimedean spiral)">
-  <title>阿基米德螺线(archimedean spiral)</title>
+  <meta content="JavaScript 绘制 星形线(Astroid)">
+  <title>星形线(Astroid)</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="../85/styles.css">
+  <style>
+    .math-formula {
+      width: 130px;
+      height: 50px;
+      background: url('https://xxholic.github.io/segment/images/88/2.svg') no-repeat center;
+      -webkit-background-size: 100% auto;
+      background-size: 100% auto;
+    }
+  </style>
 </head>
 <body class="pt50">
   <div id="archimedeanSpiral"></div>
+
   <div>
-    <div class="mb10">极坐标公式 ： r = a + b*θ</div>
+    <div class="mb10 df flex-ac">笛卡尔坐标公式 ：<div class="math-formula"></div> </div>
 
     <form action="" name="mathAttr">
       <div class="mb10">转换过后影响因素如下</div>
       <div class="df mb10">
-        <div class="math-attr pr">a</div><input name="attrA" type="number" value="0" step="1">
+        <div class="math-attr pr">a</div><input name="attrA" type="number" value="100" step="1">
       </div>
       <div class="df mb10">
-        <div class="math-attr pr">b</div><input name="attrB"  type="number" value="10" step="1">
+        <div class="math-attr pr">递增值</div><input name="acceleration" value="0.1"  type="number" step="0.1">
       </div>
       <div class="df mb10">
-        <div class="math-attr pr">初始角度</div><input name="initAngle" value="0"  type="number" step="1">
-      </div>
-      <div class="df mb10">
-        <div class="math-attr pr">递增角度</div><input name="accelerationAngle" value="0.1"  type="number" step="0.1">
-      </div>
-      <div class="df mb10">
-        <div class="math-attr pr">圈数</div><input name="circleNum" value="2"  type="number" step="1">
+        <div class="math-attr pr">变化最大值</div><input name="max" value="20"  type="number" step="1">
       </div>
     </form>
     <div class="btn-submit">

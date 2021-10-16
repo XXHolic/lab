@@ -1,9 +1,9 @@
 window.onload = function () {
   const page = {
-    initAngle: 0.1,
+    initStart: 0,
     a: 100,
-    accelerationAngle: 0.1,
-    circleNum: 20,
+    acceleration: 0.1,
+    max: 20,
     canvasObj: {},
     lineAttrs: {
       points: [],
@@ -13,9 +13,8 @@ window.onload = function () {
       fillStyle: "rgba(0,148,255,1)",
     },
     init: function () {
-      const canvasObj = new Canvas(700, 300);
+      const canvasObj = new Canvas(400, 300);
       canvasObj.attrs({ class: "demo-canvas" });
-
       document.querySelector("#archimedeanSpiral").appendChild(canvasObj.node);
       this.canvasObj = canvasObj;
       this.draw();
@@ -23,24 +22,23 @@ window.onload = function () {
     },
     draw: function () {
       let a = this.a,
-        angle = this.initAngle;
+        start = this.initStart;
       let points = [],
         x = 0,
         y = 0;
-      const acceleration = this.accelerationAngle,
-        circleNum = this.circleNum;
+      const acceleration = this.acceleration,
+        max = this.max;
       const { lineAttrs, canvasObj } = this;
       let { width, height, translate, line, clear, resetTransform } = canvasObj;
-      while (angle <= circleNum * 2 * Math.PI) {
-        const angleSqrt = Math.sqrt(angle);
-        x = (a / angleSqrt) * Math.cos(angle);
-        y = (a / angleSqrt) * Math.sin(angle);
+      while (start <= max) {
+        x = a * Math.pow(Math.cos(start), 3);
+        y = a * Math.pow(Math.sin(start), 3);
         points.push([x, y]);
-        angle = MathLab.plus(angle, acceleration);
+        start = MathLab.plus(start, acceleration);
       }
       // console.info("points", points);
       clear();
-      translate(width / 4, height / 2);
+      translate(width / 2, height / 2);
       line({
         ...lineAttrs,
         points: points,
@@ -52,10 +50,10 @@ window.onload = function () {
         const formObj = document.mathAttr;
         const a = formObj.attrA.value;
         // const b = formObj.attrB.value;
-        const initAngle = formObj.initAngle.value;
-        const accelerationAngle = formObj.accelerationAngle.value;
-        const circleNum = formObj.circleNum.value;
-        if ([a, initAngle, circleNum, accelerationAngle].includes("")) {
+        // const initStart = formObj.initStart.value;
+        const acceleration = formObj.acceleration.value;
+        const max = formObj.max.value;
+        if ([a, max, acceleration].includes("")) {
           alert("所有值不能为空");
           return;
         }
@@ -63,23 +61,23 @@ window.onload = function () {
           alert("a 值无效 ");
           return;
         }
-        if (initAngle == 0) {
-          alert("初始角度 值无效 ");
+        // if (initStart == 0) {
+        //   alert("初始值 值无效 ");
+        //   return;
+        // }
+        if (acceleration == 0) {
+          alert("递增值 值无效 ");
           return;
         }
-        if (accelerationAngle == 0) {
-          alert("递增角度 值无效 ");
-          return;
-        }
-        if (circleNum < 1) {
-          alert("圈数 值无效");
+        if (max < 1) {
+          alert("变化最大值 值无效");
           return;
         }
         this.a = Number(a);
         // this.b = Number(b);
-        this.initAngle = Number(initAngle);
-        this.accelerationAngle = Number(accelerationAngle);
-        this.circleNum = Number(circleNum);
+        // this.initStart = Number(initStart);
+        this.acceleration = Number(acceleration);
+        this.max = Number(max);
         this.draw();
       };
     },

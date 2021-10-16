@@ -15,6 +15,7 @@ window.onload = function () {
     },
     init: function () {
       const canvasObj = new Canvas(400, 300);
+      canvasObj.attrs({ class: "demo-canvas" });
       document.querySelector("#archimedeanSpiral").appendChild(canvasObj.node);
       this.canvasObj = canvasObj;
       this.draw();
