@@ -15,7 +15,7 @@ window.onload = function () {
     init: function () {
       const canvasObj = new Canvas(400, 300);
       canvasObj.attrs({ class: "demo-canvas" });
-      document.querySelector("#archimedeanSpiral").appendChild(canvasObj.node);
+      document.querySelector("#astroid").appendChild(canvasObj.node);
       this.canvasObj = canvasObj;
       this.draw();
       this.pageEvent();
@@ -78,5 +78,5 @@ window.onload = function () {
   };
 
   page.init();
-  insertLink({ title: "JavaScript 数学曲线—星形线", linkIndex: 105 });
+  insertLink({ title: "JavaScript 数学曲线—星形线(Astroid)", linkIndex: 105 });
 };
