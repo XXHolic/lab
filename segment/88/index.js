@@ -61,10 +61,6 @@ window.onload = function () {
           alert("a 值无效 ");
           return;
         }
-        // if (initStart == 0) {
-        //   alert("初始值 值无效 ");
-        //   return;
-        // }
         if (acceleration == 0) {
           alert("递增值 值无效 ");
           return;
@@ -74,8 +70,6 @@ window.onload = function () {
           return;
         }
         this.a = Number(a);
-        // this.b = Number(b);
-        // this.initStart = Number(initStart);
         this.acceleration = Number(acceleration);
         this.max = Number(max);
         this.draw();
@@ -84,5 +78,5 @@ window.onload = function () {
   };
 
   page.init();
-  insertLink({ title: "JavaScript 数学曲线—连锁螺线", linkIndex: 104 });
+  insertLink({ title: "JavaScript 数学曲线—星形线", linkIndex: 105 });
 };
