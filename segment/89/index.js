@@ -81,5 +81,5 @@ window.onload = function () {
   };
 
   page.init();
-  insertLink({ title: "JavaScript 数学曲线—星形线(Astroid)", linkIndex: 106 });
+  insertLink({ title: "JavaScript 数学曲线—双角线(Bicorn)", linkIndex: 106 });
 };
