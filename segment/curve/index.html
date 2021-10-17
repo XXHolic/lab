@@ -12,38 +12,50 @@
 </head>
 <body>
   <h2 class="tc">曲线总览</h2>
-  <div class="tc">
-    <div>
-      <a target="_blank" href="https://github.com/XXHolic/segment/issues/102">
-        阿基米德螺线(Archimedean spiral)
-      </a>
-    </div>
-    <img src="https://xxholic.github.io/segment/images/85/1.png" alt="阿基米德螺线(Archimedean spiral)" />
-  </div>
-  <div class="tc">
-    <div>
-      <a target="_blank" href="https://github.com/XXHolic/segment/issues/103">
-        等角螺线(Equiangular Spiral)
-      </a>
-    </div>
-    <img src="https://xxholic.github.io/segment/images/86/1.gif" alt="等角螺线(Equiangular Spiral)" />
-  </div>
-  <div class="tc">
-    <div>
-      <a target="_blank" href="https://github.com/XXHolic/segment/issues/104">
-        连锁螺线(Lituus)
-      </a>
-    </div>
-    <img src="https://xxholic.github.io/segment/images/87/1.gif" alt="连锁螺线(Lituus)" />
-  </div>
-  <div class="tc">
-    <div>
-      <a target="_blank" href="https://github.com/XXHolic/segment/issues/105">
-        星形线(Astroid)
-      </a>
-    </div>
-    <img src="https://xxholic.github.io/segment/images/88/1.gif" alt="星形线(Astroid)" />
-  </div>
+  <div id="curve"></div>
+  <script>
+    const curveConfig = [
+      {
+        name: '阿基米德螺线(Archimedean spiral)',
+        link: 'https://github.com/XXHolic/segment/issues/102',
+        img: 'https://xxholic.github.io/segment/images/85/1.png'
+      },
+      {
+        name: '等角螺线(Equiangular Spiral)',
+        link: 'https://github.com/XXHolic/segment/issues/103',
+        img: 'https://xxholic.github.io/segment/images/86/1.gif'
+      },
+      {
+        name: '连锁螺线(Lituus)',
+        link: 'https://github.com/XXHolic/segment/issues/104',
+        img: 'https://xxholic.github.io/segment/images/87/1.gif'
+      },
+      {
+        name: '星形线(Astroid)',
+        link: 'https://github.com/XXHolic/segment/issues/105',
+        img: 'https://xxholic.github.io/segment/images/88/1.gif'
+      },
+      {
+        name: '双角线(Bicorn)',
+        link: 'https://github.com/XXHolic/segment/issues/106',
+        img: 'https://xxholic.github.io/segment/images/89/1.gif'
+      },
+    ]
+    const eleStr = curveConfig.map(ele => {
+      const {name,link,img} = ele
+      return (
+        `<div class="tc">
+          <div>
+            <a target="_blank" href="${link}">
+              ${name}
+            </a>
+          </div>
+          <img src="${img}" alt="${name}" />
+        </div>`
+      )
+    })
+    document.querySelector('#curve').innerHTML = eleStr.join('')
+  </script>
 
 </body>
 </html>
