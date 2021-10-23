@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="JavaScript 绘制 心形线(Cardioid)">
+  <title>心形线(Cardioid)</title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../85/styles.css">
+  <style>
+    .math-formula {
+      width: 200px;
+      height: 50px;
+      background: url('https://xxholic.github.io/segment/images/90/2.svg') no-repeat center;
+      -webkit-background-size: 100% auto;
+      background-size: 100% auto;
+    }
+  </style>
+</head>
+<body class="pt50">
+  <div id="bicorn"></div>
+
+  <div>
+    <div class="mb10 df flex-ac">笛卡尔坐标公式 ：<div class="math-formula"></div> </div>
+
+    <form action="" name="mathAttr">
+      <div class="mb10">转换过后影响因素如下</div>
+      <div class="df mb10">
+        <div class="math-attr pr">a</div><input name="attrA" type="number" value="40" step="1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">递增值</div><input name="acceleration" value="0.1"  type="number" step="0.1">
+      </div>
+      <div class="df mb10">
+        <div class="math-attr pr">变化最大值</div><input name="max" value="40"  type="number" step="1">
+      </div>
+    </form>
+    <div class="btn-submit">
+        <button id="apply">绘制</button>
+    </div>
+
+  </div>
+  <script src="../../js/canvas/index.js"></script>
+  <script src="../../js/math-lab/index.js"></script>
+  <script src="../../js/common/insertLink.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
