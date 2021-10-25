@@ -1,10 +1,10 @@
 const _PI = Math.PI;
 
 const constants = {
-  RADIANS: "radians",
+  RADIANS: "radians", // 这个是弧度
   DEG_TO_RAD: _PI / 180.0,
   RAD_TO_DEG: 180.0 / _PI,
-  DEGREES: "degrees",
+  DEGREES: "degrees", // 数学中度数
 };
 
 class Vector {
@@ -323,6 +323,55 @@ class Vector {
 
     return this;
   }
+  /**
+   * 向量的点积
+   * @param {*} x
+   * @param {*} y
+   * @param {*} z
+   * @returns
+   */
+  dot(x, y, z) {
+    if (x instanceof Vector) {
+      return this.dot(x.x, x.y, x.z);
+    }
+    return this.x * (x || 0) + this.y * (y || 0) + this.z * (z || 0);
+  }
+  /**
+   * 向量的叉积，两个矢量的叉积 a × b 是与这两个矢量垂直的矢量，这个涉及到了三维
+   * https://www.shuxuele.com/algebra/vectors-cross-product.html
+   * @param {*} x
+   * @param {*} y
+   * @param {*} z
+   * @returns
+   */
+  cross(v) {
+    const x = this.y * v.z - this.z * v.y;
+    const y = this.z * v.x - this.x * v.z;
+    const z = this.x * v.y - this.y * v.x;
+    return new Vector(x, y, z);
+  }
+
+  /**
+   * 获取两个向量之间的夹角
+   * @param {*} v
+   * @returns
+   */
+  angleBetween(v) {
+    const dotmagmag = this.dot(v) / (this.mag() * v.mag());
+    // Mathematically speaking: the dotmagmag variable will be between -1 and 1
+    // inclusive. Practically though it could be slightly outside this range due
+    // to floating-point rounding issues. This can make Math.acos return NaN.
+    //
+    // Solution: we'll clamp the value to the -1,1 range
+    let angle;
+    angle = Math.acos(Math.min(1, Math.max(-1, dotmagmag)));
+    // Math.sign 获取数字的符号
+    angle = angle * Math.sign(this.cross(v).z || 1);
+    if (Vector) {
+      angle = this._fromRadians(angle);
+    }
+    return angle;
+  }
 }
 
 /**
@@ -398,4 +447,19 @@ Vector.div = function div(...rest) {
   }
   target.div(n);
   return target;
+};
+
+// 向量的点积
+Vector.dot = function (v1, v2) {
+  return v1.dot(v2);
+};
+
+// 向量的叉积
+Vector.cross = function (v1, v2) {
+  return v1.cross(v2);
+};
+
+// 向量的之间的角度
+Vector.angleBetween = function (v1, v2) {
+  return v1.angleBetween(v2);
 };

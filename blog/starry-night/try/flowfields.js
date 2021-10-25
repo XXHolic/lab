@@ -1,9 +1,10 @@
 const width = 640,
   height = 360;
-const canvasObj = new Canvas(width, height);
-canvasObj.attrs({ class: "flow-canvas" });
-document.querySelector("#flow").appendChild(canvasObj.node);
-
+let flow = null; //流场对象
+let canvasObj = null; //画布对象
+let movers = []; // 运动的粒子
+// 控制绘制
+let requestAnimationFrameMark = 1;
 class FlowField {
   constructor(r) {
     // 每一个单元流场大小，设定的每个单元是一个正方形
@@ -21,7 +22,7 @@ class FlowField {
     for (let i = 0; i < this.rows; i++) {
       arr[i] = new Array(this.cols);
       for (let j = 0; j < this.cols; j++) {
-        // 考虑重叠的情况，弄个数组，重叠的时候，需要增加权重，看那个权重打就用那个向量
+        // 考虑重叠的情况，弄个数组，重叠的时候，需要增加权重，看那个权重大就用那个向量
         arr[i][j] = [];
       }
     }
@@ -69,7 +70,7 @@ class FlowField {
             basePoints.push([x, y]);
             angle += angleVel;
           }
-          // 获取 Y 区间范围坐标，注意这里是单个坐标点，但流程是以单元格为基本单位，要匹配
+          // 获取 Y 区间范围坐标，注意这里是单个坐标点，但流场是以单元格为基本单位，要匹配
           const yStartOff = 50,
             yEndOff = 150; // 决定的范围
           const rangeY = basePoints.map((ele, index) => {
@@ -104,8 +105,16 @@ class FlowField {
                 (cellStartY > startY && cellStartY < endY) ||
                 (cellEndY > startY && cellEndY < endY);
               if (!isValidCell) {
+                const randomVector = {
+                  type: "random",
+                  v: new Vector(
+                    Math.sin(angle) * resolution,
+                    Math.cos(angle) * resolution
+                  ),
+                  weight: 1,
+                };
+                targetCell.push(randomVector);
                 angle = angle + angleVel;
-                targetCell.push(defaultVector); // 默认水平方向
                 continue;
               }
               // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
@@ -177,32 +186,49 @@ class FlowField {
   };
 }
 
-const flow = new FlowField(10);
-// flow.init();
-flow.init("sin");
-flow.display(canvasObj);
-
-// 粒子太少，可根本无法按曲线运动，也跟曲线边界的判定/加速度有联系
-const move1 = new Mover(
-  // Tool.random(width),
-  // Tool.random(height),
-  80,
-  180,
-  Tool.random(2, 5),
-  Tool.random(1, 5)
-);
-let loop = 1;
 function draw() {
-  if (loop > 500) {
-    console.info("stop");
-    return;
+  canvasObj && canvasObj.clear();
+  // flow.display(canvasObj);
+  for (let i = 0; i < movers.length; i++) {
+    movers[i].follow(flow);
+    movers[i].run(canvasObj);
   }
-  loop++;
-  move1.follow(flow);
-  move1.run(canvasObj);
+  requestAnimationFrameMark = requestAnimationFrame(draw);
+}
+
+function pageInit() {
+  canvasObj = new Canvas(width, height);
+  canvasObj.attrs({ class: "flow-canvas" });
+  document.querySelector("#flow").appendChild(canvasObj.node);
+  // 流场初始化，
+  flow = new FlowField(20);
+  flow.init("sin");
+  flow.display(canvasObj);
+  // return false;
+  // 运动粒子初始化，
+  // 注意目前这个流场中方向会影响运动的方向，但这个不是路径跟随,
+  // 尝试了几次，发现这类流场最终导致会集中在某条路径刘冬，并不是按照想要的路径运动
+  for (let i = 0; i < 120; i++) {
+    const moveEle = new Mover(
+      Tool.random(width),
+      Tool.random(height),
+      Tool.random(1, 4),
+      Tool.random(0.1, 0.5)
+    );
+    movers.push(moveEle);
+  }
+  pageEvent();
   requestAnimationFrame(draw);
 }
 
-draw();
+function pageEvent() {
+  document.querySelector("#stop").onclick = () => {
+    window.cancelAnimationFrame(requestAnimationFrameMark);
+  };
+  document.querySelector("#start").onclick = () => {
+    requestAnimationFrameMark = requestAnimationFrame(draw);
+  };
+}
 
+pageInit();
 
