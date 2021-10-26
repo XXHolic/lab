@@ -372,6 +372,14 @@ class Vector {
     }
     return angle;
   }
+  /**
+   * 两个点之间的支线距离
+   * @param {*} v
+   * @returns
+   */
+  dist(v) {
+    return v.copy().sub(this).mag();
+  }
 }
 
 /**
@@ -462,4 +470,9 @@ Vector.cross = function (v1, v2) {
 // 向量的之间的角度
 Vector.angleBetween = function (v1, v2) {
   return v1.angleBetween(v2);
+};
+
+// 两个点之间的距离
+Vector.dist = function (v1, v2) {
+  return v1.dist(v2);
 };
