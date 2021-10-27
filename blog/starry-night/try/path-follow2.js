@@ -4,21 +4,34 @@ window.onload = function () {
     mover = null,
     requestAnimationFrameMark = null;
   class Path {
-    constructor(points) {
+    constructor() {
       this.radius = 5; // 路径的范围
-      this.start = new Vector(0, 30); // 路径的起点
-      this.end = new Vector(600, 200); // 路径的终点
-      this.points = points || [
-        [0, 30],
-        [600, 200],
-      ];
+      this.points = [];
+      this.init();
+    }
+
+    init() {
+      this.points.push(new Vector(0, Tool.random(300)));
+      this.points.push(new Vector(300, Tool.random(300)));
+      this.points.push(new Vector(600, Tool.random(300)));
+    }
+
+    getStart() {
+      return this.points[0];
+    }
+
+    getEnd() {
+      return this.points[this.points.length - 1];
     }
 
     // Draw the path
     display = (canvas) => {
       const { points } = this;
       const { line, clear, resetTransform } = canvas;
-      line({ points });
+      const linePoints = points.map((ele) => {
+        return [ele.x, ele.y];
+      });
+      line({ points: linePoints });
     };
   }
 
@@ -55,25 +68,50 @@ window.onload = function () {
       predict.mult(50); // 预测 50 像素
       let predictLoc = Vector.add(this.position, predict);
 
-      // Look at the line segment
-      let a = p.start;
-      let b = p.end;
+      // Now we must find the normal to the path from the predicted location
+      // We look at the normal for each line segment and pick out the closest one
 
-      // 找到预测点到路径最近的一个点
-      let normalPoint = getNormalPoint(predictLoc, a, b);
+      let normal = null;
+      let target = null;
+      let worldRecord = 1000000; // Start with a very high record distance that can easily be beaten
+      // 所有线段路径
+      for (let i = 0; i < p.points.length - 1; i++) {
+        // Look at a line segment
+        let a = p.points[i];
+        let b = p.points[i + 1];
+        //println(b);
 
-      // Find target point a little further ahead of normal
-      // 给了一个目标点，这个是为了能一直移动，总是比目标点提前一些
-      let dir = Vector.sub(b, a);
-      dir.normalize();
-      dir.mult(10); // This could be based on velocity instead of just an arbitrary 10 pixels
-      let target = Vector.add(normalPoint, dir);
+        // Get the normal point to that line
+        let normalPoint = getNormalPoint(predictLoc, a, b);
+        // This only works because we know our path goes from left to right
+        // We could have a more sophisticated test to tell if the point is in the line segment or not
+        if (normalPoint.x < a.x || normalPoint.x > b.x) {
+          // This is something of a hacky solution, but if it's not within the line segment
+          // consider the normal to just be the end of the line segment (point b)
+          normalPoint = b.copy();
+        }
 
-      // How far away are we from the path?
-      // 找到预测点和到路径最近点的距离，跟控制范围做比较
-      let distance = Vector.dist(predictLoc, normalPoint);
+        // How far away are we from the path?
+        let distance = Vector.dist(predictLoc, normalPoint);
+        // Did we beat the record and find the closest line segment?
+        if (distance < worldRecord) {
+          worldRecord = distance;
+          // If so the target we want to steer towards is the normal
+          normal = normalPoint;
+
+          // Look at the direction of the line segment so we can seek a little bit ahead of the normal
+          let dir = Vector.sub(b, a);
+          dir.normalize();
+          // This is an oversimplification
+          // Should be based on distance to path & velocity
+          dir.mult(10);
+          target = normalPoint.copy();
+          target.add(dir);
+        }
+      }
+
       // Only if the distance is greater than the path's radius do we bother to steer
-      if (distance > p.radius) {
+      if (worldRecord > p.radius && target !== null) {
         this.seek(target);
       }
     }
@@ -117,9 +155,9 @@ window.onload = function () {
 
     // Wraparound
     borders(p) {
-      if (this.position.x > p.end.x + this.r) {
-        this.position.x = p.start.x - this.r;
-        this.position.y = p.start.y + (this.position.y - p.end.y);
+      if (this.position.x > p.getEnd().x + this.r) {
+        this.position.x = p.getStart().x - this.r;
+        this.position.y = p.getStart().y + (this.position.y - p.getEnd().y);
       }
     }
 
@@ -165,7 +203,7 @@ window.onload = function () {
     document.querySelector("#demo").appendChild(canvasObj.node);
     pathObj = new Path();
     // pathObj.display(canvasObj);
-    mover = new Vehicle(0, 300 / 2, 2, 0.02);
+    mover = new Vehicle(0, 300 / 2, 2, 0.1);
     pageEvent();
     requestAnimationFrame(draw);
   }
@@ -180,5 +218,4 @@ window.onload = function () {
   }
 
   pageInit();
-
 };
