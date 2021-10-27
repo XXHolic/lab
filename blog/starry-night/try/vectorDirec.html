@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>路径跟随</title>
+  <title>计算同方向上的一点</title>
   <script src="../../../js/canvas/index.js"></script>
   <script src="../../../js/vector/index.js"></script>
   <script src="../../../js/noise/index.js"></script>
@@ -22,6 +22,21 @@
   <div><button id="stop">stop</button><button id="start">start</button></div>
   <!-- <script src="./path-follow.js"></script> -->
   <!-- <script src="./path-follow2.js"></script> -->
-  <script src="./path-follow3.js"></script>
+  <script>
+    const len = 20;
+    const v1 = new Vector(20,100) // 起始点
+    const direc = -1 // 偏移的方向，先假设是 45 度，tan45 = 1
+    const x2 =  len / (Math.sqrt(1+direc*direc)) + v1.x
+    const y2 = (len * direc)/(Math.sqrt(1+direc*direc)) + v1.y
+    const v2 = new Vector(x2,y2)
+    const points = [v1,v2]
+    const linePoints = points.map(ele => {
+      return [ele.x,ele.y]
+    })
+    let canvasObj = new Canvas(600, 300);
+    canvasObj.attrs({ class: "flow-canvas" });
+    document.querySelector("#demo").appendChild(canvasObj.node);
+    canvasObj.line({points: linePoints})
+  </script>
 </body>
 </html>
