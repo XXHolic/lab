@@ -114,6 +114,7 @@ class FlowField {
                   weight: 1,
                 };
                 targetCell.push(randomVector);
+                // targetCell.push(defaultVector);
                 angle = angle + angleVel;
                 continue;
               }
@@ -209,12 +210,13 @@ function pageInit() {
   // 注意目前这个流场中方向会影响运动的方向，但这个不是路径跟随,
   // 尝试了几次，发现这类流场最终导致会集中在某条路径，并不是按照想要的路径运动
   for (let i = 0; i < 120; i++) {
-    const moveEle = new Mover(
-      Tool.random(width),
-      Tool.random(height),
-      Tool.random(1, 4),
-      Tool.random(0.1, 0.5)
-    );
+    // const moveEle = new Mover(
+    //   Tool.random(width),
+    //   Tool.random(height),
+    //   Tool.random(1, 4),
+    //   Tool.random(0.1, 0.5)
+    // );
+    const moveEle = new MoverStatic(Tool.random(width), Tool.random(height));
     movers.push(moveEle);
   }
   pageEvent();
