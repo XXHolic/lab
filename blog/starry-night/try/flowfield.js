@@ -15,7 +15,6 @@ class FlowField {
       arr[i] = new Array(this.cols).fill("");
     }
     this.fields = arr;
-    // this.init();
   }
 
   // 初始化类型
@@ -26,43 +25,100 @@ class FlowField {
         {
           for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-              fields[i][j] = new Vector(1, 0); //每行有10列
+              fields[i][j] = new Vector(1, 0);
             }
           }
         }
         break;
-      case "archimedean": // 阿基米德螺线-未完成
+      case "vertical": // 垂直流场
         {
           for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-              fields[i][j] = new Vector(1, 0); //每行有10列
+              fields[i][j] = new Vector(0, 1);
             }
           }
         }
         break;
       case "sin": // 正弦流场
         {
-          // 划分的单元格跨越曲线的角度范围
-          let angleGap = (2 * Math.PI) / cols;
-          const rangeHeight = height;
+          /**
+           * 参数化方程
+           * x = x
+           * y = sin(x)
+           * 分别求导就可以得出每个点的切线
+           * dx = 1
+           * dy = cos(x)
+           * 由于坐标 y 轴的方向跟数学坐标系不一样，取个反向
+           */
+          let angleGap = (4 * Math.PI) / cols; //周期
           for (let i = 0; i < rows; i++) {
             let angle = 0; // 角度的递增跟 x 轴映射
             for (let j = 0; j < cols; j++) {
-              // 取宽跨度的开始和结束两个点的坐标，然后相减得到方向向量
-              const xStart = resolution * j;
-              const yStart = Tool.map(Math.sin(angle), -1, 1, 0, rangeHeight);
-              const xEnd = xStart + resolution;
-              const yEnd = Tool.map(
-                Math.sin(angle + angleGap),
-                -1,
-                1,
-                0,
-                rangeHeight
-              );
-              const vX = xEnd - xStart,
-                vY = yEnd - yStart;
+              const dx = 1;
+              const dy = -Math.cos(angle);
               angle = angle + angleGap;
-              fields[i][j] = new Vector(vX, vY);
+              fields[i][j] = new Vector(dx, dy);
+            }
+          }
+        }
+        break;
+      case "circle": // 圆流场
+        {
+          /**
+           * 参数化方程
+           * x = rcos(angle) + x
+           * y = rsin(angle) + y
+           * 分别求导就可以得出每个点的切线
+           * dx = -sin(x)
+           * dy = cos(x)
+           */
+          let r = 100,
+            x = 200,
+            y = 200; // 圆心和半径
+          let circle = new Vector(x, y);
+          for (let i = 0; i < rows; i++) {
+            let pointY = i * resolution;
+            for (let j = 0; j < cols; j++) {
+              let pointX = j * resolution;
+              const movePoint = new Vector(pointX, pointY);
+              const minus = Vector.sub(circle, movePoint);
+              const len = minus.mag();
+              if (len <= r) {
+                const angle = minus.heading();
+                const dx = -Math.sin(angle);
+                const dy = Math.cos(angle);
+                fields[i][j] = new Vector(dx, dy);
+              } else {
+                fields[i][j] = "";
+              }
+            }
+          }
+        }
+        break;
+      case "archimedean": // 阿基米德螺线
+        {
+          // 参数方程
+          // x = -(a + b * angle) * Math.sin(angle);
+          // y = (a + b * angle) * Math.cos(angle);
+          /**
+           * 结合图形思考一下，这种螺线上每个点的切线肯定有相同的，
+           * 所以在会只想要的矢量场时，以切线作为参考
+           */
+          let x = width / 2,
+            y = height / 2; // 作为参考起始点
+          let center = new Vector(x, y);
+          // 获取曲线的点
+          for (let i = 0; i < rows; i++) {
+            let pointY = i * resolution;
+            for (let j = 0; j < cols; j++) {
+              let pointX = j * resolution;
+              const movePoint = new Vector(pointX, pointY);
+              // const minus = Vector.sub(movePoint, center); // 由中心点向外
+              const minus = Vector.sub(center, movePoint); // 朝向中心点
+              const angle = minus.heading();
+              const dx = Math.cos(angle) - angle * Math.sin(angle);
+              const dy = Math.sin(angle) + angle * Math.cos(angle);
+              fields[i][j] = new Vector(dx, dy);
             }
           }
         }
@@ -84,28 +140,43 @@ class FlowField {
     }
   };
 
-  drawVector = ({ canvas, x, y, vector, scale = 1 }) => {
-    const { resolution } = this;
-    const { translate, rotate, line, triangle, resetTransform } = canvas;
-    translate(x, y);
-    rotate(vector.heading());
-    let len = vector.mag() * scale;
+  drawArrow = (canvas, len) => {
+    const { line } = canvas;
     line({
       points: [
-        [0, resolution / 2],
-        [len, resolution / 2],
-        // [5, 7], 三角形
-        // [5, 13],
-        // [15, 10],
+        [0, 0],
+        [len, 0],
       ],
-      strokeStyle: "#fff",
-      fillStyle: "#fff",
     });
+    line({
+      points: [
+        [len, 0],
+        [(len * 2) / 3, len / 3],
+      ],
+    });
+    line({
+      points: [
+        [len, 0],
+        [(len * 2) / 3, -len / 3],
+      ],
+    });
+  };
+
+  drawVector = ({ canvas, x, y, vector }) => {
+    const { resolution } = this;
+    const { translate, rotate, resetTransform } = canvas;
+    translate(x, y);
+    rotate(vector.heading());
+    // let len = vector.mag() * scale; // 这种方式并不是必须的
+    this.drawArrow(canvas, resolution / 2);
     resetTransform();
   };
 }
 
 const flow = new FlowField(20);
-// flow.init();
-flow.init("sin");
+flow.init();
+// flow.init("vertical");
+// flow.init("sin");
+// flow.init("circle");
+flow.init("archimedean");
 flow.display(canvasObj);
