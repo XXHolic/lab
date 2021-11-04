@@ -123,6 +123,32 @@ class FlowField {
           }
         }
         break;
+      case "lituus": // 连锁螺线
+        {
+          let x = width / 2,
+            y = height / 2; // 作为参考起始点
+          let center = new Vector(x, y);
+          // 获取曲线的点
+          for (let i = 0; i < rows; i++) {
+            let pointY = i * resolution;
+            for (let j = 0; j < cols; j++) {
+              let pointX = j * resolution;
+              const movePoint = new Vector(pointX, pointY);
+              // const minus = Vector.sub(movePoint, center); // 由中心点向外
+              const minus = Vector.sub(center, movePoint); // 朝向中心点
+              const angle = minus.heading();
+              const cosValue = Math.cos(angle),
+                sinValue = Math.sin(angle),
+                sqrtValue = Math.sqrt(angle);
+              const dx =
+                -(2 * angle * sinValue + cosValue) / (2 * angle * sqrtValue);
+              const dy =
+                (2 * angle * cosValue - sinValue) / (2 * angle * sqrtValue);
+              fields[i][j] = new Vector(dx, dy);
+            }
+          }
+        }
+        break;
     }
 
     // console.info("fields", fields);
@@ -178,5 +204,6 @@ flow.init();
 // flow.init("vertical");
 // flow.init("sin");
 // flow.init("circle");
-flow.init("archimedean");
+// flow.init("archimedean");
+flow.init("lituus");
 flow.display(canvasObj);
