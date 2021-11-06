@@ -20,22 +20,23 @@ window.onload = function () {
       );
       this.draw(glContext, shaderProgram);
     },
-    // 设置缓冲
+    /**
+     * 设置缓冲
+     * @param {*} gl
+     * @param {*} vertexData
+     */
     setBuffers: function (gl, vertexData) {
       // 创建空白的缓冲对象
       const buffer = gl.createBuffer();
-      // 绑定对象
+      // 绑定目标
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
       // WebGL 不支持直接使用 JavaScript 原始数组类型，需要转换
       const dataFormat = new Float32Array(vertexData);
-      // 初始化数据
+      // 初始化数据存储
       gl.bufferData(gl.ARRAY_BUFFER, dataFormat, gl.STATIC_DRAW);
     },
     // 创建顶点着色器
     createVertexShader: function (gl) {
-      // 创建着色器
-      const shader = gl.createShader(gl.VERTEX_SHADER);
-
       // 顶点着色器 glsl 代码
       const source = `
         attribute vec3 vertexPos;
@@ -43,6 +44,9 @@ window.onload = function () {
           gl_Position = vec4(vertexPos, 1);
         }
       `;
+
+      // 创建着色器
+      const shader = gl.createShader(gl.VERTEX_SHADER);
 
       // 设置顶点着色器代码
       gl.shaderSource(shader, source);
@@ -61,15 +65,15 @@ window.onload = function () {
     },
     // 片段着色器
     createFragmentShader: function (gl) {
-      // 创建着色器
-      const shader = gl.createShader(gl.FRAGMENT_SHADER);
-
       // 片段着色器 glsl 代码
       const source = `
         void main(void){
           gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
         }
       `;
+
+      // 创建着色器
+      const shader = gl.createShader(gl.FRAGMENT_SHADER);
 
       // 设置片段着色器代码
       gl.shaderSource(shader, source);
@@ -119,5 +123,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript 数学曲线—心形线(Cardioid)", linkIndex: 107 });
+  insertLink({ title: "JavaScript WebGL 绘制一条直线", linkIndex: 109 });
 };
