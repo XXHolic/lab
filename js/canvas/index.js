@@ -1,10 +1,10 @@
 class Canvas {
-  constructor(w = 300, h = 150, mode = "create", target) {
+  constructor(w = 300, h = 150, { mode = "create", target }) {
     const ratio = window.devicePixelRatio || 1;
     this.width = w;
     this.height = h;
     this.ratio = ratio;
-    if (mode === "set") {
+    if (mode === "set" && target) {
       this.node = target;
       this.context = target.getContext("2d");
       return;
@@ -378,9 +378,9 @@ class Canvas {
    * @param {number} height 画布宽度
    */
   clear = (isAnimation = false) => {
-    const { width, height, context } = this
+    const { width, height, context } = this;
     if (!isAnimation) {
-      context.clearRect(0,0,width,height);
+      context.clearRect(0, 0, width, height);
       return;
     }
     var centerX = width / 2;
@@ -410,5 +410,8 @@ Canvas.setTarget = (target) => {
     return;
   }
   const renderStyles = window.getComputedStyle(element);
-  return new Canvas(renderStyles.width, renderStyles.height, "set", element);
+  return new Canvas(renderStyles.width, renderStyles.height, {
+    mode: "set",
+    target: element,
+  });
 };

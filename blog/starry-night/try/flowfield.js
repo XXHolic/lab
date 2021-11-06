@@ -149,6 +149,26 @@ class FlowField {
           }
         }
         break;
+      case "curve1": // 曲线 1
+        {
+          let x = width / 2,
+            y = height / 2; // 作为参考起始点
+          let center = new Vector(x, y);
+          // 获取曲线的点
+          for (let i = 0; i < rows; i++) {
+            let pointY = i * resolution;
+            for (let j = 0; j < cols; j++) {
+              let pointX = j * resolution;
+              // const movePoint = new Vector(pointX, pointY);
+              // const minus = Vector.sub(movePoint, center); // 由中心点向外
+              // const minus = Vector.sub(center, movePoint); // 朝向中心点
+              const dx = pointY - 2 * pointX;
+              const dy = pointX + 2 * pointY;
+              fields[i][j] = new Vector(dx, dy);
+            }
+          }
+        }
+        break;
     }
 
     // console.info("fields", fields);
@@ -205,5 +225,6 @@ flow.init();
 // flow.init("sin");
 // flow.init("circle");
 // flow.init("archimedean");
-flow.init("lituus");
+// flow.init("lituus");
+flow.init("curve1");
 flow.display(canvasObj);
