@@ -138,5 +138,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 绘制一条直线", linkIndex: 109 });
+  insertLink({ title: "JavaScript WebGL 基础疑惑点", linkIndex: 110 });
 };
