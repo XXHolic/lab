@@ -1,5 +1,6 @@
 class Canvas {
-  constructor(w = 300, h = 150, { mode = "create", target }) {
+  constructor(w = 300, h = 150, options = {}) {
+    const { mode = "create", target } = options;
     const ratio = window.devicePixelRatio || 1;
     this.width = w;
     this.height = h;
