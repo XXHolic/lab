@@ -11,17 +11,7 @@ window.onload = function () {
         return;
       }
 
-      let vertices = [
-        0,
-        0.5,
-        0.0,
-        -0.5,
-        -0.5,
-        0.0,
-        0.5,
-        -0.5,
-        0.0,
-      ]; // 三角形
+      let vertices = [0, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5, -0.5, 0.0]; // 三角形
 
       let colors = [
         1.0,
@@ -56,8 +46,33 @@ window.onload = function () {
       const fragmentSource = `
         precision highp float;
         varying vec4 vColor;
+
+        int findMax(float r, float g, float b) {
+            if (r > g && r > b) {
+                return 0;
+            }
+            if (g > r && g > b) {
+                return 1;
+            }
+            return 2;
+        }
+
         void main(void){
-          gl_FragColor = vColor;
+          float red = vColor.r;
+          float green = vColor.g;
+          float blue = vColor.b;
+          int max = findMax(red, green, blue);
+          vec4 finalColor = vColor;
+          if (max == 0) {
+              finalColor = vec4(1.0, 0.0, 0.0, 1.0);
+          }
+          else if (max == 1) {
+              finalColor = vec4(0.0, 1.0, 0.0, 1.0);
+          }
+          else if (max == 2) {
+              finalColor = vec4(0.0, 0.0, 1.0, 1.0);
+          }
+          gl_FragColor = finalColor;
         }
       `;
       const fragmentShader = this.loadShader(
