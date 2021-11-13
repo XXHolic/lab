@@ -2,6 +2,7 @@ window.onload = function () {
   const page = {
     init: function () {
       const canvasObj = new WebGL();
+      // const canvasObj = new WebGL(150, 75);
       canvasObj.attrs({ class: "demo-webgl" });
       document.querySelector("#demo").appendChild(canvasObj.node);
       const glContext = canvasObj.context;
@@ -166,5 +167,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 基础疑惑点", linkIndex: 110 });
+  insertLink({ title: "JavaScript WebGL 设置颜色", linkIndex: 112 });
 };

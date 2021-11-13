@@ -11,17 +11,7 @@ window.onload = function () {
         return;
       }
 
-      let vertices = [
-        0,
-        0.5,
-        0.0,
-        -0.5,
-        -0.5,
-        0.0,
-        0.5,
-        -0.5,
-        0.0,
-      ]; // 三角形
+      let vertices = [0, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5, -0.5, 0.0]; // 三角形
 
       let colors = [
         1.0,
@@ -96,13 +86,19 @@ window.onload = function () {
       // 启用顶点属性，顶点属性默认是禁用的。
       gl.enableVertexAttribArray(vertexPos);
     },
-    setColorBuffers: function (gl, shaderProgram, vertexData) {
+    /**
+     *
+     * @param {*} gl
+     * @param {*} shaderProgram 着色器程序
+     * @param {*} colorData 颜色数据
+     */
+    setColorBuffers: function (gl, shaderProgram, colorData) {
       // 创建空白的缓冲对象
       const buffer = gl.createBuffer();
       // 绑定目标
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
       // WebGL 不支持直接使用 JavaScript 原始数组类型，需要转换
-      const dataFormat = new Float32Array(vertexData);
+      const dataFormat = new Float32Array(colorData);
       // 初始化数据存储
       gl.bufferData(gl.ARRAY_BUFFER, dataFormat, gl.DYNAMIC_DRAW);
 
@@ -151,5 +147,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 基础疑惑点", linkIndex: 110 });
-};
+  insertLink({ title: "JavaScript WebGL 设置颜色", linkIndex: 112 });
+};;
