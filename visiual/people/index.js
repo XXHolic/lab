@@ -30,8 +30,7 @@ window.onload = function () {
           (d, b) => svg`<rect x="${x(d.date)}" height="${height}" width="${
             x(b.date) - x(d.date)
           }">
-      <title>${formatDate(d.date)}
-${formatClose(d.close)}</title>
+      <title>${formatDate(d.date)} ： ${d.close}</title>
     </rect>`
         )}
       </g>
@@ -107,7 +106,7 @@ ${formatClose(d.close)}</title>
   }
 
   function formatDate({ d3 }) {
-    return d3.utcFormat("%b %-d, ’%y");
+    return d3.utcFormat("%b %-d");
   }
 
   function formatClose({ d3 }) {
