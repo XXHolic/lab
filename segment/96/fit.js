@@ -57,17 +57,34 @@ window.onload = function () {
       );
       this.setBuffers(gl, shaderProgram, vertices);
       this.setIndexBuffers(gl, indexData);
-      this.setTextureBuffers(gl, shaderProgram, texCoords);
+      // this.setTextureBuffers(gl, shaderProgram, texCoords);
       this.loadImage(gl, shaderProgram, texCoords);
     },
-
     loadImage: function (gl, shaderProgram) {
       var img = new Image();
       img.onload = (e) => {
+        // console.info("e.target", e.target);
+        const texCoords = this.getTexCoords(e.target);
+        this.setTextureBuffers(gl, shaderProgram, texCoords);
         this.createTexture(gl, e.target);
         this.draw(gl, shaderProgram);
       };
       img.src = "./1.jpg";
+    },
+    getTexCoords: function (source) {
+      const { width, height } = source;
+      const percent = (1 - height / width).toFixed(1);
+      console.info("percent", percent);
+      return [
+        1.0,
+        1.0, // 右上角
+        0.0,
+        1.0, // 左上角
+        0.0,
+        percent, // 左下角
+        1.0,
+        percent, // 右下角
+      ];
     },
     createTexture: function (gl, source) {
       const texture = gl.createTexture();
@@ -75,9 +92,9 @@ window.onload = function () {
       // 反转图片 Y 轴方向
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       // 纹理坐标水平填充 s
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); // GL_REPEAT CLAMP_TO_EDGE
       // 纹理坐标垂直填充 t
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); // GL_REPEAT CLAMP_TO_EDGE
       // 纹理放大处理
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       // 纹理缩小处理
@@ -201,5 +218,5 @@ window.onload = function () {
   };
 
   page.init();
-  insertLink({ title: "JavaScript WebGL 使用图片", linkIndex: 113 });
+  // insertLink({ title: "JavaScript WebGL 绘制一个面", linkIndex: 111 });
 };
