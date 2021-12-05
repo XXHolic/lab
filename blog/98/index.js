@@ -1,18 +1,9 @@
 window.onload = function () {
+  let globalGeo = [];
   const page = {
     canvasObj: {},
-    lineAttrs: {
-      points: [],
-      lineWidth: 1,
-      lineCap: "round",
-      strokeStyle: "rgba(0,148,255,1)",
-      fillStyle: "rgba(0,148,255,1)",
-    },
     init: function () {
-      const canvasObj = new Canvas(360, 180);
-      // canvasObj.attrs({ class: "demo-canvas" });
-      document.querySelector("#container").appendChild(canvasObj.node);
-      this.canvasObj = canvasObj;
+      this.canvasObj = Canvas.setTarget("#coastline");
       this.getData();
     },
     getData: function () {
@@ -20,32 +11,50 @@ window.onload = function () {
       fetch("https://xxholic.github.io/lab/blog/98/geo.json")
         .then((response) => response.json())
         .then((res) => {
-          _this.draw(res.features || []);
+          const backData = res.features || [];
+          globalGeo = backData;
+          _this.draw(backData);
         });
     },
     draw: function (data) {
-      const { lineAttrs, canvasObj } = this;
-      let { width, height, translate, line, clear, node, resetTransform } =
-        canvasObj;
+      const { context, node, clear } = this.canvasObj;
       const len = data.length;
+      clear();
+      context.lineWidth = 1;
+      context.lineJoin = context.lineCap = "round";
+      context.strokeStyle = "rgba(0,148,255,1)";
+      context.beginPath();
       for (let i = 0; i < len; i++) {
-        const coordinates = data[i].geometry.coordinates;
-        let points = [];
-        for (let j = 0; j < line.length; j++) {
-          points.push([
-            ((coordinates[j][0] + 180) * node.width) / width,
-            ((-coordinates[j][1] + 90) * node.height) / height,
-          ]);
+        const coordinates = data[i].geometry.coordinates || [];
+        const coordinatesNum = coordinates.length;
+        for (let j = 0; j < coordinatesNum; j++) {
+          context[j ? "lineTo" : "moveTo"](
+            ((coordinates[j][0] + 180) * node.width) / 360,
+            ((-coordinates[j][1] + 90) * node.height) / 180
+          );
         }
-        line({
-          ...lineAttrs,
-          points: points,
-        });
       }
+      context.stroke();
+    },
+    resize: function () {
+      const ele = document.querySelector("#coastline");
+      ele.style.width = `${window.innerWidth}px`; // 控制显示大小
+      ele.style.height = `${window.innerHeight}px`; // 控制显示大小
+      this.canvasObj = Canvas.setTarget("#coastline");
+      this.draw(globalGeo);
     },
     pageEvent: function () {},
   };
 
   page.init();
+  let timeoutHandler = null;
+  window.onresize = function () {
+    if (timeoutHandler) {
+      clearTimeout(timeoutHandler);
+    }
+    timeoutHandler = setTimeout(() => {
+      page.resize();
+    }, 500);
+  };
   // insertLink({ title: "JavaScript 数学曲线—星形线(Astroid)", linkIndex: 105 });
 };
