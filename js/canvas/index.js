@@ -1,13 +1,21 @@
 class Canvas {
-  constructor(w = 300, h = 150, options = {}) {
+  constructor(widthN = 300, heightN = 150, options = {}) {
     const { mode = "create", target } = options;
     const ratio = window.devicePixelRatio || 1;
+    const w = parseFloat(widthN),
+      h = parseFloat(heightN);
     this.width = w;
     this.height = h;
     this.ratio = ratio;
     if (mode === "set" && target) {
       this.node = target;
-      this.context = target.getContext("2d");
+      const context = target.getContext("2d");
+      this.context = context;
+      // 高清屏幕模糊问题处理
+      target.width = w * ratio; // 实际渲染像素
+      target.height = h * ratio; // 实际渲染像素
+      target.style.width = `${w}px`; // 控制显示大小
+      target.style.height = `${h}px`; // 控制显示大小
       return;
     }
     const canvas = document.createElement("canvas");
