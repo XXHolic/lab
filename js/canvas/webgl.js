@@ -1,15 +1,9 @@
 class WebGL {
   constructor(w = 300, h = 150, options = {}) {
-    const { mode = "create", target } = options;
     const ratio = window.devicePixelRatio || 1;
     this.width = w;
     this.height = h;
     this.ratio = ratio;
-    if (mode === "set" && target) {
-      this.node = target;
-      this.context = target.getContext("webgl");
-      return;
-    }
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("webgl");
     this.node = canvas;
@@ -42,20 +36,3 @@ class WebGL {
     context.clear(context.COLOR_BUFFER_BIT);
   };
 }
-
-WebGL.setTarget = (target) => {
-  if (typeof target !== "string") {
-    console.warn("Invalid Canvas Target");
-    return;
-  }
-  const element = document.querySelector(target);
-  if (!element) {
-    console.warn("Invalid Canvas Target");
-    return;
-  }
-  const renderStyles = window.getComputedStyle(element);
-  return new Canvas(renderStyles.width, renderStyles.height, {
-    mode: "set",
-    target: element,
-  });
-};
