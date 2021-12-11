@@ -1,4 +1,5 @@
-/* eslint-disable */
+const webglUtil = {};
+
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
@@ -11,7 +12,25 @@ function createShader(gl, type, source) {
   return shader;
 }
 
-export function createProgram(gl, vertexSource, fragmentSource) {
+webglUtil.getColorRamp = (colors) => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = 256;
+  canvas.height = 1;
+
+  const gradient = ctx.createLinearGradient(0, 0, 256, 0);
+  for (const stop in colors) {
+    gradient.addColorStop(+stop, colors[stop]);
+  }
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 256, 1);
+
+  return new Uint8Array(ctx.getImageData(0, 0, 256, 1).data);
+};
+
+webglUtil.createProgram = (gl, vertexSource, fragmentSource) => {
   const program = gl.createProgram();
 
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexSource);
@@ -39,9 +58,9 @@ export function createProgram(gl, vertexSource, fragmentSource) {
   }
 
   return wrapper;
-}
+};
 
-export function createTexture(gl, filter, data, width, height) {
+webglUtil.createTexture = (gl, filter, data, width, height) => {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   // 设置 s 轴纹理，纹理坐标会被约束在0到1之间，超出的部分会重复纹理坐标的边缘，产生一种边缘被拉伸的效果
@@ -70,27 +89,27 @@ export function createTexture(gl, filter, data, width, height) {
   }
   gl.bindTexture(gl.TEXTURE_2D, null);
   return texture;
-}
+};
 
-export function bindTexture(gl, texture, unit) {
+webglUtil.bindTexture = (gl, texture, unit) => {
   gl.activeTexture(gl.TEXTURE0 + unit);
   gl.bindTexture(gl.TEXTURE_2D, texture);
-}
+};
 
-export function createBuffer(gl, data) {
+webglUtil.createBuffer = (gl, data) => {
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
   return buffer;
-}
+};
 
-export function bindAttribute(gl, buffer, attribute, numComponents) {
+webglUtil.bindAttribute = (gl, buffer, attribute, numComponents) => {
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.enableVertexAttribArray(attribute);
   gl.vertexAttribPointer(attribute, numComponents, gl.FLOAT, false, 0, 0);
-}
+};
 
-export function bindFramebuffer(gl, framebuffer, texture) {
+webglUtil.bindFramebuffer = (gl, framebuffer, texture) => {
   gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
   if (texture) {
     gl.framebufferTexture2D(
@@ -101,4 +120,4 @@ export function bindFramebuffer(gl, framebuffer, texture) {
       0
     );
   }
-}
+};
