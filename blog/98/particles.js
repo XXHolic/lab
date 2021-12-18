@@ -37,4 +37,7 @@ window.onload = function () {
     }
   }
   frame();
+
+  insertLink({ title: "绘制粒子", linkIndex: 104 });
+
 };

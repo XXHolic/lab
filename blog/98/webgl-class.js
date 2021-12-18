@@ -94,7 +94,7 @@ class WindGL {
 
   setColorRamp(colors) {
     // lookup texture for colorizing the particles according to their speed
-    // 速度两个分量对应颜色的两个分量，256 种可能，宽高 16*16
+    // Canvas 里面的数据放到纹理中，需要足够的大小：16 * 16 = 256
     this.colorRampTexture = webglUtil.createTexture(
       this.gl,
       this.gl.LINEAR,
@@ -111,15 +111,15 @@ class WindGL {
     const particleRes = (this.particleStateResolution = Math.ceil(
       Math.sqrt(numParticles)
     ));
-    // 粒子总数
+    // 总粒子数
     this._numParticles = particleRes * particleRes;
-    // 存放 rgba 四个分量，每个分量 8 位
+    // 所有粒子的颜色信息，存放 rgba 四个分量，每个分量 8 位
     const particleState = new Uint8Array(this._numParticles * 4);
     for (let i = 0; i < particleState.length; i++) {
-      // 产生随机位置
+      // 生成随机颜色，颜色会对应到图片中的位置
       particleState[i] = Math.floor(Math.random() * 256);
     }
-    // 包含每个位置 rgab 信息放入纹理中
+    // 创建存储所有粒子颜色信息的纹理
     this.particleStateTexture = webglUtil.createTexture(
       gl,
       gl.NEAREST,
@@ -127,11 +127,12 @@ class WindGL {
       particleRes,
       particleRes
     );
-    // 创建顶点索引数据并缓冲
+    // 粒子索引
     const particleIndices = new Float32Array(this._numParticles);
     for (let i = 0; i < this._numParticles; i++) particleIndices[i] = i;
     this.particleIndexBuffer = webglUtil.createBuffer(gl, particleIndices);
   }
+
   get numParticles() {
     return this._numParticles;
   }

@@ -18,7 +18,7 @@ webglUtil.getColorRamp = (colors) => {
 
   canvas.width = 256;
   canvas.height = 1;
-
+  // createLinearGradient 用法： https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createLinearGradient
   const gradient = ctx.createLinearGradient(0, 0, 256, 0);
   for (const stop in colors) {
     gradient.addColorStop(+stop, colors[stop]);

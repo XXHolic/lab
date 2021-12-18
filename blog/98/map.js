@@ -56,5 +56,5 @@ window.onload = function () {
       page.resize();
     }, 500);
   };
-  // insertLink({ title: "JavaScript 数学曲线—星形线(Astroid)", linkIndex: 105 });
+  insertLink({ title: "绘制粒子", linkIndex: 104 });
 };
