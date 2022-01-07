@@ -7,6 +7,7 @@ window.onload = function () {
       // const canvasObj = new WebGL(400, 300);
       canvasObj.attrs({ class: "demo-webgl" });
       document.querySelector("#demo").appendChild(canvasObj.node);
+      // canvasObj.clear();
       const gl = canvasObj.context;
       if (!gl) {
         alert("浏览器不支持 WebGL");
@@ -15,40 +16,11 @@ window.onload = function () {
 
       const vertices = [
         // 第一套顶点
-        0.5,
-        0.5,
-        0.0,
-        0.0,
-        -0.5,
-        0.5,
-        0.0,
-        0.0,
-        -0.5,
-        -0.5,
-        0.0,
-        0.0,
-        0.5,
-        -0.5,
-        0.0,
-        0.0,
+        0.5, 0.5, 0.0, 0.0, -0.5, 0.5, 0.0, 0.0, -0.5, -0.5, 0.0, 0.0, 0.5,
+        -0.5, 0.0, 0.0,
         // 第二套顶点
-        0.5,
-        0.5,
-        0.0,
-        1.0,
-        -0.5,
-        0.5,
-        0.0,
-        1.0,
-        -0.5,
-        -0.5,
-        0.0,
-        1.0,
-        0.5,
-        -0.5,
-        0.0,
-        1.0,
-
+        0.5, 0.5, 0.0, 1.0, -0.5, 0.5, 0.0, 1.0, -0.5, -0.5, 0.0, 1.0, 0.5,
+        -0.5, 0.0, 1.0,
       ]; // 矩形
       const indexData = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]; // 索引
       const texCoords = [
@@ -138,7 +110,7 @@ window.onload = function () {
           this.draw(gl, shaderProgram);
         }
       };
-      img2.src = "./2.png";
+      img2.src = "./2-transparency.png";
     },
     createTexture: function (gl, source) {
       const texture = gl.createTexture();
