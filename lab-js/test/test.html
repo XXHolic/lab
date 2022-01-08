@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>数字转换</title>
+    <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico" />
+    <link rel="stylesheet" href="../../css/newreset.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+  </head>
+  <body>
+    <script>
+
+function fixMoney(s, n) { //格式化金额如：1,100,000.00
+  if (!s) {
+      return (0).toFixed(n);
+  }
+  n = n >= 0 && n <= 20 ? n : 2;
+  s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+  var l = s.split(".")[0].split("").reverse(),
+      r = s.split(".")[1] || '';
+  let t = "";
+  for (let i = 0; i < l.length; i++) {
+      t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+  }
+  let numStr = t.split("").reverse().join("")
+  if (r) {
+    numStr = `${numStr}.${r}`
+  }
+  return numStr
+}
+
+    const res1 = fixMoney(0, 1)
+    const res2 = fixMoney(2.32, 0)
+    const res3 = fixMoney(33333333232, 0)
+    console.info(res1)
+    console.info(res2)
+    console.info(res3)
+    </script>
+  </body>
+</html>
