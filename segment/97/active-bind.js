@@ -206,5 +206,5 @@ window.onload = function () {
   };
 
   page.init();
-  insertLink({ title: "JavaScript WebGL 使用图片", linkIndex: 113 });
+  insertLink({ title: "JavaScript WebGL 使用图片疑惑点", linkIndex: 114 });
 };
