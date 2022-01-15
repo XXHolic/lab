@@ -2,8 +2,10 @@ window.onload = function () {
   const page = {
     texture1: null,
     texture2: null,
+    canvasObj: null,
     init: function () {
       const canvasObj = new WebGL(300, 300);
+      this.canvasObj = canvasObj;
       // const canvasObj = new WebGL(400, 300);
       canvasObj.attrs({ class: "demo-webgl" });
       document.querySelector("#demo").appendChild(canvasObj.node);
@@ -71,7 +73,7 @@ window.onload = function () {
               gl_FragColor = texture2D(uSampler1, vTextureCoord);
           }
           if (vTextureIndex == 1.0) {
-              gl_FragColor = vec4(texture2D(uSampler2, vTextureCoord).rgb, 0.5);
+              gl_FragColor = texture2D(uSampler2, vTextureCoord);
           }
         }
       `;
@@ -89,6 +91,7 @@ window.onload = function () {
       this.setIndexBuffers(gl, indexData);
       this.setTextureBuffers(gl, shaderProgram, texCoords);
       this.loadImage(gl, shaderProgram);
+      this.pageEvent(gl, shaderProgram);
     },
     loadImage: function (gl, shaderProgram) {
       let loadCount = 2;
@@ -100,7 +103,7 @@ window.onload = function () {
           this.draw(gl, shaderProgram);
         }
       };
-      img.src = "./1.jpg";
+      img.src = "./images/1.jpg";
 
       const img2 = new Image();
       img2.onload = (e) => {
@@ -111,13 +114,14 @@ window.onload = function () {
         }
       };
       // img2.src = "./2-transparency.png";
-      img2.src = "./2.png";
+      img2.src = "./images/2.png";
     },
     createTexture: function (gl, source) {
       const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       // 反转图片 Y 轴方向
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
       // 纹理坐标水平填充 s
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       // 纹理坐标垂直填充 t
@@ -246,7 +250,8 @@ window.onload = function () {
      * @param {*} gl WebGL 上下文
      * @param {*} shaderProgram 着色器程序
      */
-    draw: function (gl, shaderProgram) {
+    draw: function (gl, shaderProgram, src = "SRC_COLOR", dest = "DST_COLOR") {
+      this.canvasObj.clear();
       this.activeBindTexture(gl, this.texture1, 1);
       this.activeBindTexture(gl, this.texture2, 2);
       // 获取纹理采样器
@@ -256,8 +261,26 @@ window.onload = function () {
       gl.uniform1i(samplerUniform1, 1);
       gl.uniform1i(samplerUniform2, 2);
       gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      // gl.blendColor(0, 0.5, 1, 1);
+      // console.info(gl.getParameter(gl.BLEND_COLOR));
+      gl.blendFunc(gl[src], gl[dest]);
       gl.drawElements(gl.TRIANGLES, 12, gl.UNSIGNED_SHORT, 0);
+    },
+    pageEvent: function (gl, shaderProgram) {
+      const srcEle = document.querySelector("#src");
+      const destEle = document.querySelector("#dest");
+      srcEle.onchange = (e) => {
+        const value = e.target.value;
+        console.info("src value", value);
+        const destValue = destEle.value;
+        this.draw(gl, shaderProgram, value, destValue);
+      };
+      destEle.onchange = (e) => {
+        const value = e.target.value;
+        console.info("value", value);
+        const srcValue = srcEle.value;
+        this.draw(gl, shaderProgram, srcValue, value);
+      };
     },
   };
 

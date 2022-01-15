@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="JavaScript webgl 使用图片">
-  <title>blend 效果展示</title>
+  <title>blendColor 与 blend 配合使用效果展示</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
@@ -25,6 +25,7 @@
 </head>
 <body class="pt50 tc">
   <div id="demo"></div>
+  <div>gl.blendColor(0.3, 0.3, 0.3, 0.3);</div>
   <div class="options tl">
     <p>源颜色参数值</p>
     <select id="src" class="mb10">
@@ -65,6 +66,6 @@
 
   <script src="../../js/common/insertLink.js"></script>
   <script src="../../js/canvas/webgl.js"></script>
-  <script src="./blend.js"></script>
+  <script src="./blend-color.js"></script>
 </body>
 </html>
