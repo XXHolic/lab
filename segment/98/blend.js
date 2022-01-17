@@ -121,7 +121,7 @@ window.onload = function () {
       gl.bindTexture(gl.TEXTURE_2D, texture);
       // 反转图片 Y 轴方向
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+      // gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
       // 纹理坐标水平填充 s
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       // 纹理坐标垂直填充 t

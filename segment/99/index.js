@@ -3,6 +3,7 @@ window.onload = function () {
     texture1: null,
     texture2: null,
     canvasObj: null,
+    fadeOpacity: 0.9, // 每次透明度的变化基数
     init: function () {
       const canvasObj = new WebGL(300, 300);
       this.canvasObj = canvasObj;
@@ -15,27 +16,12 @@ window.onload = function () {
         alert("浏览器不支持 WebGL");
         return;
       }
-
+      // 背景纹理相关变量
       const vertices = [
-        // 第一套顶点
-        0.0, 0.5, 0.0, 0.0, -0.8, 0.5, 0.0, 0.0, -0.8, -0.5, 0.0, 0.0, 0.0,
-        -0.5, 0.0, 0.0,
-        // 第二套顶点
-        0.7, 0.3, 0.0, 1.0, -0.3, 0.3, 0.0, 1.0, -0.3, -0.7, 0.0, 1.0, 0.7,
-        -0.7, 0.0, 1.0,
+        0.0, 0.2, 0.0, -0.2, 0.2, 0.0, -0.2, -0.2, 0.0, 0.0, -0.2, 0.0,
       ]; // 矩形
-      const indexData = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]; // 索引
+      const indexData = [0, 1, 2, 0, 2, 3]; // 索引，公用的
       const texCoords = [
-        // 针对第一套顶点
-        1.0,
-        1.0, // 右上角
-        0.0,
-        1.0, // 左上角
-        0.0,
-        0.0, // 左下角
-        1.0,
-        0.0, // 右下角
-        // 针对第二套顶点
         1.0,
         1.0, // 右上角
         0.0,
@@ -51,47 +37,38 @@ window.onload = function () {
         precision highp float;
         attribute vec3 aVertexPos;
         attribute vec2 aVertexTextureCoord;
-        attribute float aTextureIndex;
 
-        varying float vTextureIndex;
         varying highp vec2 vTextureCoord;
         void main(void){
           gl_Position = vec4(aVertexPos, 1);
           vTextureCoord = aVertexTextureCoord;
-          vTextureIndex = aTextureIndex;
         }
       `;
-      const vertexShader = this.loadShader(gl, gl.VERTEX_SHADER, source);
+
       const fragmentSource = `
         precision highp float;
         varying highp vec2 vTextureCoord;
-        varying float vTextureIndex;
-        uniform sampler2D uSampler1;
-        uniform sampler2D uSampler2;
+        uniform sampler2D uSampler;
+        uniform float uOpacity;
+
         void main(void){
-          if (vTextureIndex == 0.0) {
-              gl_FragColor = texture2D(uSampler1, vTextureCoord);
-          }
-          if (vTextureIndex == 1.0) {
-              gl_FragColor = texture2D(uSampler2, vTextureCoord);
-          }
+          vec4 color = texture2D(uSampler, vTextureCoord);
+          gl_FragColor = vec4(floor(255.0 * color * uOpacity) / 255.0);
         }
       `;
-      const fragmentShader = this.loadShader(
-        gl,
-        gl.FRAGMENT_SHADER,
-        fragmentSource
-      );
-      const shaderProgram = this.initShaderProgram(
-        gl,
-        vertexShader,
-        fragmentShader
-      );
-      this.setBuffers(gl, shaderProgram, vertices);
+
+      const program = this.createShaderProgram(gl, source, fragmentSource);
+      this.shaderProgram = program;
+      // 这个是为了在后面重复使用，先创建好这个对象。
+      this.quadBuffer = this.createBuffer(gl, new Float32Array([]));
       this.setIndexBuffers(gl, indexData);
-      this.setTextureBuffers(gl, shaderProgram, texCoords);
-      this.loadImage(gl, shaderProgram);
-      this.pageEvent(gl, shaderProgram);
+      this.bindEnableBuffer(gl, this.quadBuffer, program.aVertexPos, 3);
+      this.bindEnableBuffer(gl, this.quadBuffer, program.aVertexPos, 3);
+
+      // this.setBuffers(gl, shaderProgram, vertices);
+      // this.setTextureBuffers(gl, shaderProgram, texCoords);
+      // this.loadImage(gl, shaderProgram);
+      // this.pageEvent(gl, shaderProgram);
     },
     loadImage: function (gl, shaderProgram) {
       let loadCount = 2;
@@ -103,7 +80,7 @@ window.onload = function () {
           this.draw(gl, shaderProgram);
         }
       };
-      img.src = "./images/1.jpg";
+      img.src = "./person.png";
 
       const img2 = new Image();
       img2.onload = (e) => {
@@ -113,15 +90,26 @@ window.onload = function () {
           this.draw(gl, shaderProgram);
         }
       };
-      // img2.src = "./2-transparency.png";
-      img2.src = "./images/2.png";
+      img2.src = "./person.nng";
+    },
+    // 创建缓冲对象
+    createBuffer: function (gl, data) {
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+      return buffer;
+    },
+    // 缓冲并激活对应顶点属性
+    bindEnableBuffer: function (gl, buffer, attribute, numComponents) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.enableVertexAttribArray(attribute);
+      gl.vertexAttribPointer(attribute, numComponents, gl.FLOAT, false, 0, 0);
     },
     createTexture: function (gl, source) {
       const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
       // 反转图片 Y 轴方向
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      // gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
       // 纹理坐标水平填充 s
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       // 纹理坐标垂直填充 t
@@ -228,7 +216,13 @@ window.onload = function () {
       return shader;
     },
     // 初始化整个着色器程序
-    initShaderProgram: function (gl, vertexShader, fragmentShader) {
+    createShaderProgram: function (gl, vertexSource, fragmentSource) {
+      const vertexShader = this.loadShader(gl, gl.VERTEX_SHADER, vertexSource);
+      const fragmentShader = this.loadShader(
+        gl,
+        gl.FRAGMENT_SHADER,
+        fragmentSource
+      );
       // 创建着色器对象
       const shaderProgram = gl.createProgram();
       // 添加着色器
@@ -241,40 +235,56 @@ window.onload = function () {
         alert("无法初始化着色器程序: " + gl.getProgramInfoLog(shaderProgram));
         return null;
       }
-      // 将定义好的对象添加到当前的渲染状态中。
-      gl.useProgram(shaderProgram);
-      return shaderProgram;
+      const wrapper = { program: shaderProgram };
+
+      const numAttributes = gl.getProgramParameter(
+        shaderProgram,
+        gl.ACTIVE_ATTRIBUTES
+      );
+      for (let i = 0; i < numAttributes; i++) {
+        const attribute = gl.getActiveAttrib(shaderProgram, i);
+        wrapper[attribute.name] = gl.getAttribLocation(
+          shaderProgram,
+          attribute.name
+        );
+      }
+      const numUniforms = gl.getProgramParameter(
+        shaderProgram,
+        gl.ACTIVE_UNIFORMS
+      );
+      for (let i = 0; i < numUniforms; i++) {
+        const uniform = gl.getActiveUniform(shaderProgram, i);
+        wrapper[uniform.name] = gl.getUniformLocation(
+          shaderProgram,
+          uniform.name
+        );
+      }
+
+      return wrapper;
     },
     /**
      * 绘制
      * @param {*} gl WebGL 上下文
      * @param {*} shaderProgram 着色器程序
      */
-    draw: function (gl, shaderProgram, type = "FUNC_ADD") {
+    draw: function () {
+      const gl = this.gl;
       this.canvasObj.clear();
       this.activeBindTexture(gl, this.texture1, 1);
-      this.activeBindTexture(gl, this.texture2, 2);
+      // this.activeBindTexture(gl, this.texture2, 2);
       // 获取纹理采样器
-      const samplerUniform1 = gl.getUniformLocation(shaderProgram, "uSampler1");
-      const samplerUniform2 = gl.getUniformLocation(shaderProgram, "uSampler2");
+      const samplerUniform1 = gl.getUniformLocation(shaderProgram, "uSampler");
+      // const samplerUniform2 = gl.getUniformLocation(shaderProgram, "uSampler2");
       // 指定全局变量关联的纹理单元
       gl.uniform1i(samplerUniform1, 1);
-      gl.uniform1i(samplerUniform2, 2);
-      gl.enable(gl.BLEND);
-      gl.blendEquation(gl[type]);
-      // gl.blendEquation(gl.FUNC_REVERSE_SUBTRACT);
-      gl.blendFunc(gl.SRC_COLOR, gl.DST_COLOR);
-      gl.drawElements(gl.TRIANGLES, 12, gl.UNSIGNED_SHORT, 0);
+      gl.uniform1f(program.uOpacity, this.fadeOpacity);
+      // gl.enable(gl.BLEND);
+      // gl.blendFunc(gl.SRC_COLOR, gl.DST_COLOR);
+      gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     },
-    pageEvent: function (gl, shaderProgram) {
-      document.querySelector("#equation").onchange = (e) => {
-        const value = e.target.value;
-        console.info("value", value);
-        this.draw(gl, shaderProgram, value);
-      };
-    },
+    pageEvent: function (gl, shaderProgram) {},
   };
 
   page.init();
-  insertLink({ title: "JavaScript WebGL 图片透明处理", linkIndex: 115 });
+  // insertLink({ title: "JavaScript WebGL 图片透明处理", linkIndex: 115 });
 };
