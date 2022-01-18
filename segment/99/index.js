@@ -16,6 +16,7 @@ window.onload = function () {
         alert("浏览器不支持 WebGL");
         return;
       }
+      this.gl = gl;
       // 背景纹理相关变量
       const vertices = [
         0.0, 0.2, 0.0, -0.2, 0.2, 0.0, -0.2, -0.2, 0.0, 0.0, -0.2, 0.0,
@@ -59,25 +60,33 @@ window.onload = function () {
 
       const program = this.createShaderProgram(gl, source, fragmentSource);
       this.shaderProgram = program;
-      // 这个是为了在后面重复使用，先创建好这个对象。
-      this.quadBuffer = this.createBuffer(gl, new Float32Array([]));
+      // 顶点缓冲
+      const verticesBuffer = this.createBuffer(gl, new Float32Array(vertices));
+      this.bindEnableBuffer(gl, verticesBuffer, program.aVertexPos, 3);
+      // 索引缓冲
       this.setIndexBuffers(gl, indexData);
-      this.bindEnableBuffer(gl, this.quadBuffer, program.aVertexPos, 3);
-      this.bindEnableBuffer(gl, this.quadBuffer, program.aVertexPos, 3);
-
-      // this.setBuffers(gl, shaderProgram, vertices);
-      // this.setTextureBuffers(gl, shaderProgram, texCoords);
-      // this.loadImage(gl, shaderProgram);
-      // this.pageEvent(gl, shaderProgram);
+      // 纹理坐标缓冲
+      const texCoordsBuffer = this.createBuffer(
+        gl,
+        new Float32Array(texCoords)
+      );
+      this.bindEnableBuffer(
+        gl,
+        texCoordsBuffer,
+        program.aVertexTextureCoord,
+        2
+      );
+      this.loadImage();
     },
-    loadImage: function (gl, shaderProgram) {
+    loadImage: function () {
+      const gl = this.gl;
       let loadCount = 2;
       const img = new Image();
       img.onload = (e) => {
         this.texture1 = this.createTexture(gl, e.target);
         loadCount--;
         if (!loadCount) {
-          this.draw(gl, shaderProgram);
+          this.draw();
         }
       };
       img.src = "./person.png";
@@ -87,10 +96,10 @@ window.onload = function () {
         this.texture2 = this.createTexture(gl, e.target);
         loadCount--;
         if (!loadCount) {
-          this.draw(gl, shaderProgram);
+          this.draw();
         }
       };
-      img2.src = "./person.nng";
+      img2.src = "./person.png";
     },
     // 创建缓冲对象
     createBuffer: function (gl, data) {
@@ -135,32 +144,6 @@ window.onload = function () {
       gl.bindTexture(gl.TEXTURE_2D, texture);
     },
     /**
-     * 缓冲纹理坐标数据
-     * @param {*} gl WebGL 上下文
-     * @param {*} shaderProgram 着色器程序
-     * @param {*} data 纹理坐标数据
-     */
-    setTextureBuffers: function (gl, shaderProgram, data) {
-      // 创建空白的缓冲对象
-      const buffer = gl.createBuffer();
-      // 绑定目标
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      // WebGL 不支持直接使用 JavaScript 原始数组类型，需要转换
-      const dataFormat = new Float32Array(data);
-      // 初始化数据存储
-      gl.bufferData(gl.ARRAY_BUFFER, dataFormat, gl.STATIC_DRAW);
-
-      // 获取对应数据索引
-      const texCoord = gl.getAttribLocation(
-        shaderProgram,
-        "aVertexTextureCoord"
-      );
-      // 解析顶点数据
-      gl.vertexAttribPointer(texCoord, 2, gl.FLOAT, false, 0, 0);
-      // 启用顶点属性，顶点属性默认是禁用的。
-      gl.enableVertexAttribArray(texCoord);
-    },
-    /**
      * 缓冲索引数据
      * @param {*} gl WebGL 上下文
      * @param {*} data 索引数据
@@ -174,35 +157,6 @@ window.onload = function () {
       const dataFormat = new Uint16Array(data);
       // 初始化数据存储
       gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, dataFormat, gl.STATIC_DRAW);
-    },
-    /**
-     * 设置缓冲
-     * @param {*} gl
-     * @param {*} vertexData
-     */
-    setBuffers: function (gl, shaderProgram, vertexData) {
-      // 创建空白的缓冲对象
-      const buffer = gl.createBuffer();
-      // 绑定目标
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      // WebGL 不支持直接使用 JavaScript 原始数组类型，需要转换
-      const dataFormat = new Float32Array(vertexData);
-      // 初始化数据存储
-      gl.bufferData(gl.ARRAY_BUFFER, dataFormat, gl.STATIC_DRAW);
-
-      // 获取对应数据索引
-      const vertexPos = gl.getAttribLocation(shaderProgram, "aVertexPos");
-      // 解析顶点数据
-      gl.vertexAttribPointer(vertexPos, 3, gl.FLOAT, false, 16, 0);
-      // 启用顶点属性，顶点属性默认是禁用的。
-      gl.enableVertexAttribArray(vertexPos);
-      // 区分使用纹理的索引
-      const aTextureIndex = gl.getAttribLocation(
-        shaderProgram,
-        "aTextureIndex"
-      );
-      gl.vertexAttribPointer(aTextureIndex, 1, gl.FLOAT, false, 16, 12);
-      gl.enableVertexAttribArray(aTextureIndex);
     },
     loadShader: function (gl, type, source) {
       const shader = gl.createShader(type);
@@ -268,15 +222,14 @@ window.onload = function () {
      * @param {*} shaderProgram 着色器程序
      */
     draw: function () {
-      const gl = this.gl;
+      const gl = this.gl,
+        program = this.shaderProgram;
+      gl.useProgram(program.program);
       this.canvasObj.clear();
       this.activeBindTexture(gl, this.texture1, 1);
       // this.activeBindTexture(gl, this.texture2, 2);
-      // 获取纹理采样器
-      const samplerUniform1 = gl.getUniformLocation(shaderProgram, "uSampler");
-      // const samplerUniform2 = gl.getUniformLocation(shaderProgram, "uSampler2");
       // 指定全局变量关联的纹理单元
-      gl.uniform1i(samplerUniform1, 1);
+      gl.uniform1i(program.uSampler, 1);
       gl.uniform1f(program.uOpacity, this.fadeOpacity);
       // gl.enable(gl.BLEND);
       // gl.blendFunc(gl.SRC_COLOR, gl.DST_COLOR);
