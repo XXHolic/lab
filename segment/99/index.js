@@ -19,7 +19,7 @@ window.onload = function () {
       this.gl = gl;
       // 背景纹理相关变量
       const vertices = [
-        0.0, 0.2, 0.0, -0.2, 0.2, 0.0, -0.2, -0.2, 0.0, 0.0, -0.2, 0.0,
+        0.2, 0.2, 0.0, -0.2, 0.2, 0.0, -0.2, -0.2, 0.0, 0.2, -0.2, 0.0,
       ]; // 矩形
       const indexData = [0, 1, 2, 0, 2, 3]; // 索引，公用的
       const texCoords = [
@@ -76,11 +76,21 @@ window.onload = function () {
         program.aVertexTextureCoord,
         2
       );
+      // 帧缓冲
+      this.framebuffer = gl.createFramebuffer();
+      this.screenTexture = util.createTexture(
+        gl,
+        gl.NEAREST,
+        emptyPixels,
+        gl.canvas.width,
+        gl.canvas.height
+      );
+
       this.loadImage();
     },
     loadImage: function () {
       const gl = this.gl;
-      let loadCount = 2;
+      let loadCount = 1;
       const img = new Image();
       img.onload = (e) => {
         this.texture1 = this.createTexture(gl, e.target);
@@ -99,7 +109,27 @@ window.onload = function () {
           this.draw();
         }
       };
-      img2.src = "./person.png";
+      // img2.src = "./person.png";
+    },
+    /**
+     *
+     * @param {*} gl
+     * @param {*} framebuffer 帧缓冲对象
+     * @param {*} texture 纹理
+     */
+    bindFramebuffer: function (gl, framebuffer, texture) {
+      // 将纹理对象关联到帧缓冲区对象
+      gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+      if (texture) {
+        // 使用绑定的目标，将创建的纹理对象指定为帧缓冲区的颜色关联对象
+        gl.framebufferTexture2D(
+          gl.FRAMEBUFFER,
+          gl.COLOR_ATTACHMENT0,
+          gl.TEXTURE_2D,
+          texture,
+          0
+        );
+      }
     },
     // 创建缓冲对象
     createBuffer: function (gl, data) {
@@ -226,16 +256,28 @@ window.onload = function () {
         program = this.shaderProgram;
       gl.useProgram(program.program);
       this.canvasObj.clear();
-      this.activeBindTexture(gl, this.texture1, 1);
-      // this.activeBindTexture(gl, this.texture2, 2);
-      // 指定全局变量关联的纹理单元
-      gl.uniform1i(program.uSampler, 1);
-      gl.uniform1f(program.uOpacity, this.fadeOpacity);
+      // 这个就让绘制的目标变成了帧缓冲区
+      this.bindFramebuffer(gl, this.framebuffer, this.texture1);
+      this.drawTexture(this.texture1, this.fadeOpacity);
       // gl.enable(gl.BLEND);
-      // gl.blendFunc(gl.SRC_COLOR, gl.DST_COLOR);
+      // 权重都是源颜色的透明度，第一个参数假设是 a，第二个就是 1-a
+      // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      // 这个会让绘制的目标变成了颜色缓冲区
+      this.bindFramebuffer(gl, null);
+      this.drawTexture(this.texture1, 1);
+      // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+    },
+    drawTexture: function (texture, opacity) {
+      const gl = this.gl;
+      const program = this.shaderProgram;
+      gl.useProgram(program.program);
+
+      this.activeBindTexture(gl, texture, 1);
+      gl.uniform1i(program.uSampler, 1);
+      gl.uniform1f(program.uOpacity, opacity);
+
       gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     },
-    pageEvent: function (gl, shaderProgram) {},
   };
 
   page.init();
