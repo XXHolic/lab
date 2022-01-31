@@ -272,20 +272,18 @@ window.onload = function () {
 
       // 这个就让绘制的目标变成了帧缓冲区
       gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
-
+      gl.viewport(0, 0, this.offscreenWidth, this.offscreenHeight);
       this.drawOffFrame(program, this.imgTexture);
 
       // 这个会让绘制的目标变成了颜色缓冲区
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
       this.drawScreen(program, frameBuffer.texture);
       // this.drawScreen(program, this.imgTexture);
     },
     drawOffFrame: function (program, texture) {
       const gl = this.gl;
       const targetBuffer = this.offScreenBuffer;
-
-      gl.viewport(0, 0, this.offscreenWidth, this.offscreenHeight);
 
       this.activeBindTexture(gl, texture, 0);
       this.bindEnableBuffer(
@@ -309,7 +307,7 @@ window.onload = function () {
     drawScreen: function (program, texture) {
       const gl = this.gl;
       const targetBuffer = this.screenBuffer;
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
       this.activeBindTexture(gl, texture, 1);
 
       this.bindEnableBuffer(
@@ -332,5 +330,6 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 图片透明处理", linkIndex: 115 });
+  insertLink({ title: "JavaScript WebGL 帧缓冲区对象", linkIndex: 116 });
+
 };

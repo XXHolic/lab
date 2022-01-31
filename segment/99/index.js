@@ -42,8 +42,9 @@ window.onload = function () {
 
       this.shaderProgram = this.createShaderProgram(gl, source, fragmentSource);
       this.screenBuffer = this.initBuffersForScreen(gl);
-      // 帧缓冲
+      // 帧缓冲对象
       this.framebufferObj = this.createFramebufferObject(gl);
+      // 针对帧缓冲区绘制的顶点和纹理坐标
       this.offScreenBuffer = this.initBuffersForFramebuffer(gl);
 
       this.loadImage();
@@ -190,9 +191,10 @@ window.onload = function () {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       // 纹理缩小处理
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      framebuffer.texture = texture; // Store the texture object
+      framebuffer.texture = texture; // 保存纹理对象
+      // console.info("framebuffer", framebuffer);
 
-      // Attach the texture  to the FBO
+      // 关联缓冲区对象
       gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
       gl.framebufferTexture2D(
         gl.FRAMEBUFFER,
@@ -202,7 +204,7 @@ window.onload = function () {
         0
       );
 
-      // Check if FBO is configured correctly
+      // 检查配置是否正确
       var e = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
       if (gl.FRAMEBUFFER_COMPLETE !== e) {
         console.log("Frame buffer object is incomplete: " + e.toString());
@@ -276,19 +278,19 @@ window.onload = function () {
       // 这个就让绘制的目标变成了帧缓冲区
       gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
 
+      gl.viewport(0, 0, this.offscreenWidth, this.offscreenHeight);
       this.drawOffFrame(program, this.imgTexture);
 
-      // 这个会让绘制的目标变成了颜色缓冲区
+      // 解除帧缓冲区绑定，绘制的目标变成了颜色缓冲区
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
       this.drawScreen(program, frameBuffer.texture);
       // this.drawScreen(program, this.imgTexture);
     },
     drawOffFrame: function (program, texture) {
       const gl = this.gl;
       const targetBuffer = this.offScreenBuffer;
-
-      gl.viewport(0, 0, this.offscreenWidth, this.offscreenHeight);
 
       this.activeBindTexture(gl, texture, 0);
       this.bindEnableBuffer(
@@ -312,7 +314,7 @@ window.onload = function () {
     drawScreen: function (program, texture) {
       const gl = this.gl;
       const targetBuffer = this.screenBuffer;
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
       this.activeBindTexture(gl, texture, 1);
 
       this.bindEnableBuffer(
@@ -335,5 +337,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 图片透明处理", linkIndex: 115 });
+  insertLink({ title: "JavaScript WebGL 帧缓冲区对象", linkIndex: 116 });
 };
