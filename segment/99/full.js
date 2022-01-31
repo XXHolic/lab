@@ -86,11 +86,8 @@ window.onload = function () {
     },
     initBuffersForFramebuffer: function (gl) {
       const vertices = new Float32Array([
-        0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5,
+        1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0,
       ]); // 矩形
-      // const vertices = new Float32Array([
-      //   1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0,
-      // ]); // 矩形
       const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
       const texCoords = new Float32Array([
         1.0,
