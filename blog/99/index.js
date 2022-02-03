@@ -55,7 +55,7 @@ window.onload = function () {
   const gl = canvas.getContext("webgl", { antialiasing: false });
 
   const wind = new WindGL(gl);
-  wind.numParticles = 100;
+  wind.numParticles = 5000;
 
   function getWindData() {
     fetch("./2021113000.json")
@@ -87,5 +87,5 @@ window.onload = function () {
   }
   frame();
 
-  // insertLink({ title: "绘制粒子", linkIndex: 104 });
+  insertLink({ title: "绘制轨迹", linkIndex: 105, type: "blog" });
 };

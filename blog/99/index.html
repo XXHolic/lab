@@ -8,21 +8,22 @@
   <meta name="keywords" content="webgl,css,html,js,JavaScript">
   <meta content="webgl,JavaScript">
   <meta name="format-detection" content="telephone=no">
-  <title>绘制风粒子</title>
+  <title>绘制风粒子轨迹</title>
   <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
   <link rel="stylesheet" href="../../css/newreset.css">
   <link rel="stylesheet" href="../../css/common.css">
   <!-- <script src="./webgl-glsl.js"></script>s -->
   <style>
     #coastline { background: black; }
-    #particles, #coastline { display: block; width: 100vw; height: 100vh; position: absolute; }
+    #particles, #coastline { display: block; width: 100vw; height: calc(100vh - 50px); position: absolute; }
   </style>
 </head>
 
-<body>
+<body class="pt50">
   <canvas id="coastline"></canvas>
   <canvas id="particles"></canvas>
   <script src="../../js/common/util.js"></script>
+  <script src="../../js/common/insertLink.js"></script>
   <script src="../../js/canvas/index.js"></script>
   <script src="./webgl-util.js"></script>
   <script src="./webgl-class.js"></script>

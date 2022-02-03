@@ -110,16 +110,8 @@ const updateFrag = `
   uniform vec2 u_wind_res;
   uniform vec2 u_wind_min;
   uniform vec2 u_wind_max;
-  uniform float u_speed_factor;
 
   varying vec2 v_tex_pos;
-
-  // pseudo-random generator
-  const vec3 rand_constants = vec3(12.9898, 78.233, 4375.85453);
-  float rand(const vec2 co) {
-      float t = dot(rand_constants.xy, co);
-      return fract(sin(t) * (rand_constants.z + t));
-  }
 
   // wind speed lookup; use manual bilinear filtering based on 4 adjacent pixels for smooth interpolation
   vec2 lookup_wind(const vec2 uv) {
@@ -141,10 +133,11 @@ const updateFrag = `
           color.g / 255.0 + color.a); // decode particle position from pixel RGBA
 
       vec2 velocity = mix(u_wind_min, u_wind_max, lookup_wind(pos));
+      // vec2 velocity = mix(u_wind_min, u_wind_max, pos);
 
       // take EPSG:4236 distortion into account for calculating where the particle moved
       float distortion = cos(radians(pos.y * 180.0 - 90.0));
-      vec2 offset = vec2(velocity.x / distortion, -velocity.y) * 0.0001 * u_speed_factor;
+      vec2 offset = vec2(velocity.x / distortion, -velocity.y) * 0.0001 * 0.25;
 
       // update particle position, wrapping around the date line
       pos = fract(1.0 + pos + offset);
@@ -171,7 +164,7 @@ class WindGL {
     this.gl = gl;
 
     this.fadeOpacity = 0.996; // 粒子轨迹在每帧上衰减的速度有多快
-    this.speedFactor = 0.25; // 粒子移动的速度有多快
+    // this.speedFactor = 0.25; // 粒子移动的速度有多快
     // this.dropRate = 0.003; // 粒子移动到随机位置的频率
     // this.dropRateBump = 0.01; // 下降速率相对于单个粒子速度的增加
 
@@ -277,7 +270,6 @@ class WindGL {
     gl.disable(gl.DEPTH_TEST); // 关闭深度测试，这个是否开启影响物体遮挡顺序
     gl.disable(gl.STENCIL_TEST); // 关闭模板
 
-    // 使用多个纹理，先指定到对应纹理单元
     webglUtil.bindTexture(gl, this.windTexture, 0);
     webglUtil.bindTexture(gl, this.particleStateTexture0, 1);
 
@@ -360,7 +352,7 @@ class WindGL {
     gl.uniform2f(program.u_wind_res, this.windData.width, this.windData.height);
     gl.uniform2f(program.u_wind_min, this.windData.uMin, this.windData.vMin);
     gl.uniform2f(program.u_wind_max, this.windData.uMax, this.windData.vMax);
-    gl.uniform1f(program.u_speed_factor, this.speedFactor);
+    // gl.uniform1f(program.u_speed_factor, this.speedFactor);
     // gl.uniform1f(program.u_drop_rate, this.dropRate);
     // gl.uniform1f(program.u_drop_rate_bump, this.dropRateBump);
 
