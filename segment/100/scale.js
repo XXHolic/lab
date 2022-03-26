@@ -176,5 +176,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 帧缓冲区对象", linkIndex: 116 });
+  insertLink({ title: "JavaScript WebGL 矩阵", linkIndex: 117 });
 };

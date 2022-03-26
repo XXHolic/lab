@@ -1,7 +1,7 @@
 window.onload = function () {
   const page = {
     canvasObj: null,
-    transformData: 0,
+    transformData: 30,
     init: function () {
       const canvasObj = new WebGL(400, 400);
       this.canvasObj = canvasObj;
@@ -169,5 +169,5 @@ window.onload = function () {
   };
 
   page.init();
-  // insertLink({ title: "JavaScript WebGL 帧缓冲区对象", linkIndex: 116 });
+  insertLink({ title: "JavaScript WebGL 矩阵", linkIndex: 117 });
 };
