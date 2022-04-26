@@ -29,26 +29,157 @@
    -->
 
    <script>
-  const result = [1,2,3,4,5,2,3,4,6].reduce((acc, cur, index) => {
-    const salePriceNum = Number(cur)
-    // 第一次
-    if (index === 0) {
-      acc.min = salePriceNum
-      acc.max = salePriceNum
+  // const result = [1,2,3,4,5,2,3,4,6].reduce((acc, cur, index) => {
+  //   const salePriceNum = Number(cur)
+  //   // 第一次
+  //   if (index === 0) {
+  //     acc.min = salePriceNum
+  //     acc.max = salePriceNum
+  //   }
+  //   if (index !== 0 && acc.min > salePriceNum) {
+  //     acc.min = salePriceNum
+  //   }
+  //   if (index !== 0 && acc.max < salePriceNum) {
+  //     acc.max = salePriceNum
+  //   }
+  //   return acc
+  // }, { min: 0, max: 0 })
+  // // console.info('result',result)
+  // let a = [1,2]
+  // const b = [...a,undefined]
+  // console.log('b',b)
+  //   const type = '.jpg,.png'
+  //   let a = type.replace(/\./g, '')
+  //  a = a.replace(/,/g, '、')
+
+  const str = '3232zAA4A'
+  const reg =/A/g
+  // const matchRes = reg.exec(str)
+  for (const match of str.matchAll(reg)) {
+    console.log(match);
+  }
+    // console.info(matchRes)
+    // console.info(matchRes.index)
+const ellipsisMark = '…'
+const maxShowLen = 4
+
+// 默认超过 10 个字就不显示的处理
+const getShowText = (data) => {
+  const dataLen = data.length
+  let showText = data
+  if (dataLen > maxShowLen) {
+    const partText = data.substring(0, maxShowLen)
+    showText = `${partText}${ellipsisMark}`
+  }
+  return showText
+}
+
+const getSearchShowText = (title, searchText, searchLen) => {
+  const titleLen = title.length
+  let showText = title
+  let hightText = searchText
+  const reg = new RegExp(searchText, 'g')
+  // 如果直接大于 10 那么就显示这一个匹配就够了
+  if (searchLen > maxShowLen) {
+    hightText = searchText.substring(0, maxShowLen)
+    const target = reg.exec(title)
+    const hasPreStr = target && target.index > 0 // 前面有字符串
+    const hasNextStr = target && target.index + searchLen < titleLen // 后面还有字符串
+    const preEle = hasPreStr ? ellipsisMark : ''
+    const nextEle = hasNextStr ? ellipsisMark : ''
+
+    showText = `${preEle}<span class="text-primary">${hightText}</span>${nextEle}`
+  } else {
+    // 可能存在间隔多个匹配的情况，累计 10 个字就结束
+    const matchIndexArr = []
+    const noMatchText = [] // 存储多个匹配结果之间的文字
+    const matchHightText = [] // 存储多个匹配结果的文字,超出的会被截断部分，所以用个变量存储
+    for (const match of title.matchAll(reg)) {
+      matchIndexArr.push(match.index)
     }
-    if (index !== 0 && acc.min > salePriceNum) {
-      acc.min = salePriceNum
+    const matchLen = matchIndexArr.length
+    // 最前和最后的文本
+    const preText = title.substring(0, matchIndexArr[0].index)
+    const lastText = title.substring(matchIndexArr[matchLen-1].index+1)
+
+    let worldsTotal = 0
+    for (let index = 0; index < matchLen; index++) {
+      const matchIndex = matchIndexArr[index]
+      const noMatchIndex = matchIndex + searchLen
+      const nextMatchIndex = matchIndexArr[index + 1]
+
+      // 如果刚好是最后一个也要停止
+      if(matchIndex + searchLen === titleLen) {
+        matchHightText[index] = searchText
+        break;
+      }
+
+      if(worldsTotal + searchLen > maxShowLen) {
+        matchHightText[index] = searchText.substring(matchIndex, maxShowLen-matchIndex+1)
+        break;
+      }
+      worldsTotal += searchLen
+      matchHightText[index] = searchText
+
+      // 表明中间有非匹配的文字
+      if (nextMatchIndex && noMatchIndex < nextMatchIndex) {
+        const minus = nextMatchIndex - noMatchIndex
+        worldsTotal += minus
+        // 没有超过 10 个字就记录下要显示的非匹配文字
+        if (worldsTotal < maxShowLen) {
+          noMatchText[index] = title.substring(noMatchIndex, nextMatchIndex)
+        } else {
+          noMatchText[index] = title.substring(noMatchIndex,  maxShowLen - searchLen + noMatchIndex + 1)
+        }
+      }
+      if (worldsTotal > maxShowLen) {
+        break; // 超过了就直接停止循环
+      }
     }
-    if (index !== 0 && acc.max < salePriceNum) {
-      acc.max = salePriceNum
+    // 高亮和非高亮结合
+    // for (let index = 0; index < matchLen; index++) {
+
+    // }
+   const pureText = matchHightText.reduce((acc, cur, index) => {
+    acc+=cur
+    const noMatchStr = noMatchText[index]
+    if(noMatchStr) {
+      acc+= noMatchStr
     }
     return acc
-  }, { min: 0, max: 0 })
-  // console.info('result',result)
-  let a = []
-  const b = [...a]
-  console.log('b',b)
+   }, '')
+   // 小于长度限制要补充
+   if(pureText<10) {
+     const needSupply = maxShowLen - pureText
+     const preNum = Math.floor(needSupply/2)
+     const lastNum = needSupply - preNum
+   }
+   showText = matchHightText.reduce((acc,cur,index) => {
+     acc+=`<span class="text-primary">${cur}</span>`
+    if(noMatchText[index]) {
+      acc+= noMatchText[index]
+    }
+    if(matchIndexArr[index] ) {
 
+    }
+    return acc
+   },'')
+  }
+  // const splitStr = title.split(searchText) // 去除匹配到的
+      // showText = (
+      //   <span
+      //     dangerouslySetInnerHTML={{
+      //       __html: title.replace(new RegExp(searchText, 'g'), `<span class="text-primary">${hightText}</span>`),
+      //     }}
+      //   />
+      // )
+      console.info('showText',showText)
+  return showText
+}
+
+const keywords = 'a'
+const testData  = 'aa777a88acc'
+getSearchShowText(testData,keywords,keywords.length )
    </script>
 </body>
 
