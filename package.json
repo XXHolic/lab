@@ -30,7 +30,6 @@
     }
   },
   "scripts": {
-    "commitmsg": "commitlint -E GIT_PARAMS",
     "babel": "babel",
     "local-babel": "babel ./lab-js/20/src -d ./lab-js/20/lib",
     "start": "webpack-dev-server --open --config ./script/webpack.dev.js",

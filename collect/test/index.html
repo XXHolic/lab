@@ -55,13 +55,13 @@
   const str = '3232zAA4A'
   const reg =/A/g
   // const matchRes = reg.exec(str)
-  for (const match of str.matchAll(reg)) {
-    console.log(match);
-  }
+  // for (const match of str.matchAll(reg)) {
+  //   console.log(match);
+  // }
     // console.info(matchRes)
     // console.info(matchRes.index)
 const ellipsisMark = '…'
-const maxShowLen = 4
+const maxShowLen = 10
 
 // 默认超过 10 个字就不显示的处理
 const getShowText = (data) => {
@@ -83,7 +83,7 @@ const getSearchShowText = (title, searchText, searchLen) => {
   if (searchLen > maxShowLen) {
     hightText = searchText.substring(0, maxShowLen)
     const target = reg.exec(title)
-    const hasPreStr = target && target.index > 0 // 前面有字符串
+    const hasPreStr = target && target.index > 0 // 前面还有字符串
     const hasNextStr = target && target.index + searchLen < titleLen // 后面还有字符串
     const preEle = hasPreStr ? ellipsisMark : ''
     const nextEle = hasNextStr ? ellipsisMark : ''
@@ -99,8 +99,10 @@ const getSearchShowText = (title, searchText, searchLen) => {
     }
     const matchLen = matchIndexArr.length
     // 最前和最后的文本
-    const preText = title.substring(0, matchIndexArr[0].index)
-    const lastText = title.substring(matchIndexArr[matchLen-1].index+1)
+    const preText = title.substring(0, matchIndexArr[0])
+    const preTextLen = preText.length
+    const lastText = title.substring(matchIndexArr[matchLen-1]+searchLen)
+    const lastTextLen = lastText.length
 
     let worldsTotal = 0
     for (let index = 0; index < matchLen; index++) {
@@ -108,14 +110,14 @@ const getSearchShowText = (title, searchText, searchLen) => {
       const noMatchIndex = matchIndex + searchLen
       const nextMatchIndex = matchIndexArr[index + 1]
 
-      // 如果刚好是最后一个也要停止
+      // 如果刚好是最后一个要停止
       if(matchIndex + searchLen === titleLen) {
         matchHightText[index] = searchText
         break;
       }
 
       if(worldsTotal + searchLen > maxShowLen) {
-        matchHightText[index] = searchText.substring(matchIndex, maxShowLen-matchIndex+1)
+        matchHightText[index] = searchText.substring(0, maxShowLen-worldsTotal)
         break;
       }
       worldsTotal += searchLen
@@ -129,7 +131,7 @@ const getSearchShowText = (title, searchText, searchLen) => {
         if (worldsTotal < maxShowLen) {
           noMatchText[index] = title.substring(noMatchIndex, nextMatchIndex)
         } else {
-          noMatchText[index] = title.substring(noMatchIndex,  maxShowLen - searchLen + noMatchIndex + 1)
+          noMatchText[index] = title.substring(noMatchIndex,  maxShowLen - searchLen + noMatchIndex)
         }
       }
       if (worldsTotal > maxShowLen) {
@@ -137,9 +139,6 @@ const getSearchShowText = (title, searchText, searchLen) => {
       }
     }
     // 高亮和非高亮结合
-    // for (let index = 0; index < matchLen; index++) {
-
-    // }
    const pureText = matchHightText.reduce((acc, cur, index) => {
     acc+=cur
     const noMatchStr = noMatchText[index]
@@ -148,22 +147,59 @@ const getSearchShowText = (title, searchText, searchLen) => {
     }
     return acc
    }, '')
-   // 小于长度限制要补充
-   if(pureText<10) {
-     const needSupply = maxShowLen - pureText
-     const preNum = Math.floor(needSupply/2)
-     const lastNum = needSupply - preNum
+   const pureTextLen = pureText.length
+   // 小于长度限制要向前和向后补充够 10 个字显示
+   let preSupplyText = ''
+   let lastSupplyText = ''
+   let hasMorePre = false // 针对小于的情况
+   let hasMoreLast = false // 针对小于的情况
+   if(pureTextLen<maxShowLen) {
+     const needSupplyNum = maxShowLen - pureTextLen
+     let preNumValid = needSupplyNum // 先想前找，不够再往后找
+     if(needSupplyNum>=preTextLen) {
+      preSupplyText = preText
+      preNumValid = preTextLen
+     } else {
+      preSupplyText = preText.substring(preTextLen-needSupplyNum)
+      hasMorePre = true
+     }
+
+     const lastNum = needSupplyNum - preNumValid
+     if(lastNum >= lastTextLen) {
+      lastSupplyText = lastText
+     } else {
+      lastSupplyText = lastText.substring(0, lastNum)
+      hasMoreLast = true
+     }
    }
+   if(pureTextLen === maxShowLen) {
+    hasMorePre = matchIndexArr[0] > 0
+    hasMoreLast = matchIndexArr[0] + pureTextLen < titleLen
+   }
+   // 匹配和非匹配之间结合
    showText = matchHightText.reduce((acc,cur,index) => {
      acc+=`<span class="text-primary">${cur}</span>`
     if(noMatchText[index]) {
       acc+= noMatchText[index]
     }
-    if(matchIndexArr[index] ) {
-
-    }
     return acc
    },'')
+
+
+   if(preSupplyText) {
+    showText = hasMorePre ? `${ellipsisMark}${preSupplyText}${showText}` : `${preSupplyText}${showText}`
+   }
+
+
+   if(lastSupplyText) {
+    showText =`${showText}${lastSupplyText}`
+   }
+   // 有可能前面刚好够了，后面实际上还有多的内容
+   if(hasMoreLast) {
+    showText = `${showText}${ellipsisMark}`
+   }
+
+
   }
   // const splitStr = title.split(searchText) // 去除匹配到的
       // showText = (
@@ -177,9 +213,23 @@ const getSearchShowText = (title, searchText, searchLen) => {
   return showText
 }
 
-const keywords = 'a'
-const testData  = 'aa777a88acc'
-getSearchShowText(testData,keywords,keywords.length )
+const keywords = 'aa'
+// const testData  = 'aa777a88acc' // 单个左边界情况
+// const testData  = '777a88accaa' // 单个右边界情况
+// const testData  = 'aa' // 刚好
+// const testData  = '77aa7a88acc' // 中间一个
+const testDataArr = [
+// 'aa777a88acc', // 单个左边界情况
+// '777a88accaa', // 单个右边界情况
+// 'aa', // 刚好
+// '77aa7a88acc', // 中间一个
+// 'aa777a88aa', // 两头边界
+// '77aa7a88aa', // 中间 + 边界
+'77aa7aa88aa', // 多个
+]
+testDataArr.map(ele => {
+  return getSearchShowText(ele,keywords,keywords.length )
+})
    </script>
 </body>
 
