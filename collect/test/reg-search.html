@@ -80,11 +80,11 @@ const getSearchShowText = (title, searchText, searchLen) => {
   let hightText = searchText
   const reg = new RegExp(searchText, 'g')
   // 如果直接大于 10 那么就显示这一个匹配就够了
-  if (searchLen > maxShowLen) {
+  if (searchLen >= maxShowLen) {
     hightText = searchText.substring(0, maxShowLen)
     const target = reg.exec(title)
     const hasPreStr = target && target.index > 0 // 前面还有字符串
-    const hasNextStr = target && target.index + searchLen < titleLen // 后面还有字符串
+    const hasNextStr = target && titleLen > maxShowLen // 后面还有字符串
     const preEle = hasPreStr ? ellipsisMark : ''
     const nextEle = hasNextStr ? ellipsisMark : ''
 
@@ -213,7 +213,7 @@ const getSearchShowText = (title, searchText, searchLen) => {
   return showText
 }
 
-const keywords = 'aa'
+const keywords = 'R所有参数最大值三级目录（勿动）3004最大值32位最大值01'
 // const testData  = 'aa777a88acc' // 单个左边界情况
 // const testData  = '777a88accaa' // 单个右边界情况
 // const testData  = 'aa' // 刚好
@@ -225,7 +225,9 @@ const testDataArr = [
 // '77aa7a88acc', // 中间一个
 // 'aa777a88aa', // 两头边界
 // '77aa7a88aa', // 中间 + 边界
-'77aa7aa88aa', // 多个
+// '77aa7aa88aa', // 多个
+'R所有参数最大值三级目录（勿动）3004最大值32位最大值01', // 多个
+// '0408二级', // 多个
 ]
 testDataArr.map(ele => {
   return getSearchShowText(ele,keywords,keywords.length )
