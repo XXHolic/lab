@@ -54,15 +54,15 @@
 
   const str = '3232zAA4A'
   const reg =/A/g
-  // const matchRes = reg.exec(str)
+  const matchRes = reg.exec(str)
   // for (const match of str.matchAll(reg)) {
   //   console.log(match);
   // }
-    // console.info(matchRes)
+    console.info(matchRes)
     // console.info(matchRes.index)
 const ellipsisMark = '…'
 const maxShowLen = 10
-
+// 最大长度 32 , 两个小写字母 和 数字算长度 1
 // 默认超过 10 个字就不显示的处理
 const getShowText = (data) => {
   const dataLen = data.length
@@ -230,7 +230,8 @@ const testDataArr = [
 // '0408二级', // 多个
 ]
 testDataArr.map(ele => {
-  return getSearchShowText(ele,keywords,keywords.length )
+  // return getSearchShowText(ele,keywords,keywords.length )
+  return getShowText(ele )
 })
    </script>
 </body>

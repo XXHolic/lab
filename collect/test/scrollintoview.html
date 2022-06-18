@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="practice">
+  <meta content="scrollintoview">
+  <meta name="format-detection" content="telephone=no">
+  <title> scrollintoview </title>
+  <link rel="shortcut icon" href="https://xxholic.github.io/lab/icon.ico">
+  <link rel="stylesheet" href="../../css/newreset.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    #mainContent {
+      width: 200px;
+      overflow: auto;
+      white-space: nowrap;
+    }
+    .input-demo {
+      width: 150px;
+    }
+  </style>
+</head>
+
+<body class="pt50 tc">
+  <div class="dib tl pt30" id="mainContent">
+
+    <input class="input-demo" type="text" value="1">
+    <input class="input-demo" type="text" value="2">
+    <input id="demo3" class="input-demo" type="text" value="3">
+    <input class="input-demo" type="text">
+  </div>
+  <button id="btn">scrollIntoView</button>
+   <script>
+     const ele = document.querySelector("#btn")
+     ele.onclick = () => {
+      document.querySelector("#demo3").scrollIntoView()
+     }
+
+   </script>
+</body>
+
+</html>
